@@ -1,0 +1,71 @@
+// 프방 프로젝트 클래스 상속 설계
+// 파일 수정할 때 vscode yuml extension 쓰시면 편합니다.
+// YUML 문법은 https://yuml.me/diagram/scruffy/class/samples 과 https://github.com/jaime-olivares/yuml-diagram/wiki#class-diagram 이곳 참고
+// UML 다이어그램은 https://gmlwjd9405.github.io/2018/07/04/class-diagram.html 이 문서 참고
+
+// {type:class}
+// {direction:topDown}
+// {generate:true}
+
+
+[note: 화면을 구성하는 틀.; Object의 position값들은 frame 내부의 opengl 좌표계로 결정된다.; child frame의 좌표도 상대 좌표로 결정되며, child frame은 항상 parent frame 위에 그려진다.{bg:cornsilk}]
+// Frame은 자주 업데이트되지 않으니 callback용 draw와 occasional update draw를 분리하는것도 좋은 생각인듯
+
+[<<virtual>>;BaseFrame|#position;#coordspec;#childframes;#childobjects|registerFrame() : void; registerObject() : void ;+drawFrame() : void]
+
+[note: 화면상에 그려지는 모든 object ; root 프레임을 선언 후 내부에 다른 프레임을 추가해 좌표시스템에서 오는 혼란 최소화. ; 모든 Object들은 프레임에 등록되어야 함.;coordspec은 xyz 좌표의 min/max 를 나타냄.;object나 frame을 등록할 때 크기 테스트를 통과한 객체만 허용.{bg:cornsilk}]
+
+// applyPhysics 함수는 사용 시 object 가 가진 state가 원하는 형태인지 확인할 것 
+[<<virtual>>;BaseObject|-position;-collision : bool;-state : PhyState|+setPhyState(PhyState) : void;+drawObject() : void;+moveObject(float* position) : void]
+
+
+[<<virtual>>;BaseFrame]++-[<<virtual>>;BaseObject]
+
+[<<abstract>>;PhyState|#angle : float;#velocity : float;#friction : float |+setAngle(float) : void;+setVelocity(float) : void;+setFriction(float) : void]
+
+// Collision check?
+[<<abstract>>;PhyState]^[Fly||]
+[<<abstract>>;PhyState]^[SelfRotation||]
+[<<abstract>>;PhyState]^[PinRotation||]
+[<<abstract>>;PhyState]^[Static||]
+[<<abstract>>;PhyState]^[FSBoth||]
+[<<abstract>>;PhyState]^[SPBoth||]
+[<<abstract>>;PhyState]^[FPBoth||]
+[<<abstract>>;PhyState]^[All||]
+
+
+// velocity: pixel/sec or pixel/millisecond
+// friction : pixel/sec^2 or pixel/millisecond^2. defaults to 0
+
+[<<virtual>>;BaseObject]++-[<<abstract>>;PhyState]
+
+
+// childs : override drawObject member to update flying action
+[BallObject|-radius;-color|+drawObject() : void;+applyPhysics(float* coordspec, float collisionradius, float* position) : float*;+applyPhysics(float* coordspec, float collisionradius, float* position, float* destination) : float*;+applyPhysics(float* position, float* pinpoint) : float*;+applyPhysics(float* position, float* pinpoint, float* destination) : float*]
+[ShooterObject||]
+
+[<<virtual>>;BaseObject]^[BallObject]
+
+
+[ShooterObject||]
+
+[DrawObject||]
+[TextObject||]
+[PictureObject||]
+[TextureObject||]
+
+
+
+[<<virtual>>;BaseObject]^[ShooterObject]
+[<<virtual>>;BaseObject]^[DrawObject]
+
+[DrawObject]^[TextObject]
+[DrawObject]^[PictureObject]
+[DrawObject]^[TextureObject]
+
+// 필요한지 잘 모르겠음
+[2DFrame||]
+[3DFrame|-viewpoint: float*;-lightsource: float*|]
+
+[<<virtual>>;BaseFrame]^[2DFrame]
+[<<virtual>>;BaseFrame]^[3DFrame]
