@@ -1,3 +1,47 @@
+/**
+ * @file Board.cpp
+ * @author YHJeon
+ * @brief Bubble Game board
+ * @version 0.1
+ * @date 2019-10-30
+ * 
+ * 보드 판 array에는 가로 10개, 세로 12개의 bubble이 들어간다.?
+ * 알고리즘 구현의 편의를 위해 보이는 bubble은 가로 7~8, 세로 11개.
+ * 
+ * 두 개의 isValid 함수의 의미
+ * 	게임 판은 아래와 같은 array.
+ * 	logically invalid bubble: +, visually invalid bubble: X, logically & visually valid bubble: O
+ * 
+ * 			+ X X X X X X X X +
+ * 			+ O O O O O O O + +
+ * 			+ O O O O O O O O +
+ * 			+ O O O O O O O + +
+ * 			+ O O O O O O O O +
+ * 			+ O O O O O O O + +
+ * 			+ O O O O O O O O +
+ * 			+ O O O O O O O + +
+ * 			+ O O O O O O O O +
+ * 			+ O O O O O O O + +
+ * 			+ O O O O O O O O +
+ * 			+ O O O O O O O + +
+ * 
+ * 	위의 array가 그려질 때는 아래처럼 그려짐
+ * 
+ * 		 01   O O O O O O O
+ * 		 02  O O O O O O O O
+ * 		 03   O O O O O O O 
+ * 		 04  O O O O O O O O
+ * 		 05   O O O O O O O
+ * 		 06  O O O O O O O O
+ * 		 07   O O O O O O O 
+ * 		 08  O O O O O O O O
+ * 		 09   O O O O O O O
+ * 		 10  O O O O O O O O
+ * 		 11   O O O O O O O
+ * 
+ * TOCHK: stage 변수의 사용? 게임판 내려오는거 구현용?
+ */
+
 #include "Board.h"
 #define SQRT3 1.732050807568877293;
 
@@ -10,8 +54,8 @@ Board::Board() {
 		xPos[i][0] = -25.0;
 		if (i % 2 == 0)	xPos[i][0] += 25.0;
 		for (int j = 1; j <= 8; j++) {
-		xPos[i][j] = xPos[i][j - 1] + 50.0;
-		yPos[i][j] = -(1.0 * i - 1.0) * 25.0 * SQRT3 - 25;
+			xPos[i][j] = xPos[i][j - 1] + 50.0;
+			yPos[i][j] = -(1.0 * i - 1.0) * 25.0 * SQRT3 - 25;
 		}
 	}
 	memset(bubbled, false, sizeof(bubbled));
