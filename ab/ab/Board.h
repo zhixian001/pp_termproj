@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "bubble.h"
+#include "Bubble.h"
 
 class Board{
 public:
@@ -24,4 +24,3 @@ private:
 	bool bubbled[12][10];
 	int color[12][10];
 };
-
