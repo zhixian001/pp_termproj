@@ -10,7 +10,7 @@
 #include <cmath>
 #include <algorithm>
 #include <cstdlib>
-#include "Board.h";
+#include "Board.h"
 
 using namespace std;
 
