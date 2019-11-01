@@ -96,6 +96,14 @@ void processSpecialKeys(int key, int x, int y) {
 	cannon.updateAngle(theta);
 }
 
+// 글씨쓰는 함수. 나중에 분리 예정
+void draw_characters(void* font, const char* c, float x, float y) {
+	glColor3f(0.0, 1.0, 0.0);
+	glRasterPos2f(x, y);
+	for (int i = 0; i < strlen(c); i++)
+	glutBitmapCharacter(font, c[i]);
+}
+
 void idle() {
 	/* Implement: check collision with boundary */
 	end_clock = clock();
@@ -131,6 +139,9 @@ void renderScene() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	// 텍스트 테스트
+	draw_characters(GLUT_BITMAP_TIMES_ROMAN_24, "Testing", -100, 400);
+
 	//Game Board
 	glColor3f(0.8, 0.8, 0.8);
 	glBegin(GL_POLYGON);
@@ -152,6 +163,12 @@ void renderScene() {
 	glutSwapBuffers();
 }
 
+// 창 크기 조절 막는 함수
+void resize(int width, int height) {
+    // we ignore the params and do:
+    glutReshapeWindow(WIDTH, HEIGHT);
+}
+
 int main(int argc, char** argv) {
 	// init GLUT and create Window
 	glutInit(&argc, argv);
@@ -159,6 +176,10 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(650, 300);
 	glutInitWindowSize(WIDTH, HEIGHT);
 	glutCreateWindow("Class Term Project!");
+
+	glutReshapeFunc(resize);
+
+
 	init();
 
 	// register callbacks
