@@ -3,7 +3,7 @@
 
 // 버블 이동 속도
 #ifndef BUBBLE_SPEED_MULTIPLIER
-#define BUBBLE_SPEED_MULTIPLIER 7
+#define BUBBLE_SPEED_MULTIPLIER 20
 #endif
 
 // 버블 발사 Y 좌표
@@ -33,10 +33,11 @@ using namespace std;
 
 #define M_PI 3.14159265358979323846
 
-vector<Bubble> bubbles;
-Bubble b;
+vector<Bubble> bubbles, drop;
+Bubble b, nextBubble;
 double theta = M_PI/2;
-bool isShot = false;
+int cntShot = 0;
+bool isShot = false, isDrop = false, isTransition = false;
 int upper = 0;
 double dx, dy;
 clock_t start_clock = clock();
@@ -54,6 +55,8 @@ void init() {
 	glEnable(GL_DEPTH_TEST);
 	int option = rand() % 5;
 	b = Bubble(25, 0, BUBBLE_LAUNCH_Y_COORD, option);
+	option = rand() % 5;
+	nextBubble = Bubble(25, -150, BUBBLE_LAUNCH_Y_COORD, option);
 	// TODO: Initial scripts
 
 
@@ -74,8 +77,11 @@ void processNormalKeys(unsigned char key, int x, int y) {
 	if (key == 32) {
 		if(!isShot) {
 			// 발사 각도에 따라 게임 속도가 느려지는거 보정
-			dx = BUBBLE_SPEED_MULTIPLIER * cos(theta) / cos(min(std::fabs(M_PI/2 - theta), M_PI*0.444));	// 속도제한: 80도
-			dy = BUBBLE_SPEED_MULTIPLIER * sin(theta) / cos(min(std::fabs(M_PI/2 - theta), M_PI*0.444));
+			dx = BUBBLE_SPEED_MULTIPLIER * cos(theta) ;
+			dy = BUBBLE_SPEED_MULTIPLIER * sin(theta) ;
+			b.changeDx(dx);
+			b.changeDy(dy);
+			cntShot++;
 		}
 		isShot = true;
 	}
@@ -86,22 +92,14 @@ void processSpecialKeys(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_LEFT:
 		theta += 0.2/M_PI;
-		theta = min(theta, M_PI / 180 * 175);
+		theta = min(theta, M_PI / 180 * 170);
 		break;
 	case GLUT_KEY_RIGHT:
 		theta -= 0.2/M_PI;
-		theta = max(theta, M_PI / 180 * 5);
+		theta = max(theta, M_PI / 180 * 10);
 		break;
 	}
 	cannon.updateAngle(theta);
-}
-
-// 글씨쓰는 함수. 나중에 분리 예정
-void draw_characters(void* font, const char* c, float x, float y) {
-	glColor3f(0.0, 1.0, 0.0);
-	glRasterPos2f(x, y);
-	for (int i = 0; i < strlen(c); i++)
-	glutBitmapCharacter(font, c[i]);
 }
 
 void idle() {
@@ -109,19 +107,46 @@ void idle() {
 	end_clock = clock();
 	if (end_clock - start_clock > 1000 / 60) {
 		// update object
-		if (isShot) {
+		if (isShot && !isTransition) {
 			if (board.collision(b.getX(), b.getY(), b.getOption())) {
 				board.BubblePop(b.getX(), b.getY(), b.getOption());
-				board.BubbleDrop();
+				drop = board.BubbleDrop();
 				int option = rand() % 5;
-				b = Bubble(25, 0, BUBBLE_LAUNCH_Y_COORD, option);
+				b = Bubble(25, 0, BUBBLE_LAUNCH_Y_COORD, nextBubble.getOption());
+				nextBubble = Bubble(25, -150, BUBBLE_LAUNCH_Y_COORD, option);
+
+				if (cntShot > 4 && cntShot % 5 == 0)	board.levelDown();
 				isShot = false;
+				if (drop.size() > 0) {
+					isTransition = true;
+					isDrop = true;
+				}
 				return;
 			}
 			if (b.getX() > 175 || b.getX() < -175) {
-				dx *= -1.0;
+				dx = -1.0 * b.getDx();
+				b.changeDx(dx);
 			}
-			b.move(dx, dy);
+			b.move();
+		}
+		if (isDrop) {
+			dx = 0.0;
+			dy = -5.0;
+			bool chk = true;
+			vector<Bubble> tmp;
+			for (auto bubble : drop) {
+				bubble.move();
+				bubble.changeDy(bubble.getDy() - 2.0);
+				tmp.push_back(bubble);
+				if (bubble.getY() >= -300)	chk = false;
+			}
+			drop = tmp;
+			if (chk) {
+				drop.clear();
+				isTransition = false;
+				isDrop = false;
+
+			}
 		}
 		start_clock = end_clock;
 	}
@@ -139,9 +164,6 @@ void renderScene() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	// 텍스트 테스트
-	draw_characters(GLUT_BITMAP_TIMES_ROMAN_24, "Testing", -100, 400);
-
 	//Game Board
 	glColor3f(0.8, 0.8, 0.8);
 	glBegin(GL_POLYGON);
@@ -156,17 +178,12 @@ void renderScene() {
 	
 	double dx = 0.00, dy = 0.00005;
 	glColor3f(0.8, 0.0, 0.0);
-	
+	for (auto bubble : drop)	bubble.draw();
 	b.draw();
+	nextBubble.draw();
 	board.draw();
 	cannon.draw();
 	glutSwapBuffers();
-}
-
-// 창 크기 조절 막는 함수
-void resize(int width, int height) {
-    // we ignore the params and do:
-    glutReshapeWindow(WIDTH, HEIGHT);
 }
 
 int main(int argc, char** argv) {
@@ -176,10 +193,6 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(650, 300);
 	glutInitWindowSize(WIDTH, HEIGHT);
 	glutCreateWindow("Class Term Project!");
-
-	glutReshapeFunc(resize);
-
-
 	init();
 
 	// register callbacks
