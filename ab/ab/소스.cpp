@@ -11,6 +11,11 @@
 #define BUBBLE_LAUNCH_Y_COORD -270
 #endif
 
+// 조명 효과
+#ifndef LIGHTING_ON
+#define LIGHTING_ON 0
+#endif
+
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -51,14 +56,16 @@ void init() {
 	b = Bubble(25, 0, BUBBLE_LAUNCH_Y_COORD, option);
 	// TODO: Initial scripts
 
-	light = new Light(45.0, 12.0, 100.0, GL_LIGHT0);
-	light->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
-    light->setDiffuse(0.5f, 0.5f, 0.6f, 1.0f);
-    light->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// lighting
-	glEnable(GL_LIGHTING);
-    light->draw();
+	if (LIGHTING_ON){
+		light = new Light(30.0, 200.0, 70.0, GL_LIGHT1);
+		light->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
+		light->setDiffuse(0.5f, 0.5f, 0.6f, 1.0f);
+		light->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+		glEnable(GL_LIGHTING);
+    	light->draw();
+	}
 
 }
 

@@ -24,8 +24,9 @@
 
 ## TODO
 
-  1. cannon
+  1. ~~cannon~~
   2. timeout
   3. map penalty
   4. score system
-  4. bubble drop
+  5. bubble drop
+  6. lighting
