@@ -1,5 +1,15 @@
-#define WIDTH 600
-#define HEIGHT 800
+#define WIDTH 400
+#define HEIGHT 900
+
+// 버블 이동 속도
+#ifndef BUBBLE_SPEED_MULTIPLIER
+#define BUBBLE_SPEED_MULTIPLIER 7
+#endif
+
+// 버블 발사 Y 좌표
+#ifndef BUBBLE_LAUNCH_Y_COORD
+#define BUBBLE_LAUNCH_Y_COORD -270
+#endif
 
 #include <iostream>
 #include <cstdlib>
@@ -14,7 +24,6 @@
 #include "Cannon.h"
 
 using namespace std;
-
 
 #define M_PI 3.14159265358979323846
 
@@ -36,7 +45,7 @@ void init() {
 	srand(time(0));
 	glEnable(GL_DEPTH_TEST);
 	int option = rand() % 5;
-	b = Bubble(25, 0, -300, option);
+	b = Bubble(25, 0, BUBBLE_LAUNCH_Y_COORD, option);
 	// TODO: Initial scripts
 
 }
@@ -44,8 +53,11 @@ void init() {
 void processNormalKeys(unsigned char key, int x, int y) {
 
 	if (key == 32) {
-		if(!isShot)
-			dx = 5*cos(theta), dy = 5 * sin(theta);
+		if(!isShot) {
+			// 발사 각도에 따라 게임 속도가 느려지는거 보정
+			dx = BUBBLE_SPEED_MULTIPLIER * cos(theta) / cos(std::fabs(M_PI/2 - theta));
+			dy = BUBBLE_SPEED_MULTIPLIER * sin(theta) / cos(std::fabs(M_PI/2 - theta));
+		}
 		isShot = true;
 	}
 }
@@ -75,7 +87,7 @@ void idle() {
 				board.BubblePop(b.getX(), b.getY(), b.getOption());
 				board.BubbleDrop();
 				int option = rand() % 5;
-				b = Bubble(25, 0, -300, option);
+				b = Bubble(25, 0, BUBBLE_LAUNCH_Y_COORD, option);
 				isShot = false;
 				return;
 			}
@@ -103,10 +115,10 @@ void renderScene() {
 	//Game Board
 	glColor3f(0.8, 0.8, 0.8);
 	glBegin(GL_POLYGON);
-	glVertex3f(-200, -300, 0.0);
+	glVertex3f(-200, -240, 0.0);
 	glVertex3f(-200, 300, 0.0);
 	glVertex3f(200, 300, 0.0);
-	glVertex3f(200, -300, 0.0);
+	glVertex3f(200, -240, 0.0);
 	glEnd();
 
 	
