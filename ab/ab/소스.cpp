@@ -2,15 +2,16 @@
 #define HEIGHT 800
 
 #include <iostream>
-#include <GL/glut.h>
-#include <vector>
-#include <time.h>
-#include "Bubble.h"
-#include <math.h>
-#include <cmath>
-#include <algorithm>
 #include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <math.h>
+#include <algorithm>
+#include <time.h>
+#include <GL/glut.h>
 #include "Board.h"
+#include "Bubble.h"
+#include "Cannon.h"
 
 using namespace std;
 
@@ -27,6 +28,9 @@ clock_t start_clock = clock();
 clock_t end_clock;
 
 Board board = Board();
+
+// cannon
+Cannon cannon = Cannon();
 
 void init() {
 	srand(time(0));
@@ -58,6 +62,7 @@ void processSpecialKeys(int key, int x, int y) {
 		theta = max(theta, M_PI / 180 * 5);
 		break;
 	}
+	cannon.updateAngle(theta);
 }
 
 void idle() {
@@ -112,6 +117,7 @@ void renderScene() {
 	
 	b.draw();
 	board.draw();
+	cannon.draw();
 	glutSwapBuffers();
 }
 
