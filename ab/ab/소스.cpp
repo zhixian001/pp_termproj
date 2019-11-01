@@ -74,8 +74,8 @@ void processNormalKeys(unsigned char key, int x, int y) {
 	if (key == 32) {
 		if(!isShot) {
 			// 발사 각도에 따라 게임 속도가 느려지는거 보정
-			dx = BUBBLE_SPEED_MULTIPLIER * cos(theta) / cos(std::fabs(M_PI/2 - theta));
-			dy = BUBBLE_SPEED_MULTIPLIER * sin(theta) / cos(std::fabs(M_PI/2 - theta));
+			dx = BUBBLE_SPEED_MULTIPLIER * cos(theta) / cos(min(std::fabs(M_PI/2 - theta), M_PI*0.444));	// 속도제한: 80도
+			dy = BUBBLE_SPEED_MULTIPLIER * sin(theta) / cos(min(std::fabs(M_PI/2 - theta), M_PI*0.444));
 		}
 		isShot = true;
 	}
