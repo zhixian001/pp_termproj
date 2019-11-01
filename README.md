@@ -18,5 +18,14 @@
   Windows에서 idle function을 사용하면 프레임이 컴퓨터 성능이 받쳐주는만큼 치솟습니다. 간단하게 60fps로 제한하는 코드를 추가하면 해결됩니다.
 
 
-## Linux
+### Linux
   1. build.sh 를 실행하시면 됩니다.
+
+
+## TODO
+
+  1. cannon
+  2. timeout
+  3. map penalty
+  4. score system
+  4. bubble drop
