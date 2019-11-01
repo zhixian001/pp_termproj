@@ -43,11 +43,14 @@
  */
 
 #include "Board.h"
+#include <cstdlib>
+#include <time.h>
 #define SQRT3 1.732050807568877293;
 
 int dc[3] = { -1, 0, 1 };
 
 Board::Board() {
+	srand(time(0));
 	upper = 275;
 	stage = 1;
 	for (int i = 0; i <= 11; i++) {
@@ -61,6 +64,22 @@ Board::Board() {
 	memset(bubbled, false, sizeof(bubbled));
 	memset(color, -1, sizeof(color));
 	for (int i = 0; i <= 8; i++)	bubbled[0][i] = true, color[0][i] = 1;
+	for (int r = 1; r <= 11; r++)
+		for (int c = 1; c <= 8; c++) {
+			if (!isValid(r, c))	continue;
+			if (1.0 * rand()/ RAND_MAX < 0.7)	continue;
+			bubbled[r][c] = true;
+			color[r][c] = rand() % 5;
+		}
+	memset(visited, false, sizeof(visited));
+	dfs(0, 1, -1);
+	for (int r = 1; r <= 11; r++)
+		for (int c = 1; c <= 8; c++) {
+			if (!visited[r][c]) {
+				bubbled[r][c] = false;
+				color[r][c] = -1;
+			}
+		}
 };
 
 bool Board::isValid(int row, int col) {
@@ -134,16 +153,24 @@ void Board::BubblePop(double x, double y, int option) {
 			}
 }
 
-void Board::BubbleDrop() {
+std::vector<Bubble> Board::BubbleDrop() {
+	srand(time(0));
+	std::vector<Bubble> ret;
 	memset(visited, false, sizeof(visited));
 	dfs(0, 1, -1);
 	for (int r = 1; r <= 11; r++)
 		for (int c = 1; c <= 8; c++)
 			if (!visited[r][c] && bubbled[r][c]) {
+				Bubble b = Bubble(25.0, xPos[r][c] - 200, yPos[r][c] + upper, color[r][c]);
+				double dy = 1.0 * ((rand() % 30) - 10);
+				double dx = 1.0 * ((rand() % 30) - 10) / 5;
+				b.changeDx(dx);
+				b.changeDy(dy);
+				ret.push_back(b);
 				bubbled[r][c] = false;
 				color[r][c] = -1;
 			}
-	
+	return ret;
 }
 
 void Board::dfs(int row, int col, int option) {

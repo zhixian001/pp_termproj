@@ -29,7 +29,7 @@ Bubble::Bubble(double r, double px, double py, int op) {
 	radius = r, x = px, y = py, option = op;	
 }
 
-void Bubble::move(double dx, double dy) {
+void Bubble::move() {
 	x += dx;
 	y += dy;
 }

@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <cstring>
+#include <vector>
 #include "Bubble.h"
 
 class Board{
@@ -13,7 +14,10 @@ public:
 	bool collision(double x, double y, int option);
 	/* option : color */
 	void BubblePop(double x, double y, int option);
-	void BubbleDrop();
+	std::vector<Bubble> BubbleDrop();
+	void levelDown() {
+		upper -= 50;
+	}
 
 private:
 	/* bubble visualization validity check */
