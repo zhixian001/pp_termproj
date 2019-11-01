@@ -25,8 +25,51 @@
 
 float c[5][3] = { {0.7, 0.0, 0.0}, {0.0, 0.7, 0.0}, {0.0, 0.0, 0.7}, {0.7, 0.7, 0.0}, {0.7, 0.0, 0.7} };
 
+
+
 Bubble::Bubble(double r, double px, double py, int op) {
-	radius = r, x = px, y = py, option = op;	
+	radius = r, x = px, y = py, option = op;
+	mtl = Material();
+
+	// option에 따라서 색 설정
+	switch(option){
+		// ruby
+		case 0 :
+			mtl.setAmbient(0.1745, 0.01175, 0.01175, 0.55);
+			mtl.setDiffuse(0.61424, 0.04136, 0.04136, 0.55);
+			mtl.setSpecular(0.727811, 0.626959, 0.626959, 0.55);
+			mtl.setShininess(76.8);
+			break;
+		// emerald
+		case 1 :
+			mtl.setAmbient(0.0215, 0.1745, 0.0215, 0.55);
+			mtl.setDiffuse(0.07586, 0.61424, 0.07586, 0.55);
+			mtl.setSpecular(0.633, 0.727811, 0.611, 0.55);
+			mtl.setShininess(76.8);
+			break;
+		case 2 :
+			mtl.setAmbient(0.0215, 0.1745, 0.0215, 0.55);
+			mtl.setDiffuse(0.07586, 0.61424, 0.07586, 0.55);
+			mtl.setSpecular(0.633, 0.727811, 0.611, 0.55);
+			mtl.setShininess(76.8);
+			break;
+		case 3 :
+			mtl.setAmbient(0.0215, 0.1745, 0.0215, 0.55);
+			mtl.setDiffuse(0.07586, 0.61424, 0.07586, 0.55);
+			mtl.setSpecular(0.633, 0.727811, 0.611, 0.55);
+			mtl.setShininess(76.8);
+			break;
+		case 4 :
+			mtl.setAmbient(0.0215, 0.1745, 0.0215, 0.55);
+			mtl.setDiffuse(0.07586, 0.61424, 0.07586, 0.55);
+			mtl.setSpecular(0.633, 0.727811, 0.611, 0.55);
+			mtl.setShininess(76.8);
+			break;
+		default :
+			break;
+	}
+
+
 }
 
 void Bubble::move(double dx, double dy) {
@@ -49,6 +92,14 @@ int Bubble::getOption() const {
 void Bubble::draw() const {
 	glPushMatrix();
 	glColor3f(c[option][0], c[option][1], c[option][2]);
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mtl.getAmbient());
+	glMaterialfv(GL_FRONT, GL_EMISSION, mtl.getEmission());
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mtl.getDiffuse());
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mtl.getSpecular());
+	glMaterialfv(GL_FRONT, GL_SHININESS, mtl.getShininess());
+
+
 	glTranslatef(x, y, 50);
 	glutSolidSphere(radius, 20, 50);
 	glPopMatrix();
@@ -57,6 +108,11 @@ void Bubble::draw() const {
 void Bubble::draw(int color) const {
 	glPushMatrix();
 	glColor3f(c[color][0], c[color][1], c[color][2]);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mtl.getAmbient());
+	glMaterialfv(GL_FRONT, GL_EMISSION, mtl.getEmission());
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mtl.getDiffuse());
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mtl.getSpecular());
+	glMaterialfv(GL_FRONT, GL_SHININESS, mtl.getShininess());
 	glTranslatef(x, y, 50);
 	glutSolidSphere(radius, 20, 50);
 	glPopMatrix();

@@ -28,5 +28,5 @@
   2. timeout
   3. map penalty
   4. score system
-  5. bubble drop
+  5. ~~bubble drop~~
   6. lighting

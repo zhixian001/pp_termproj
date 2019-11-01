@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GL/glut.h>
+#include "Material.h"
 
 class Bubble{
 public :
@@ -17,4 +18,5 @@ private:
 	double radius;
 	double x, y;
 	int option;
+	Material mtl;
 };
