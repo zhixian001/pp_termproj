@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <time.h>
 #include <GL/glut.h>
+#include "Light.h"
 #include "Board.h"
 #include "Bubble.h"
 #include "Cannon.h"
@@ -36,6 +37,8 @@ double dx, dy;
 clock_t start_clock = clock();
 clock_t end_clock;
 
+Light* light;
+
 Board board = Board();
 
 // cannon
@@ -47,6 +50,15 @@ void init() {
 	int option = rand() % 5;
 	b = Bubble(25, 0, BUBBLE_LAUNCH_Y_COORD, option);
 	// TODO: Initial scripts
+
+	light = new Light(45.0, 12.0, 100.0, GL_LIGHT0);
+	light->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
+    light->setDiffuse(0.5f, 0.5f, 0.6f, 1.0f);
+    light->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+
+	// lighting
+	glEnable(GL_LIGHTING);
+    light->draw();
 
 }
 
@@ -155,5 +167,6 @@ int main(int argc, char** argv) {
 
 
 	// exit
+	delete light;
 	return 0;
 }
