@@ -1,6 +1,10 @@
 #pragma once
 
 #define M_PI 3.14159265358979323846
+// 버블 발사 Y 좌표
+#ifndef BUBBLE_LAUNCH_Y_COORD
+#define BUBBLE_LAUNCH_Y_COORD -270
+#endif
 
 #include <cmath>
 #include <GL/glut.h>
@@ -20,6 +24,6 @@ protected:
 public:
     Cannon();
     ~Cannon();
-    void draw() const;
+    void draw();
     void updateAngle(double val);
 };
