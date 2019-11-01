@@ -13,7 +13,7 @@
 
 // 조명 효과
 #ifndef LIGHTING_ON
-#define LIGHTING_ON 0
+#define LIGHTING_ON 1
 #endif
 
 #include <iostream>
@@ -64,6 +64,7 @@ void init() {
 		light->setDiffuse(0.5f, 0.5f, 0.6f, 1.0f);
 		light->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 		glEnable(GL_LIGHTING);
+		// glEnable(GL_SMOOTH);
     	light->draw();
 	}
 
