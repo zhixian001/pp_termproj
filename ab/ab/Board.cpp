@@ -50,25 +50,25 @@ int dc[3] = { -1, 0, 1 };
 
 Board::Board() {
 	srand(time(0));
-	upper = 275;
+	upper = DEFAULT_UPPER_COORD;
 	stage = 1;
-	for (int i = 0; i <= 11; i++) {
-		xPos[i][0] = -25.0;
-		if (i % 2 == 0)	xPos[i][0] += 25.0;
-		for (int j = 1; j <= 8; j++) {
-			xPos[i][j] = xPos[i][j - 1] + 50.0;
-			yPos[i][j] = -(1.0 * i - 1.0) * 25.0 * SQRT3 - 25;
+	for (int i = 0; i <= GAME_ROW_COUNT-1; i++) {
+		xPos[i][0] = -BUBBLE_RADIUS;
+		if (i % 2 == 0)	xPos[i][0] += BUBBLE_RADIUS;
+		for (int j = 1; j <= GAME_COLUMN_COUNT-2; j++) {
+			xPos[i][j] = xPos[i][j - 1] + bubble_diameter;
+			yPos[i][j] = -(1.0 * i - 1.0) * BUBBLE_RADIUS * SQRT3 - BUBBLE_RADIUS;
 		}
 	}
 	memset(bubbled, false, sizeof(bubbled));
 	memset(color, -1, sizeof(color));
 
 	// 맵 생성
-	for (int i = 0; i <= 8; i++){
+	for (int i = 0; i <= GAME_COLUMN_COUNT-2; i++){
 		bubbled[0][i] = true, color[0][i] = 1;
 	}
-	for (int r = 1; r <= 11; r++){
-		for (int c = 1; c <= 8; c++) {
+	for (int r = 1; r <= GAME_ROW_COUNT-1; r++){
+		for (int c = 1; c <= GAME_COLUMN_COUNT-2; c++) {
 			if (!isValid(r, c))	continue;
 			if (1.0 * rand()/ RAND_MAX < 0.7)	continue;
 			bubbled[r][c] = true;
@@ -77,8 +77,8 @@ Board::Board() {
 	}
 	memset(visited, false, sizeof(visited));
 	dfs(0, 1, -1);
-	for (int r = 1; r <= 11; r++){
-		for (int c = 1; c <= 8; c++) {
+	for (int r = 1; r <= GAME_ROW_COUNT-1; r++){
+		for (int c = 1; c <= GAME_COLUMN_COUNT-2; c++) {
 			if (!visited[r][c]) {
 				bubbled[r][c] = false;
 				color[r][c] = -1;
@@ -90,10 +90,10 @@ Board::Board() {
 std::vector<std::pair<Bubble*, std::pair<int, int>>> Board::observeBoard(){
 	std::vector<std::pair<Bubble*, std::pair<int, int>>> observation;	
 
-	for (int r = 1 ; r <= 11 ; r++){
-		for (int c = 1 ; c <= 8 ; c++){
+	for (int r = 1 ; r <= GAME_ROW_COUNT-1 ; r++){
+		for (int c = 1 ; c <= GAME_COLUMN_COUNT-2 ; c++){
 			if(isValid(r, c) && bubbled[r][c]){
-				observation.push_back({new Bubble(25.0, xPos[r][c]-200, yPos[r][c]+upper, color[r][c]), {r, c}});
+				observation.push_back({new Bubble(BUBBLE_RADIUS, xPos[r][c]-(WIDTH/2), yPos[r][c]+upper, color[r][c]), {r, c}});
 			}
 		}
 	}
@@ -101,25 +101,25 @@ std::vector<std::pair<Bubble*, std::pair<int, int>>> Board::observeBoard(){
 }
 
 bool Board::isValid(int row, int col) {
-	if (1 <= row && row <= 11 && 1 <= col && col <= 7)	return true;
-	if (1 <= row && row <= 11 && col == 8 && row % 2)	return true;
+	if (1 <= row && row <= GAME_ROW_COUNT-1 && 1 <= col && col <= GAME_COLUMN_COUNT-3)	return true;
+	if (1 <= row && row <= GAME_ROW_COUNT-1 && col == GAME_COLUMN_COUNT-2 && row % 2)	return true;
 	return false;
 }
 
 bool Board::isValid2(int row, int col) {
-	if (0 <= row && row <= 11 && 1 <= col && col <= 7)	return true;
-	if (0 <= row && row <= 11 && col == 8 && row % 2)	return true;
+	if (0 <= row && row <= GAME_COLUMN_COUNT-1 && 1 <= col && col <= GAME_COLUMN_COUNT-3)	return true;
+	if (0 <= row && row <= GAME_ROW_COUNT-1 && col == GAME_COLUMN_COUNT-2 && row % 2)	return true;
 	return false;
 }
 
 std::pair<int, int> Board::getPos(double x, double y) {
 	std::pair<int, int> ret = { -1, -1 };
 	int dist = INT32_MAX;
-	for (int r = 1; r <= 11; r++)
-		for (int c = 1; c <= 8; c++) {
+	for (int r = 1; r <= GAME_ROW_COUNT-1; r++)
+		for (int c = 1; c <= GAME_COLUMN_COUNT-2; c++) {
 			if (!isValid(r, c))	continue;
-			if ((xPos[r][c] - 200 - 1.0 * x) * (xPos[r][c] - 200 - 1.0 * x) + (yPos[r][c] + upper - 1.0 * y) * (yPos[r][c] + upper - 1.0 * y) < dist) {
-				dist = (xPos[r][c] - 200 - 1.0 * x) * (xPos[r][c] - 200 - 1.0 * x) + (yPos[r][c] + upper - 1.0 * y) * (yPos[r][c] + upper - 1.0 * y);
+			if ((xPos[r][c] - (WIDTH/2) - 1.0 * x) * (xPos[r][c] - (WIDTH/2) - 1.0 * x) + (yPos[r][c] + upper - 1.0 * y) * (yPos[r][c] + upper - 1.0 * y) < dist) {
+				dist = (xPos[r][c] - (WIDTH/2) - 1.0 * x) * (xPos[r][c] - (WIDTH/2) - 1.0 * x) + (yPos[r][c] + upper - 1.0 * y) * (yPos[r][c] + upper - 1.0 * y);
 				ret = { r, c };
 			}
 		}
@@ -127,15 +127,15 @@ std::pair<int, int> Board::getPos(double x, double y) {
 }
 
 void Board::levelDown() {
-	upper -= 50;
+	upper -= bubble_diameter;
 
 }
 
 std::pair<int, int> Board::collision(const Bubble* bub) {
 	double x = bub->getX();
 	double y = bub->getY();
-	for (int r = 1; r <= 11; r++){
-		for (int c = 1; c <= 8; c++) {
+	for (int r = 1; r <= GAME_ROW_COUNT-1; r++){
+		for (int c = 1; c <= GAME_COLUMN_COUNT-2; c++) {
 			if (!isValid2(r, c))	continue;
 			if (y >= upper) {
 				std::pair<int, int> coord = getPos(x, y);
@@ -146,7 +146,8 @@ std::pair<int, int> Board::collision(const Bubble* bub) {
 				return {r, c};
 			}
 			if (!bubbled[r][c])	continue;
-			double dist = (xPos[r][c]-200 - 1.0 * x) * (xPos[r][c]-200 - 1.0 * x) + (yPos[r][c]+upper - 1.0 * y) * (yPos[r][c]+upper - 1.0 * y);
+			double dist = (xPos[r][c]-(WIDTH/2) - 1.0 * x) * (xPos[r][c]-(WIDTH/2) - 1.0 * x) + (yPos[r][c]+upper - 1.0 * y) * (yPos[r][c]+upper - 1.0 * y);
+			// TOCHK: generalize?
 			if (625 < dist && dist < 2500) {
 				std::pair<int, int> coord = getPos(x, y);
 				int r = coord.first;
@@ -161,7 +162,7 @@ std::pair<int, int> Board::collision(const Bubble* bub) {
 }
 
 std::pair<double, double> Board::getCoords(int r, int c) const{
-	return {xPos[r][c]-200, yPos[r][c]+upper};
+	return {xPos[r][c]-(WIDTH/2), yPos[r][c]+upper};
 }
 
 std::vector<std::pair<int, int>> Board::BubblePop(const Bubble* bub) {
@@ -174,12 +175,12 @@ std::vector<std::pair<int, int>> Board::BubblePop(const Bubble* bub) {
 	memset(visited, false, sizeof(visited));
 	dfs(r, c, bub->getOption());
 	int cnt = 0;
-	for (int r = 1; r <= 11; r++)
-		for (int c = 1; c <= 8; c++)
+	for (int r = 1; r <= GAME_ROW_COUNT-1; r++)
+		for (int c = 1; c <= GAME_COLUMN_COUNT-2; c++)
 			if (visited[r][c])	cnt++;
 	if (cnt < 3)	return ret;
-	for (int r = 1; r <= 11; r++)
-		for (int c = 1; c <= 8; c++)
+	for (int r = 1; r <= GAME_ROW_COUNT-1; r++)
+		for (int c = 1; c <= GAME_COLUMN_COUNT-2; c++)
 			if (visited[r][c]) {
 				bubbled[r][c] = false;
 				color[r][c] = -1;
@@ -195,8 +196,8 @@ std::vector<std::pair<int, int>> Board::BubbleDropRC() {
 	std::vector<Bubble> ret;
 	memset(visited, false, sizeof(visited));
 	dfs(0, 1, -1);
-	for (int r = 1; r <= 11; r++)
-		for (int c = 1; c <= 8; c++)
+	for (int r = 1; r <= GAME_ROW_COUNT-1; r++)
+		for (int c = 1; c <= GAME_COLUMN_COUNT-2; c++)
 			if (!visited[r][c] && bubbled[r][c]) {
 				bubbled[r][c] = false;
 				color[r][c] = -1;

@@ -42,7 +42,7 @@ VisualBoard::~VisualBoard()
 
 void VisualBoard::levelDown(){
     for (auto bub : bubblez) {
-        bub->moveRel(0, -50);
+        bub->moveRel(0, -BUBBLE_RADIUS*2);
     }
 }
 
