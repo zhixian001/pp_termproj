@@ -80,16 +80,22 @@ void processNormalKeys(unsigned char key, int x, int y) {
 void processSpecialKeys(int key, int x, int y) {
 
 	switch (key) {
-	case GLUT_KEY_LEFT:
-		theta += 0.2/M_PI;
-		theta = min(theta, M_PI / 180 * 170);
-		break;
-	case GLUT_KEY_RIGHT:
-		theta -= 0.2/M_PI;
-		theta = max(theta, M_PI / 180 * 10);
-		break;
+		case GLUT_KEY_LEFT:
+			theta += 0.2/M_PI;
+			theta = min(theta, M_PI / 180 * 170);
+			VB.updateCannonAngle(theta);
+			break;
+		case GLUT_KEY_RIGHT:
+			theta -= 0.2/M_PI;
+			theta = max(theta, M_PI / 180 * 10);
+			VB.updateCannonAngle(theta);
+			break;
+		// 디버깅 목적
+		case GLUT_KEY_F2:
+			cout<<VB.getScore()<<endl;
+			break;
 	}
-	VB.updateCannonAngle(theta);
+
 }
 
 void idle() {

@@ -6,5 +6,6 @@
         "*.tcc": "cpp",
         "cmath": "cpp",
         "cstdlib": "cpp"
-    }
+    },
+    "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }
