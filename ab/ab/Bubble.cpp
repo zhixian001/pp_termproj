@@ -77,7 +77,7 @@ void Bubble::move() {
 		x += dx;
 		y += dy;
 		// collision check
-		if (x > BOARD_HALF_WIDTH || x < -BOARD_HALF_WIDTH){
+		if (x > BOARD_COLLISION_WIDTH || x < -BOARD_COLLISION_WIDTH){
 			dx *= -1.0;
 		}
 	}

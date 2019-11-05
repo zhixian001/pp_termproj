@@ -1,19 +1,3 @@
-#define WIDTH 400
-#define HEIGHT 900
-
-// 버블 이동 속도
-#ifndef BUBBLE_SPEED_MULTIPLIER
-#define BUBBLE_SPEED_MULTIPLIER 20
-#endif
-// 버블 발사 Y 좌표
-#ifndef BUBBLE_LAUNCH_Y_COORD
-#define BUBBLE_LAUNCH_Y_COORD -270
-#endif
-// 조명 효과
-#ifndef LIGHTING_ON
-#define LIGHTING_ON 1
-#endif
-
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -21,6 +5,7 @@
 #include <algorithm>
 #include <time.h>
 #include <GL/glut.h>
+#include "Settings.h"
 #include "VisualBoard.h"
 #include "Light.h"
 #include "Board.h"
@@ -114,7 +99,7 @@ void renderSceneGameBoard() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-WIDTH / 2, WIDTH / 2, -850 / 2, 850 / 2, -100.0, 100.0);
+	glOrtho(-WIDTH / 2, WIDTH / 2, -800 / 2, 800 / 2, -100.0, 100.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -147,12 +132,12 @@ int main(int argc, char** argv) {
 		
 		// register callbacks
 	// 보조창: 게임상태
-	int status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 50);
+	int status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 100);
 		initScoreBoard();
 		glutDisplayFunc(renderSceneScoreBoard);
 
 	// 보조창: 게임 판
-	int gameboard_window = glutCreateSubWindow(main_window, 0, 50, WIDTH, 850);
+	int gameboard_window = glutCreateSubWindow(main_window, 0, 100, WIDTH, 800);
 		initGameBoard();
 		glutDisplayFunc(renderSceneGameBoard);
 		glutKeyboardFunc(processNormalKeys);

@@ -12,7 +12,7 @@ ADD_COMPILE_OPTIONS( -g -Wall -std=c++17)
 INCLUDE_DIRECTORIES ( include )
 LINK_DIRECTORIES ( lib /var/lib )
 LINK_LIBRARIES ( GL GLU glut )
-ADD_LIBRARY ( Bubblegame SHARED src/BaseObject.cpp src/Board.cpp src/Bubble.cpp src/Cannon.cpp src/Light.cpp src/Material.cpp src/VisualBoard.cpp )
+ADD_LIBRARY ( Bubblegame SHARED src/BaseObject.cpp src/Board.cpp src/Bubble.cpp src/Cannon.cpp src/Light.cpp src/Material.cpp src/VisualBoard.cpp src/Texts.cpp )
 
 LINK_LIBRARIES( Bubblegame )
 

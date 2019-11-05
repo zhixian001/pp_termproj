@@ -17,6 +17,35 @@
 
 #pragma once
 
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
+#include <vector>
+#include <utility>
+#include <deque>
+#include "Settings.h"
+#include "Bubble.h"
+#include "Cannon.h"
+#include "Board.h"
+
+#ifndef WIDTH
+#define WIDTH 400
+#endif
+
+#ifndef GAME_ROW_COUNT
+// #define GAME_ROW_COUNT 16
+#define GAME_ROW_COUNT 12
+#endif
+
+#ifndef GAME_COLUMN_COUNT
+#define GAME_COLUMN_COUNT 10
+#endif
+
+#ifndef DEFAULT_UPPER_COORD
+// #define DEFAULT_UPPER_COORD 375
+#define DEFAULT_UPPER_COORD 275
+#endif
+
 #ifndef BUBBLE_RADIUS
 #define BUBBLE_RADIUS 25.0
 #endif
@@ -42,15 +71,6 @@
 #endif
 
 
-#include <cstdlib>
-#include <ctime>
-#include <cmath>
-#include <vector>
-#include <utility>
-#include <deque>
-#include "Bubble.h"
-#include "Cannon.h"
-#include "Board.h"
 
 
 // 발사대기, 공 날아가는 중, 공이 충돌하고 pop과 drop을 resolution하는 중, pop과 drop을 수행
@@ -65,7 +85,7 @@ private:
     std::deque<Bubble*>::iterator to_launch;
     std::deque<Bubble*>::iterator next_launch;
     std::deque<Bubble*>::iterator flying_now;
-    Bubble* bubble_alias[12][10];
+    Bubble* bubble_alias[GAME_ROW_COUNT][GAME_COLUMN_COUNT];
     GameStates game_state;
     std::pair<int, int> collision_pair;
     std::vector<std::pair<int, int>> pop_vector;

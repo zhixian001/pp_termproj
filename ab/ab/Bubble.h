@@ -1,17 +1,19 @@
 #pragma once
 
-#ifndef BOARD_HALF_WIDTH
-#define BOARD_HALF_WIDTH 175
-#endif
-#ifndef BUBBLE_LAUNCH_Y_COORD
-#define BUBBLE_LAUNCH_Y_COORD -270
-#endif
 
 #include <stdexcept>
 #include <cstdlib>
 #include <time.h>
 #include <GL/glut.h>
+#include "Settings.h"
 #include "BaseObject.h"
+
+#ifndef BOARD_COLLISION_WIDTH
+#define BOARD_COLLISION_WIDTH 175
+#endif
+#ifndef BUBBLE_LAUNCH_Y_COORD
+#define BUBBLE_LAUNCH_Y_COORD -270
+#endif
 
 typedef enum {Static, Flick, Falling, Moving, Dead} BubbleState;
 
