@@ -45,6 +45,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include <vector>
+#include <utility>
 #include <deque>
 #include "Bubble.h"
 #include "Cannon.h"
