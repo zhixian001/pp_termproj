@@ -132,43 +132,6 @@ void Board::levelDown() {
 }
 
 std::pair<int, int> Board::collision(const Bubble* bub) {
-	// // initial
-	// std::cout<<"VALID"<<std::endl;
-	// for (int r = 0 ; r < 12 ; r++){
-	// 	for (int c = 0 ; c < 10 ; c++){
-			
-	// 		if(isValid(r, c)){
-	// 			std::cout << "O";
-	// 		}
-	// 		else if (isValid2(r, c)){
-	// 			std::cout << "X";
-	// 		}
-	// 		else {
-	// 			std::cout << "+";
-	// 		}
-	// 		std::cout << " ";
-
-	// 	}
-	// 	std::cout<<std::endl;
-	// }
-	// std::cout<<"BUBBLED"<<std::endl;
-	// for (int r = 0 ; r < 12 ; r++){
-	// 	for (int c = 0 ; c < 10 ; c++){
-			
-	// 		if(bubbled[r][c]){
-	// 			std::cout<<"#";
-	// 		}
-	// 		else{
-	// 			std::cout<<"-";
-	// 		}
-	// 		std::cout <<" ";
-
-	// 	}
-	// 	std::cout<<std::endl;
-	// }
-
-
-
 	double x = bub->getX();
 	double y = bub->getY();
 	for (int r = 1; r <= 11; r++){

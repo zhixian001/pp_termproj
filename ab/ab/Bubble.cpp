@@ -139,16 +139,6 @@ void Bubble::draw() const {
 	glPopMatrix();
 }
 
-// void Bubble::draw(int color) const {
-// 	glPushMatrix();
-// 	// glColor3f(c[color][0], c[color][1], c[color][2]);
-	
-// 	drawMaterial();
-// 	glTranslatef(x, y, 50);
-// 	glutSolidSphere(radius, 20, 50);
-// 	glPopMatrix();
-// }
-
 void Bubble::changeDx(double a) {
 	dx = a;
 }
@@ -163,19 +153,3 @@ double Bubble::getDx() const {
 double Bubble::getDy() const {
 	return dy;
 }
-
-// int Bubble::getRow() const{
-// 	return row;
-// }
-
-// int Bubble::getCol() const{
-// 	return col;
-// }
-
-// void Bubble::setRow(int _row) {
-// 	row = _row;
-// }
-
-// void Bubble::setCol(int _col) {
-// 	col = _col;
-// }
