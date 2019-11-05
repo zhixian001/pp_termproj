@@ -1,7 +1,7 @@
 #include "Cannon.h"
 
 
-Cannon::Cannon() {
+Cannon::Cannon() : BaseObject(Emerald) {
     this->head_angle = M_PI / 2;
     this->cone_height = 20;
     this->cylinder_radius = 7.0;
@@ -11,9 +11,14 @@ Cannon::~Cannon() {
     
 }
 
+void Cannon::draw() const{
+
+}
+
 void Cannon::draw() {
     // launch pnt
     glPushMatrix();
+	drawMaterial();    
     glTranslatef(0, BUBBLE_LAUNCH_Y_COORD, this->cylinder_depth);
         // cannon
         glPushMatrix();
@@ -78,4 +83,8 @@ void Cannon::drawCylinder(GLfloat radius, GLfloat height, GLfloat R, GLfloat G, 
         }
         glVertex3f(radius, 0.0, height);
     glEnd();
+}
+
+double Cannon::getAngle() const{
+    return head_angle;
 }

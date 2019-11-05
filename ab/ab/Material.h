@@ -10,7 +10,7 @@ private:
     float shininess[1];
 
 public:
-    Material(/* args */);
+    Material();
     ~Material();
 
     void setEmission(float r, float g, float b, float a);

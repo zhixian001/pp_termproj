@@ -27,55 +27,95 @@ float c[5][3] = { {0.7, 0.0, 0.0}, {0.0, 0.7, 0.0}, {0.0, 0.0, 0.7}, {0.7, 0.7, 
 
 
 
-Bubble::Bubble(double r, double px, double py, int op) {
-	radius = r, x = px, y = py, option = op;
-	mtl = Material();
+Bubble::Bubble(double r, double px, double py, int op) : BaseObject(op) {
+	radius = r;
+	x = px;
+	y = py;
+	option = op;
+	state = Static;
+	// row = _row;
+	// col = _col;
 
-	// option에 따라서 색 설정
-	switch(option){
-		// ruby
-		case 0 :
-			mtl.setAmbient(0.1745, 0.01175, 0.01175, 0.55);
-			mtl.setDiffuse(0.61424, 0.04136, 0.04136, 0.55);
-			mtl.setSpecular(0.727811, 0.626959, 0.626959, 0.55);
-			mtl.setShininess(76.8);
-			break;
-		// emerald
-		case 1 :
-			mtl.setAmbient(0.0215, 0.1745, 0.0215, 0.55);
-			mtl.setDiffuse(0.07586, 0.61424, 0.07586, 0.55);
-			mtl.setSpecular(0.633, 0.727811, 0.611, 0.55);
-			mtl.setShininess(76.8);
-			break;
-		case 2 :
-			mtl.setAmbient(0.0215, 0.1745, 0.0215, 0.55);
-			mtl.setDiffuse(0.07586, 0.61424, 0.07586, 0.55);
-			mtl.setSpecular(0.633, 0.727811, 0.611, 0.55);
-			mtl.setShininess(76.8);
-			break;
-		case 3 :
-			mtl.setAmbient(0.0215, 0.1745, 0.0215, 0.55);
-			mtl.setDiffuse(0.07586, 0.61424, 0.07586, 0.55);
-			mtl.setSpecular(0.633, 0.727811, 0.611, 0.55);
-			mtl.setShininess(76.8);
-			break;
-		case 4 :
-			mtl.setAmbient(0.0215, 0.1745, 0.0215, 0.55);
-			mtl.setDiffuse(0.07586, 0.61424, 0.07586, 0.55);
-			mtl.setSpecular(0.633, 0.727811, 0.611, 0.55);
-			mtl.setShininess(76.8);
-			break;
-		default :
-			break;
+}
+
+BubbleState Bubble::getState(){
+	return state;
+}
+
+void Bubble::setState(BubbleState _state){
+	if (_state == Falling){
+		throw std::invalid_argument("Cannot change state 'Falling' directly");
 	}
+	else if (_state == Dead){
+		throw std::invalid_argument("Cannot change state 'Dead' directly");
+	}
+	else if (_state == Moving){
+		throw std::invalid_argument("Cannot change state 'Moving' without velocity");
+	}
+	else if (_state == Static) {
+		dx = 0;
+		dy = 0;
+	}
+	state = _state;
+}
 
+void Bubble::setState(BubbleState _state, double _dx, double _dy){
+	if (_state == Moving && state != Moving){
+		state = _state;
+		dx = _dx;
+		dy = _dy;
+	}
+	else {
+		throw std::invalid_argument("Be Careful");
+	}
 
 }
 
 void Bubble::move() {
-	x += dx;
-	y += dy;
+	if (state == Static){}
+	else if (state == Moving){
+		x += dx;
+		y += dy;
+		// collision check
+		if (x > BOARD_HALF_WIDTH || x < -BOARD_HALF_WIDTH){
+			dx *= -1.0;
+		}
+	}
+	else if (state == Falling){
+		dy -= 2.0;
+		x += dx;
+		y += dy;
+		// minimum y coord 보다 작으면 죽은 bubble
+		if(y < BUBBLE_LAUNCH_Y_COORD){
+			state = Dead;
+		}
+	}
+	else if (state == Flick) {
+		// flick
+		dy = 1.0 * ((rand() % 30) - 10);
+		dx = 1.0 * ((rand() % 30) - 10) / 5;
+		state = Falling;
+	}
+	// dead
+	else {
+
+	}
 }
+
+void Bubble::moveRel(double rx, double ry) {
+	x += rx;
+	y += ry;
+}
+// Segfalut here!
+void Bubble::moveAbs (double ax, double ay) {
+	x = ax;
+	y = ay;
+}
+void Bubble::moveAbs (int ax, int ay) {
+	x = (double)ax;
+	y = (double)ay;
+}
+
 
 double Bubble::getX() const {
 	return x;
@@ -90,30 +130,52 @@ int Bubble::getOption() const {
 }
 
 void Bubble::draw() const {
+	// 사라진 버블은 그리지 않음
+	if (state == Dead) return;
 	glPushMatrix();
-	glColor3f(c[option][0], c[option][1], c[option][2]);
-
-	glMaterialfv(GL_FRONT, GL_AMBIENT, mtl.getAmbient());
-	glMaterialfv(GL_FRONT, GL_EMISSION, mtl.getEmission());
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mtl.getDiffuse());
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mtl.getSpecular());
-	glMaterialfv(GL_FRONT, GL_SHININESS, mtl.getShininess());
-
-
+	drawMaterial();
 	glTranslatef(x, y, 50);
 	glutSolidSphere(radius, 20, 50);
 	glPopMatrix();
 }
 
-void Bubble::draw(int color) const {
-	glPushMatrix();
-	glColor3f(c[color][0], c[color][1], c[color][2]);
-	glMaterialfv(GL_FRONT, GL_AMBIENT, mtl.getAmbient());
-	glMaterialfv(GL_FRONT, GL_EMISSION, mtl.getEmission());
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mtl.getDiffuse());
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mtl.getSpecular());
-	glMaterialfv(GL_FRONT, GL_SHININESS, mtl.getShininess());
-	glTranslatef(x, y, 50);
-	glutSolidSphere(radius, 20, 50);
-	glPopMatrix();
+// void Bubble::draw(int color) const {
+// 	glPushMatrix();
+// 	// glColor3f(c[color][0], c[color][1], c[color][2]);
+	
+// 	drawMaterial();
+// 	glTranslatef(x, y, 50);
+// 	glutSolidSphere(radius, 20, 50);
+// 	glPopMatrix();
+// }
+
+void Bubble::changeDx(double a) {
+	dx = a;
 }
+void Bubble::changeDy(double a) {
+	dy = a;
+}
+
+double Bubble::getDx() const {
+	return dx;
+}
+
+double Bubble::getDy() const {
+	return dy;
+}
+
+// int Bubble::getRow() const{
+// 	return row;
+// }
+
+// int Bubble::getCol() const{
+// 	return col;
+// }
+
+// void Bubble::setRow(int _row) {
+// 	row = _row;
+// }
+
+// void Bubble::setCol(int _col) {
+// 	col = _col;
+// }
