@@ -3,14 +3,8 @@
 
 VisualBoard::VisualBoard(/* args */)
 {
-    // // 발사중인가?
-    // isShot = false;
-    // // pop 할 게 있는가?
-    // isPop = false;
-    // // 발사 이후 뭔가 일어나는가?
-    // isTransition = false;
-    game_state = Ready;
 
+    game_state = Ready;
 
     board = new Board();
     // inspect generated map
@@ -106,8 +100,6 @@ void VisualBoard::stateTransition(){
         }
         next_launch = bubblez.end()-1;
         to_launch = next_launch-1;
-        // to_launch = to_launch-pop_size;
-
 
         game_state = Drop;
         

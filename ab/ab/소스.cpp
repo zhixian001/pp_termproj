@@ -5,12 +5,10 @@
 #ifndef BUBBLE_SPEED_MULTIPLIER
 #define BUBBLE_SPEED_MULTIPLIER 20
 #endif
-
 // 버블 발사 Y 좌표
 #ifndef BUBBLE_LAUNCH_Y_COORD
 #define BUBBLE_LAUNCH_Y_COORD -270
 #endif
-
 // 조명 효과
 #ifndef LIGHTING_ON
 #define LIGHTING_ON 1
@@ -35,7 +33,6 @@ using namespace std;
 
 // Bubble b, nextBubble;
 double theta = M_PI/2;
-int cntShot = 0;
 
 clock_t start_clock = clock();
 clock_t end_clock;
@@ -46,15 +43,9 @@ Light* light1;
 // Board board = Board();
 VisualBoard VB = VisualBoard();
 
-// cannon
-
 void init() {
 	srand(time(0));
 	glEnable(GL_DEPTH_TEST);
-	// int option = rand() % 5;
-	// b = Bubble(25, 0, BUBBLE_LAUNCH_Y_COORD, option);
-	// option = rand() % 5;
-	// nextBubble = Bubble(25, -150, BUBBLE_LAUNCH_Y_COORD, option);
 	// TODO: Initial scripts
 
 
@@ -83,7 +74,6 @@ void processNormalKeys(unsigned char key, int x, int y) {
 
 	if (key == 32) {
 		VB.launchBubble();
-		cntShot++;
 	}
 }
 
