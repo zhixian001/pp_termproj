@@ -30,11 +30,11 @@ VisualBoard::~VisualBoard()
 {
     delete board;
 
-    Bubble* tmp;
+    Bubble* destructor_tmp;
     while(!bubblez.empty()){
-        tmp = bubblez.back();
+        destructor_tmp = bubblez.back();
         bubblez.pop_back();
-        delete tmp;
+        delete destructor_tmp;
     }
 }
 
