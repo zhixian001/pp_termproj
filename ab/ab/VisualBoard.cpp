@@ -6,6 +6,8 @@ VisualBoard::VisualBoard(/* args */)
 
     game_state = Ready;
 
+    score = 0;
+
     board = new Board();
     // inspect generated map
     std::vector<std::pair<Bubble*, std::pair<int, int>>> observation = board->observeBoard();
@@ -81,6 +83,7 @@ void VisualBoard::stateTransition(){
         game_state = Pop;
     }
     else if (game_state == Pop){
+        int previous_size = bubblez.size();
         // update all bubble states
         for (unsigned int i = 0 ; i < bubblez.size() ; i++){
             bubblez[i]->move();
@@ -101,11 +104,17 @@ void VisualBoard::stateTransition(){
         next_launch = bubblez.end()-1;
         to_launch = next_launch-1;
 
+        if (previous_size - bubblez.size() > 0){
+            score += POINTS_PER_BUBBLE * (previous_size - bubblez.size());
+        }
+
         game_state = Drop;
         
 
     }
     else if(game_state == Drop){
+        int previous_size = bubblez.size();
+
         // update all bubble states
         for (unsigned int i = 0 ; i < bubblez.size() ; i++){
             bubblez[i]->move();
@@ -149,6 +158,9 @@ void VisualBoard::stateTransition(){
 
         next_launch = bubblez.end()-1;
         to_launch = next_launch-1;
+        if (previous_size - bubblez.size() > 0){
+            score += POINTS_PER_BUBBLE * (previous_size - bubblez.size());
+        }
         if(state_transition) game_state = Ready;
 
     }
@@ -176,4 +188,8 @@ Bubble* VisualBoard::generateBubble(){
 	// TOFIX: generation method
     srand(clock());
     return new Bubble(BUBBLE_RADIUS, BUBBLE_NEXT_LAUNCH_X_COORD, BUBBLE_NEXT_LAUNCH_Y_COORD, rand()%5);
+}
+
+unsigned int VisualBoard::getScore() const {
+    return score;
 }

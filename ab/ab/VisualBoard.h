@@ -37,6 +37,10 @@
 #define BUBBLE_SPEED_MULTIPLIER 20
 #endif
 
+#ifndef POINTS_PER_BUBBLE
+#define POINTS_PER_BUBBLE 100
+#endif
+
 
 #include <cstdlib>
 #include <ctime>
@@ -68,6 +72,8 @@ private:
     std::pair<int, int> tmp;
     std::pair<double, double> coord_tmp;
 
+    unsigned int score;
+
 protected:
 	Bubble* generateBubble();
 public:
@@ -78,4 +84,6 @@ public:
     void updateCannonAngle(double theta);
     void launchBubble();
     void stateTransition();
+
+    unsigned int getScore() const;
 };
