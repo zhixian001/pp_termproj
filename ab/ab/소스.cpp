@@ -43,12 +43,10 @@ Light* light1;
 // Board board = Board();
 VisualBoard VB = VisualBoard();
 
-void init() {
+void initGameBoard() {
 	srand(time(0));
 	glEnable(GL_DEPTH_TEST);
 	// TODO: Initial scripts
-
-
 	// lighting
 	if (LIGHTING_ON){
 		light0 = new Light(200.0, 100.0, 500.0, GL_LIGHT0);
@@ -65,8 +63,10 @@ void init() {
 		glEnable(GL_SMOOTH);
     	light0->draw();
     	light1->draw();
-
 	}
+}
+
+void initScoreBoard() {
 
 }
 
@@ -123,6 +123,10 @@ void renderSceneGameBoard() {
 	glutSwapBuffers();
 }
 
+void renderSceneScoreBoard() {
+
+}
+
 
 void resize(int width, int height) {
     // we ignore the params and do:
@@ -140,13 +144,16 @@ int main(int argc, char** argv) {
 	int main_window = glutCreateWindow("Class Term Project!");
 		glutReshapeFunc(resize);
 		glutIdleFunc(idle);
+		
 		// register callbacks
 	// 보조창: 게임상태
 	int status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 50);
+		initScoreBoard();
+		glutDisplayFunc(renderSceneScoreBoard);
 
 	// 보조창: 게임 판
 	int gameboard_window = glutCreateSubWindow(main_window, 0, 50, WIDTH, 850);
-		init();
+		initGameBoard();
 		glutDisplayFunc(renderSceneGameBoard);
 		glutKeyboardFunc(processNormalKeys);
 		glutSpecialFunc(processSpecialKeys);
