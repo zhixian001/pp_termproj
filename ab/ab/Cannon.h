@@ -8,9 +8,9 @@
 
 #include <cmath>
 #include <GL/glut.h>
+#include "BaseObject.h"
 
-class Cannon
-{
+class Cannon : public BaseObject {
 private:
     double head_angle;
     float cylinder_radius, cylinder_halflength;
@@ -25,5 +25,7 @@ public:
     Cannon();
     ~Cannon();
     void draw();
+    void draw() const;
+    double getAngle() const;
     void updateAngle(double val);
 };

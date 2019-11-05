@@ -1,24 +1,29 @@
 #pragma once
 
+
+// debugging 
+#include <iostream>
+
 #include <memory>
 #include <cstring>
 #include <vector>
+#include <cstdlib>
+#include <time.h>
 #include "Bubble.h"
 
 class Board{
 public:
 	Board();
-	void draw();
+	/* 새 맵 생성 후에 읽어오기 */
+	std::vector<std::pair<Bubble*, std::pair<int, int>>> observeBoard();
 	std::pair<int, int> getPos(double x, double y);
 	/* option : color */
-	bool collision(double x, double y, int option);
+	std::pair<int, int> collision(const Bubble* bub);
 	/* option : color */
-	void BubblePop(double x, double y, int option);
-	std::vector<Bubble> BubbleDrop();
-	void levelDown() {
-		upper -= 50;
-	}
-
+	std::vector<std::pair<int, int>> BubblePop(const Bubble* bubs);
+	std::vector<std::pair<int, int>> BubbleDropRC();
+	void levelDown();
+	std::pair<double, double> getCoords(int r, int c) const;
 private:
 	/* bubble visualization validity check */
 	bool isValid(int row, int col);

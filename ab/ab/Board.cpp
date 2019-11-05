@@ -43,8 +43,7 @@
  */
 
 #include "Board.h"
-#include <cstdlib>
-#include <time.h>
+
 #define SQRT3 1.732050807568877293;
 
 int dc[3] = { -1, 0, 1 };
@@ -63,24 +62,43 @@ Board::Board() {
 	}
 	memset(bubbled, false, sizeof(bubbled));
 	memset(color, -1, sizeof(color));
-	for (int i = 0; i <= 8; i++)	bubbled[0][i] = true, color[0][i] = 1;
-	for (int r = 1; r <= 11; r++)
+
+	// 맵 생성
+	for (int i = 0; i <= 8; i++){
+		bubbled[0][i] = true, color[0][i] = 1;
+	}
+	for (int r = 1; r <= 11; r++){
 		for (int c = 1; c <= 8; c++) {
 			if (!isValid(r, c))	continue;
 			if (1.0 * rand()/ RAND_MAX < 0.7)	continue;
 			bubbled[r][c] = true;
 			color[r][c] = rand() % 5;
 		}
+	}
 	memset(visited, false, sizeof(visited));
 	dfs(0, 1, -1);
-	for (int r = 1; r <= 11; r++)
+	for (int r = 1; r <= 11; r++){
 		for (int c = 1; c <= 8; c++) {
 			if (!visited[r][c]) {
 				bubbled[r][c] = false;
 				color[r][c] = -1;
 			}
 		}
-};
+	}
+}
+
+std::vector<std::pair<Bubble*, std::pair<int, int>>> Board::observeBoard(){
+	std::vector<std::pair<Bubble*, std::pair<int, int>>> observation;	
+
+	for (int r = 1 ; r <= 11 ; r++){
+		for (int c = 1 ; c <= 8 ; c++){
+			if(isValid(r, c) && bubbled[r][c]){
+				observation.push_back({new Bubble(25.0, xPos[r][c]-200, yPos[r][c]+upper, color[r][c]), {r, c}});
+			}
+		}
+	}
+	return observation;
+}
 
 bool Board::isValid(int row, int col) {
 	if (1 <= row && row <= 11 && 1 <= col && col <= 7)	return true;
@@ -96,7 +114,7 @@ bool Board::isValid2(int row, int col) {
 
 std::pair<int, int> Board::getPos(double x, double y) {
 	std::pair<int, int> ret = { -1, -1 };
-	int dist = 987654321;
+	int dist = INT32_MAX;
 	for (int r = 1; r <= 11; r++)
 		for (int c = 1; c <= 8; c++) {
 			if (!isValid(r, c))	continue;
@@ -108,8 +126,52 @@ std::pair<int, int> Board::getPos(double x, double y) {
 	return ret;
 }
 
-bool Board::collision(double x, double y, int option) {
-	for (int r = 1; r <= 11; r++)
+void Board::levelDown() {
+	upper -= 50;
+
+}
+
+std::pair<int, int> Board::collision(const Bubble* bub) {
+	// // initial
+	// std::cout<<"VALID"<<std::endl;
+	// for (int r = 0 ; r < 12 ; r++){
+	// 	for (int c = 0 ; c < 10 ; c++){
+			
+	// 		if(isValid(r, c)){
+	// 			std::cout << "O";
+	// 		}
+	// 		else if (isValid2(r, c)){
+	// 			std::cout << "X";
+	// 		}
+	// 		else {
+	// 			std::cout << "+";
+	// 		}
+	// 		std::cout << " ";
+
+	// 	}
+	// 	std::cout<<std::endl;
+	// }
+	// std::cout<<"BUBBLED"<<std::endl;
+	// for (int r = 0 ; r < 12 ; r++){
+	// 	for (int c = 0 ; c < 10 ; c++){
+			
+	// 		if(bubbled[r][c]){
+	// 			std::cout<<"#";
+	// 		}
+	// 		else{
+	// 			std::cout<<"-";
+	// 		}
+	// 		std::cout <<" ";
+
+	// 	}
+	// 	std::cout<<std::endl;
+	// }
+
+
+
+	double x = bub->getX();
+	double y = bub->getY();
+	for (int r = 1; r <= 11; r++){
 		for (int c = 1; c <= 8; c++) {
 			if (!isValid2(r, c))	continue;
 			if (y >= upper) {
@@ -117,8 +179,8 @@ bool Board::collision(double x, double y, int option) {
 				int r = coord.first;
 				int c = coord.second;
 				bubbled[r][c] = true;
-				color[r][c] = option;
-				return true;
+				color[r][c] = bub->getOption();
+				return {r, c};
 			}
 			if (!bubbled[r][c])	continue;
 			double dist = (xPos[r][c]-200 - 1.0 * x) * (xPos[r][c]-200 - 1.0 * x) + (yPos[r][c]+upper - 1.0 * y) * (yPos[r][c]+upper - 1.0 * y);
@@ -127,33 +189,45 @@ bool Board::collision(double x, double y, int option) {
 				int r = coord.first;
 				int c = coord.second;
 				bubbled[r][c] = true;
-				color[r][c] = option;
-				return true;
+				color[r][c] = bub->getOption();
+				return {r, c};
 			}
 		}
-	return false;
+	}
+	return {-1, -1};
 }
 
-void Board::BubblePop(double x, double y, int option) {
+std::pair<double, double> Board::getCoords(int r, int c) const{
+	return {xPos[r][c]-200, yPos[r][c]+upper};
+}
+
+std::vector<std::pair<int, int>> Board::BubblePop(const Bubble* bub) {
+	std::vector<std::pair<int, int>> ret;
+	double x = bub->getX();
+	double y = bub->getY();
 	std::pair<int, int> coord = getPos(x, y);
 	int r = coord.first;
 	int c = coord.second;
 	memset(visited, false, sizeof(visited));
-	dfs(r, c, option);
+	dfs(r, c, bub->getOption());
 	int cnt = 0;
 	for (int r = 1; r <= 11; r++)
 		for (int c = 1; c <= 8; c++)
 			if (visited[r][c])	cnt++;
-	if (cnt < 3)	return;
+	if (cnt < 3)	return ret;
 	for (int r = 1; r <= 11; r++)
 		for (int c = 1; c <= 8; c++)
 			if (visited[r][c]) {
 				bubbled[r][c] = false;
 				color[r][c] = -1;
+				ret.push_back({r, c});
 			}
+	return ret;
 }
 
-std::vector<Bubble> Board::BubbleDrop() {
+// reimplementation of BubbleDrop
+std::vector<std::pair<int, int>> Board::BubbleDropRC() {
+	std::vector<std::pair<int, int>> drop_vector;
 	srand(time(0));
 	std::vector<Bubble> ret;
 	memset(visited, false, sizeof(visited));
@@ -161,16 +235,12 @@ std::vector<Bubble> Board::BubbleDrop() {
 	for (int r = 1; r <= 11; r++)
 		for (int c = 1; c <= 8; c++)
 			if (!visited[r][c] && bubbled[r][c]) {
-				Bubble b = Bubble(25.0, xPos[r][c] - 200, yPos[r][c] + upper, color[r][c]);
-				double dy = 1.0 * ((rand() % 30) - 10);
-				double dx = 1.0 * ((rand() % 30) - 10) / 5;
-				b.changeDx(dx);
-				b.changeDy(dy);
-				ret.push_back(b);
 				bubbled[r][c] = false;
 				color[r][c] = -1;
+				drop_vector.push_back({r, c});
 			}
-	return ret;
+
+	return drop_vector;
 }
 
 void Board::dfs(int row, int col, int option) {
@@ -221,15 +291,4 @@ void Board::dfs(int row, int col, int option) {
 			dfs(row, col + dc[j], option);
 		}
 	}
-}
-
-void Board::draw() {
-	glPushMatrix();
-	for(int r = 1; r<=11;r++)
-		for (int c = 1; c <= 8; c++) {
-			if (!isValid(r, c))	continue;
-			if (!bubbled[r][c])	continue;
-			Bubble b(25.0, xPos[r][c]-200, yPos[r][c]+upper);
-			b.draw(color[r][c]);
-		}
 }
