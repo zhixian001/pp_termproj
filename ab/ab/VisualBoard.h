@@ -59,15 +59,9 @@ private:
     std::deque<Bubble*>::iterator to_launch;
     std::deque<Bubble*>::iterator next_launch;
     std::deque<Bubble*>::iterator flying_now;
-    std::vector<int> drop_monitoring;
-
-    bool isShot, isTransition, isPop;
-
     Bubble* bubble_alias[12][10];
-
     GameStates game_state;
     std::pair<int, int> collision_pair;
-
     std::vector<std::pair<int, int>> pop_vector;
     std::vector<std::pair<int, int>> drop_vector;
     std::vector<int> dead_bubble_stack;
