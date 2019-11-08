@@ -11,9 +11,7 @@ Cannon::~Cannon() {
     
 }
 
-void Cannon::draw() const{
 
-}
 
 void Cannon::draw() {
     // launch pnt
