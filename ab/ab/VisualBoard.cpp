@@ -47,7 +47,6 @@ void VisualBoard::levelDown(){
 }
 
 void VisualBoard::launchBubble(){
-    // 게임이 대기 상태일 때 발사 가능
     if(game_state == Ready){
         // bubble launch
         (*to_launch)->setState(Moving, BUBBLE_SPEED_MULTIPLIER * std::cos(cannon.getAngle()), BUBBLE_SPEED_MULTIPLIER * std::sin(cannon.getAngle()));
@@ -56,8 +55,8 @@ void VisualBoard::launchBubble(){
         // insert bubble and manage iterator
         bubblez.push_back(generateBubble());
         flying_now = to_launch;
-        to_launch++;
-        next_launch++;
+        to_launch += 1;
+        next_launch += 1;
         game_state = ShotFlying;
     }
 }
@@ -172,13 +171,19 @@ void VisualBoard::stateTransition(){
 
 void VisualBoard::draw() {
     // draw and update all values
-    for (unsigned int i = 0 ; i < bubblez.size() ; i++){
+    for (unsigned int i = 0 ; i < bubblez.size()-2 ; i++){
         bubblez[i]->draw();
     }
+	glPopMatrix();
+	glPushMatrix();
+	for (unsigned int i = bubblez.size() - 2; i < bubblez.size(); i++) {
+		bubblez[i]->draw();
+	}
     cannon.draw();
 }
 
 void VisualBoard::updateCannonAngle(double theta){
+	std::cout << cannon.getAngle() << std::endl;
     cannon.updateAngle(theta);
 }
 

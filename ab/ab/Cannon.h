@@ -26,7 +26,6 @@ public:
     Cannon();
     ~Cannon();
     void draw();
-    void draw() const;
     double getAngle() const;
     void updateAngle(double val);
 };
