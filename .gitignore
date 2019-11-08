@@ -78,3 +78,8 @@
 !ab/ab/*/*/*/*
 
 build/
+
+!msvc/lib/*
+
+buildlog.log
+!glut32.dll
