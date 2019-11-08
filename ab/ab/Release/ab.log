@@ -1,0 +1,16 @@
+﻿  VisualBoard.cpp
+  C:\Users\ECE\Desktop\pp_termproj-master\ab\ab\VisualBoard.h: warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  C:\Users\ECE\Desktop\pp_termproj-master\ab\ab\Settings.h: warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  C:\Users\ECE\Desktop\pp_termproj-master\ab\ab\BaseObject.h: warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  C:\Users\ECE\Desktop\pp_termproj-master\ab\ab\Board.h: warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  소스.cpp
+  C:\Users\ECE\Desktop\pp_termproj-master\ab\ab\Settings.h: warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  C:\Users\ECE\Desktop\pp_termproj-master\ab\ab\VisualBoard.h: warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  C:\Users\ECE\Desktop\pp_termproj-master\ab\ab\BaseObject.h: warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  C:\Users\ECE\Desktop\pp_termproj-master\ab\ab\Board.h: warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  코드를 생성하고 있습니다.
+  3 of 428 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  코드를 생성했습니다.
+  ab.vcxproj -> C:\Users\ECE\Desktop\pp_termproj-master\ab\Release\ab.exe
