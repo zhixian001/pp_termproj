@@ -6,9 +6,9 @@
                 "/usr/include/**",
                 "/usr/include/GL/**",
                 "/usr/include/c++/7/**",
+                "/usr/lib/gcc/x86_64-linux-gnu/7/include/**",
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/include/**"
-
             ],
             "cStandard": "c11",
             "cppStandard": "c++17",
@@ -22,8 +22,9 @@
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
                     "/usr/include/*",
-                    "usr/include/GL/*",
+                    "/usr/include/GL/*",
                     "/usr/include/c++/*",
+                    "/usr/lib/gcc/x86_64-linux-gnu/7/include/*",
                     "${workspaceFolder}/*",
                     "${workspaceFolder}/include/*"
                 ]
