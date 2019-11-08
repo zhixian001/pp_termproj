@@ -17,6 +17,9 @@
 
 #pragma once
 
+#include <iostream>
+
+
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
@@ -73,7 +76,6 @@
 
 
 
-// 발사대기, 공 날아가는 중, 공이 충돌하고 pop과 drop을 resolution하는 중, pop과 drop을 수행
 typedef enum {Ready, ShotFlying, ShotCollide, Pop, Drop} GameStates;
 
 class VisualBoard
