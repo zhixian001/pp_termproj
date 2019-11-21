@@ -4,4 +4,4 @@ REM please execute this file in msvc x86 native compiler shell in current direct
 
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat"
 
-call msbuild -consoleLoggerParameters:PerformanceSummary;Summary;ShowTimestamp -maxCpuCount:2 ab\ab\ab.vcxproj
+call msbuild -consoleLoggerParameters:PerformanceSummary;Summary;ShowTimestamp -maxCpuCount:2 -property:Configuration=%BUILD_CONFIG% ab\ab\ab.vcxproj
