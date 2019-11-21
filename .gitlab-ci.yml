@@ -14,4 +14,4 @@ build:
     - move ab/ab/%BUILD_CONFIG%
   artifacts:
     paths:
-      - %BUILD_CONFIG%/*
+      - "%BUILD_CONFIG%/*"
