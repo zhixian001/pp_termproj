@@ -5,9 +5,11 @@ build:
   stage: build
   tags:
     - windows
+  before_script:
+    - CHCP 65001
   
   script:
-    - msvc_build.bat
+    - ./msvc_build.bat
   artifacts:
     paths:
       - msvc/*.exe
