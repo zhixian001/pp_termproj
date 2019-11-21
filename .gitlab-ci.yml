@@ -14,4 +14,4 @@ build:
     - mv ab/ab/$env:BUILD_CONFIG ./
   artifacts:
     paths:
-      - "%BUILD_CONFIG%/*"
+      - "$env:BUILD_CONFIG/*"
