@@ -1,6 +1,9 @@
 stages:
   - build
 
+variables:
+  BUILD_CONFIG: 'Debug'
+
 build:
   stage: build
   tags:
@@ -8,6 +11,7 @@ build:
 
   script:
     - ./msvc_build.bat
+    - move ab/ab/%BUILD_CONFIG%
   artifacts:
     paths:
-      - msvc/*
+      - %BUILD_CONFIG%/*
