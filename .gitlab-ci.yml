@@ -7,7 +7,7 @@ build:
     - windows
   
   script:
-    - Start-Process msvc_build.bat
+    - msvc_build.bat
   artifacts:
     paths:
       - msvc/*.exe
