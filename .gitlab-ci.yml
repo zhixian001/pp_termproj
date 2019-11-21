@@ -11,7 +11,7 @@ build:
 
   script:
     - ./msvc_build.bat
-    - mv ab/ab/%BUILD_CONFIG% ./
+    - mv ab/ab/$env:BUILD_CONFIG ./
   artifacts:
     paths:
       - "%BUILD_CONFIG%/*"
