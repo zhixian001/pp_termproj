@@ -10,8 +10,4 @@ build:
     - ./msvc_build.bat
   artifacts:
     paths:
-      - msvc/*.exe
-      - msvc/glut32.dll
-
-
-
+      - msvc/*
