@@ -2,7 +2,7 @@ stages:
   - build
 
 variables:
-  BUILD_CONFIG: 'Debug'
+  BUILD_CONFIG: 'Release'
 
 build:
   stage: build
@@ -10,8 +10,8 @@ build:
     - windows
 
   script:
-    - ./msvc_build.bat
-    - mv ab/ab/$env:BUILD_CONFIG ./
+    - cd ab/ab
+    - ../../msvc_build.bat
   artifacts:
     paths:
       - "$env:BUILD_CONFIG/*"
