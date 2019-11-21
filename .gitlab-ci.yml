@@ -14,4 +14,4 @@ build:
     - ../../msvc_build.bat
   artifacts:
     paths:
-      - "$env:BUILD_CONFIG/*"
+      - "ab/ab/$env:BUILD_CONFIG/*"
