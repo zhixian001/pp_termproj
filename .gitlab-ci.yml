@@ -12,6 +12,9 @@ build:
   script:
     - cd ab/ab
     - ../../msvc_build.bat
+    - mv $env:BUILD_CONFIG ../../
+    - cd ../../
+    - cp glut32.dll $env:BUILD_CONFIG/
   artifacts:
     paths:
-      - "ab/ab/$env:BUILD_CONFIG/*"
+      - "$env:BUILD_CONFIG/*"
