@@ -44,5 +44,18 @@
         "xtr1common": "cpp",
         "xutility": "cpp"
     },
-    "C_Cpp.intelliSenseEngineFallback": "Enabled"
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
+    "files.exclude": {
+        "ab/**": true,
+        "ab/**.*": true,
+        "ab/ab/**": true,
+        "ab/ab/**.*": true
+    },
+    "C_Cpp.exclusionPolicy": "checkFilesAndFolders",
+    "files.watcherExclude": {
+        "ab/**": true,
+        "ab/**.*": true,
+        "ab/ab/**": true,
+        "ab/ab/**.*": true
+    }
 }
