@@ -42,6 +42,9 @@
     <ClCompile Include="Board.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="TimeBar.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bubble.h">
@@ -69,6 +72,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="VisualBoard.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeBar.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
