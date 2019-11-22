@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseObject.cpp" />
+    <ClCompile Include="TimeBar.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Bubble.cpp" />
     <ClCompile Include="Cannon.cpp" />
@@ -141,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="TimeBar.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Bubble.h" />
     <ClInclude Include="Cannon.h" />
