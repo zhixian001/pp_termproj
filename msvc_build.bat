@@ -1,12 +1,5 @@
 @echo off
 
-REM please execute this file in msvc x86 native compiler shell in current directory
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat"
 
-call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars32.bat"
-
-call cd msvc
-call cl /EHsc /std:c++17 "..\ab\ab\¼Ò½º.cpp" "..\ab\ab\BaseObject.cpp" "..\ab\ab\Board.cpp" "..\ab\ab\Bubble.cpp" "..\ab\ab\Cannon.cpp" "..\ab\ab\Light.cpp" "..\ab\ab\Material.cpp" "..\ab\ab\VisualBoard.cpp" "..\ab\ab\Texts.cpp" "..\ab\ab\TimeBar.cpp"  /I "..\ab\ab" /I "include" "lib\glut32.lib" /link 
-
-cd ..
-
-PAUSE
+call msbuild -consoleLoggerParameters:PerformanceSummary;Summary;ShowTimestamp -maxCpuCount:2 -property:Configuration=%BUILD_CONFIG% ab.vcxproj
