@@ -174,8 +174,8 @@ void VisualBoard::draw() {
     for (unsigned int i = 0 ; i < bubblez.size()-2 ; i++){
         bubblez[i]->draw();
     }
-	glPopMatrix();
-	glPushMatrix();
+	// glPopMatrix();
+	// glPushMatrix();
 	for (unsigned int i = bubblez.size() - 2; i < bubblez.size(); i++) {
 		bubblez[i]->draw();
 	}
@@ -183,7 +183,7 @@ void VisualBoard::draw() {
 }
 
 void VisualBoard::updateCannonAngle(double theta){
-	std::cout << cannon.getAngle() << std::endl;
+	// std::cout << cannon.getAngle() << std::endl;
     cannon.updateAngle(theta);
 }
 

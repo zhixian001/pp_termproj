@@ -11,6 +11,7 @@
 #include "Board.h"
 #include "Bubble.h"
 #include "Cannon.h"
+#include "TimeBar.h"
 
 using namespace std;
 
@@ -29,10 +30,17 @@ Light* light1;
 // Board board = Board();
 VisualBoard VB = VisualBoard();
 
+TimeBar tb = TimeBar();
+
+
+int main_window, status_window, gameboard_window;
+
 void initGameBoard() {
 	// while (VB.getBubblez().size() == 2) {
 	// VB = VisualBoard();
 	// }
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	srand(time(0));
 	glEnable(GL_DEPTH_TEST);
 	// TODO: Initial scripts
@@ -56,6 +64,8 @@ void initGameBoard() {
 }
 
 void initScoreBoard() {
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 }
 
@@ -91,11 +101,18 @@ void idle() {
 	end_clock = clock();
 	if (end_clock - start_clock > 1000 / 60) {
 		VB.stateTransition();
+		tb.progressTime();
+		// glutSetWindow(main_window);
+		// glutPostRedisplay();
+		glutSetWindow(gameboard_window);
+		glutPostRedisplay();
+		glutSetWindow(status_window);
+		glutPostRedisplay();
 		start_clock = end_clock;
 		// t += 0.2;
 		// cout << t << endl;
+		
 	}
-	glutPostRedisplay();
 }
 
 void initParentWindow() {
@@ -112,30 +129,32 @@ void renderSceneGameBoard() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-WIDTH / 2, WIDTH / 2, -800 / 2, 800 / 2, -100.0, 100.0);
+	glOrtho(-WIDTH / 2, WIDTH / 2, -800 / 2, 800 / 2, 100.0, -100.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glPushMatrix();
+	// glPushMatrix();
 
 	// glTranslatef(30*sin(t), 0, 0);
 	VB.draw();
-	glPopMatrix();
+	// glPopMatrix();
+	
 	glutSwapBuffers();
 }
 
 void renderSceneScoreBoard() {
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode (GL_PROJECTION); // Tell opengl that we are doing project matrix work
+	glLoadIdentity(); // Clear the matrix
+	glOrtho(-200.0, 200.0, -50.0, 50.0, -100.0, 100.0); // Setup an Ortho view
+	glMatrixMode(GL_MODELVIEW); // Tell opengl that we are doing model matrix work. (drawing)
+	glLoadIdentity(); // Clear the model matrix
 
-	glBegin(GL_TRIANGLE_FAN);
-		glColor3f(0.7, 0.7, 0.7);
-		glVertex2f(10.f, 20.f);
-		glVertex2f(15.f, 30.f);
-		glVertex2f(30.f, 40.f);
-	glEnd();
-
+	// glPushMatrix();
+	tb.draw();
+	// glPopMatrix();
 
 	glutSwapBuffers();
 }
@@ -153,18 +172,20 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(650, 300);
 	glutInitWindowSize(WIDTH, HEIGHT);
 
-	int main_window = glutCreateWindow("Class Term Project!");
+	glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
+
+	main_window = glutCreateWindow("Class Term Project!");
 		glutReshapeFunc(resize);
 		glutIdleFunc(idle);
 		initParentWindow();
 		glutDisplayFunc(renderSceneParentWindow);
 		
 		// register callbacks
-	int status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 100);
+	status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 100);
 		initScoreBoard();
 		glutDisplayFunc(renderSceneScoreBoard);
 
-	int gameboard_window = glutCreateSubWindow(main_window, 0, 100, WIDTH, 800);
+	gameboard_window = glutCreateSubWindow(main_window, 0, 100, WIDTH, 800);
 		initGameBoard();
 		glutDisplayFunc(renderSceneGameBoard);
 		glutKeyboardFunc(processNormalKeys);

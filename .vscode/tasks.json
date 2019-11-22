@@ -1,0 +1,28 @@
+{
+// tasks.json 형식에 대한 설명서는 
+    // https://go.microsoft.com/fwlink/?LinkId=733558의 내용을 참조하세요.
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "script",
+            "scriptType": "batch",
+            "cmdLine": "cmd.exe /c .\\msvc_build.bat",
+            "path": "",
+            "fileName": "msvc_build.bat",
+            "scriptFile": true,
+            "requiresArgs": false,
+            "uri": {
+                "$mid": 1,
+                "fsPath": "c:\\Users\\okyjh\\Desktop\\pp_termproj\\msvc_build.bat",
+                "_sep": 1,
+                "path": "/c:/Users/okyjh/Desktop/pp_termproj/msvc_build.bat",
+                "scheme": "file"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
