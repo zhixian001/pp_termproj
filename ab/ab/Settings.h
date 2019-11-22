@@ -83,3 +83,13 @@
 #undef BOARD_COLLISION_WIDTH
 #endif
 #define BOARD_COLLISION_WIDTH 175
+
+#ifdef GAME_TIMEOUT
+#undef GAME_TIMEOUT
+#endif
+#define GAME_TIMEOUT 5000.0
+
+#ifdef TIME_BAR_WIDTH
+#undef TIME_BAR_WIDTH
+#endif
+#define TIME_BAR_WIDTH 100.0

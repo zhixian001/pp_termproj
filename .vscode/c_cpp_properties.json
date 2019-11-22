@@ -29,6 +29,35 @@
                     "${workspaceFolder}/include/*"
                 ]
             }
+        },
+        {
+            "name": "windows",
+            "includePath": [
+                "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Tools\\MSVC\\14.23.28105\\include\\**",
+                "${workspaceFolder}/msvc/include/**",
+                "${workspaceFolder}/ab/ab/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.23.28105/bin/Hostx64/x64/cl.exe",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Tools\\MSVC\\14.23.28105\\include\\*",
+                    "${workspaceFolder}/ab/ab/*"
+                ]
+            },
+            "compilerArgs": [
+                "/Wall",
+                "/EHsc",
+                "/std:c++17"
+            ],
+            "intelliSenseMode": "msvc-x86",
+            "windowsSdkVersion": "10.0.18362.0"
         }
     ],
     "version": 4
