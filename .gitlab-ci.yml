@@ -1,0 +1,20 @@
+stages:
+  - build
+
+variables:
+  BUILD_CONFIG: 'Release'
+
+build:
+  stage: build
+  tags:
+    - windows
+
+  script:
+    - cd ab/ab
+    - ../../msvc_build.bat
+    - mv $env:BUILD_CONFIG ../../
+    - cd ../../
+    - cp glut32.dll $env:BUILD_CONFIG/
+  artifacts:
+    paths:
+      - "$env:BUILD_CONFIG/*"
