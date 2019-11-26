@@ -101,9 +101,11 @@ void idle() {
 	end_clock = clock();
 	if (end_clock - start_clock > 1000 / 60) {
 		VB.stateTransition();
-		tb.progressTime();
-		// glutSetWindow(main_window);
-		// glutPostRedisplay();
+		if (tb.progressTime()) {
+			VB.launchBubble();
+		}
+		glutSetWindow(main_window);
+		glutPostRedisplay();
 		glutSetWindow(gameboard_window);
 		glutPostRedisplay();
 		glutSetWindow(status_window);
@@ -116,11 +118,15 @@ void idle() {
 }
 
 void initParentWindow() {
-
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glutSwapBuffers();
 }
 
 void renderSceneParentWindow() {
-
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glutSwapBuffers();
 }
 
 void renderSceneGameBoard() {
@@ -129,7 +135,7 @@ void renderSceneGameBoard() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-WIDTH / 2, WIDTH / 2, -800 / 2, 800 / 2, 100.0, -100.0);
+	glOrtho(-WIDTH / 2, WIDTH / 2, -800 / 2, 800 / 2, -100.0, 100.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -182,8 +188,8 @@ int main(int argc, char** argv) {
 		
 		// register callbacks
 	status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 100);
-		initScoreBoard();
-		glutDisplayFunc(renderSceneScoreBoard);
+		// initScoreBoard();
+		// glutDisplayFunc(renderSceneScoreBoard);
 
 	gameboard_window = glutCreateSubWindow(main_window, 0, 100, WIDTH, 800);
 		initGameBoard();
