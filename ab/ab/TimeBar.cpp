@@ -40,14 +40,14 @@ int TimeBar::getTime() {
 }
 
 /* True: timeout, False: otime(k */
-bool TimeBar::progressTime(){
-    colored_width = TIME_BAR_WIDTH * 1.0 * t / 300;
-    if (colored_width < 0){
-        colored_width = TIME_BAR_WIDTH;
-        base_timer = std::clock();
-        return true;
-    }
-    else{
-        return false;
-    }
-}
+// bool TimeBar::progressTime(){
+//     colored_width = TIME_BAR_WIDTH * 1.0 * t / 300;
+//     if (colored_width < 0){
+//         colored_width = TIME_BAR_WIDTH;
+//         base_timer = std::clock();
+//         return true;
+//     }
+//     else{
+//         return false;
+//     }
+// }
