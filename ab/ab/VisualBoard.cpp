@@ -198,3 +198,7 @@ Bubble* VisualBoard::generateBubble(){
 unsigned int VisualBoard::getScore() const {
     return score;
 }
+
+int VisualBoard::getState() {
+	return game_state;
+}
