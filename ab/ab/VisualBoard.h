@@ -108,6 +108,7 @@ public:
     void updateCannonAngle(double theta);
     void launchBubble();
     void stateTransition();
+	int getState();
 
     unsigned int getScore() const;
 };

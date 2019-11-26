@@ -19,13 +19,15 @@ class TimeBar{
         // ~TimeBar();
 
         bool progressTime();
+		void timeTicking();
         void draw() const;
         void reset();
+		int getTime();
 
     private:
         std::clock_t base_timer;
         float colored_width;
-        
+		int t;        
         float pos2d[2];
 
 };

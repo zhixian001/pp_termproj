@@ -19,6 +19,7 @@ using namespace std;
 
 // Bubble b, nextBubble;
 double theta = M_PI/2;
+int cnt = 0;
 // double t = 0.0;
 
 clock_t start_clock = clock();
@@ -100,15 +101,19 @@ void idle() {
 	/* Implement: check collision with boundary */
 	end_clock = clock();
 	if (end_clock - start_clock > 1000 / 60) {
+		
+		cout << tb.getTime() << endl;
+		// glutSetWindow(main_window);
+		// glutPostRedisplay();
+		if (VB.getState() > 1)	tb.reset();
+		if (VB.getState() == 0)	tb.timeTicking();
 		VB.stateTransition();
-		if (tb.progressTime()) {
+		if (tb.getTime() == 0 && VB.getState() == 0) {
 			VB.launchBubble();
 		}
-		glutSetWindow(main_window);
+		glutSetWindow(status_window);
 		glutPostRedisplay();
 		glutSetWindow(gameboard_window);
-		glutPostRedisplay();
-		glutSetWindow(status_window);
 		glutPostRedisplay();
 		start_clock = end_clock;
 		// t += 0.2;
@@ -118,15 +123,11 @@ void idle() {
 }
 
 void initParentWindow() {
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glutSwapBuffers();
+
 }
 
 void renderSceneParentWindow() {
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glutSwapBuffers();
+
 }
 
 void renderSceneGameBoard() {
@@ -135,7 +136,7 @@ void renderSceneGameBoard() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-WIDTH / 2, WIDTH / 2, -800 / 2, 800 / 2, -100.0, 100.0);
+	glOrtho(-WIDTH / 2, WIDTH / 2, -800 / 2, 800 / 2,-100.0, 100.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -188,8 +189,8 @@ int main(int argc, char** argv) {
 		
 		// register callbacks
 	status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 100);
-		// initScoreBoard();
-		// glutDisplayFunc(renderSceneScoreBoard);
+		initScoreBoard();
+		 glutDisplayFunc(renderSceneScoreBoard);
 
 	gameboard_window = glutCreateSubWindow(main_window, 0, 100, WIDTH, 800);
 		initGameBoard();
