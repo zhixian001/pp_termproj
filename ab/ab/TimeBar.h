@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ctime>
+// #include <ctime>
 #include <GL/glut.h>
 
 #include "Settings.h"
@@ -18,7 +18,7 @@ class TimeBar{
         TimeBar();
         // ~TimeBar();
 
-        bool progressTime();
+        // bool progressTime();
 		void timeTicking();
         void draw() const;
         void reset();
