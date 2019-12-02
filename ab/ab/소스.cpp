@@ -98,19 +98,20 @@ void processSpecialKeys(int key, int x, int y) {
 }
 
 void idle() {
-	/* Implement: check collision with boundary */
 	end_clock = clock();
 	if (end_clock - start_clock > 1000 / 60) {
 		
-		cout << tb.getTime() << endl;
 		// glutSetWindow(main_window);
 		// glutPostRedisplay();
-		if (VB.getState() > 1)	tb.reset();
-		if (VB.getState() == 0)	tb.timeTicking();
 		VB.stateTransition();
-		if (tb.getTime() == 0 && VB.getState() == 0) {
-			VB.launchBubble();
+		if (VB.getState() == Ready) {
+			if (tb.getTime() == 0) VB.launchBubble();
+			else tb.timeTicking();
 		}
+		else if (VB.getState() != ShotFlying) {
+			tb.reset();
+		}
+
 		glutSetWindow(status_window);
 		glutPostRedisplay();
 		glutSetWindow(gameboard_window);
@@ -136,7 +137,7 @@ void renderSceneGameBoard() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-WIDTH / 2, WIDTH / 2, -800 / 2, 800 / 2,-100.0, 100.0);
+	glOrtho(-WIDTH / 2, WIDTH / 2, -800 / 2, 800 / 2, -100.0, 100.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -179,7 +180,7 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(650, 300);
 	glutInitWindowSize(WIDTH, HEIGHT);
 
-	glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
+	glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);
 
 	main_window = glutCreateWindow("Class Term Project!");
 		glutReshapeFunc(resize);
