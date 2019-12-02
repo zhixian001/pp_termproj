@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -15,7 +17,6 @@
 
 using namespace std;
 
-#define _USE_MATH_DEFINES
 
 // Bubble b, nextBubble;
 double theta = M_PI/2;
