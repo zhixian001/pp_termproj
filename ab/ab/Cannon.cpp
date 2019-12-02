@@ -18,12 +18,14 @@ void Cannon::draw()
 
     // launch pnt
     glPushMatrix();
+        // drawMaterial();
         glTranslatef(0, BUBBLE_LAUNCH_Y_COORD, this->cylinder_depth);
         // cannon
         glPushMatrix();
             glRotatef(head_angle * 180 / M_PI - 90, 0, 0, 1.0);
             // cannon arrow
             glPushMatrix();
+                // glTranslatef(0, 50, 0);
                 glPushMatrix();
                     launch_torus.drawMaterialOnly();
                     glutSolidTorus(3, 45, 30, 30);

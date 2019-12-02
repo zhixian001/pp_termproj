@@ -235,7 +235,7 @@ std::vector<std::pair<int, int>> Board::BubbleDropRC()
 	std::vector<Bubble> ret;
 	memset(visited, false, sizeof(visited));
 	dfs(0, 1, -1);
-	for (int r = 1; r <= GAME_ROW_COUNT - 1; r++)
+	for (int r = 1; r <= GAME_ROW_COUNT + 1; r++)
 		for (int c = 1; c <= GAME_COLUMN_COUNT - 2; c++)
 			if (!visited[r][c] && bubbled[r][c])
 			{

@@ -115,6 +115,9 @@ public:
     void launchBubble();
     void stateTransition();
     int getState();
-
+    bool gameClear();
+    bool gameOver(int upper);
+    std::deque<Bubble *> getBubble();
+    void makePopping(Bubble *b);
     unsigned int getScore() const;
 };

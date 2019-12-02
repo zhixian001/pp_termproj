@@ -20,7 +20,8 @@ typedef enum
 	Flick,
 	Falling,
 	Moving,
-	Dead
+	Dead,
+	Popping
 } BubbleState;
 
 class Bubble : public BaseObject
@@ -44,6 +45,7 @@ public:
 	double getDx() const;
 	double getDy() const;
 	int getOption() const;
+	void setGradient(double DX, double DY);
 
 	int getRow() const;
 	int getCol() const;
@@ -57,4 +59,5 @@ private:
 	double radius;
 	double x, y;
 	int option;
+	int life;
 };

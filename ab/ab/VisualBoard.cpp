@@ -109,6 +109,7 @@ void VisualBoard::stateTransition()
             {
                 if (bubblez[i] == bubble_alias[tmp.first][tmp.second])
                 {
+                    makePopping(bubblez[i]);
                     bubblez.erase(bubblez.begin() + i);
                     delete bubble_alias[tmp.first][tmp.second];
                     bubble_alias[tmp.first][tmp.second] = NULL;
@@ -222,7 +223,7 @@ void VisualBoard::draw()
         glVertex3f(WIDTH, -128, 0);
         glEnd();
     glPopMatrix();
-    
+
 }
 
 void VisualBoard::updateCannonAngle(double theta)
@@ -235,7 +236,24 @@ Bubble *VisualBoard::generateBubble()
 {
     // TOFIX: generation method
     srand(clock());
-    return new Bubble(BUBBLE_RADIUS, BUBBLE_NEXT_LAUNCH_X_COORD, BUBBLE_NEXT_LAUNCH_Y_COORD, rand() % 5);
+    int cnt[5] = {
+        0,
+    };
+    int cnt1 = 0;
+    for (unsigned int i = 0; i < bubblez.size() - 2; i++)
+        cnt[bubblez[i]->getOption()]++;
+    for (int i = 1; i < 5; i++)
+        cnt[i] += cnt[i - 1];
+    int r = rand() % cnt[4];
+    for (int i = 0; i < 5; i++)
+        std::cout << cnt[i] << ' ';
+    std::cout << r << '\n';
+    for (int i = 0; i < 5; i++)
+    {
+        if (r < cnt[i])
+            return new Bubble(BUBBLE_RADIUS, BUBBLE_NEXT_LAUNCH_X_COORD, BUBBLE_NEXT_LAUNCH_Y_COORD, i);
+    }
+    return new Bubble(BUBBLE_RADIUS, BUBBLE_NEXT_LAUNCH_X_COORD, BUBBLE_NEXT_LAUNCH_Y_COORD, -1);
 }
 
 unsigned int VisualBoard::getScore() const
@@ -246,4 +264,40 @@ unsigned int VisualBoard::getScore() const
 int VisualBoard::getState()
 {
     return game_state;
+}
+
+bool VisualBoard::gameClear()
+{
+    return bubblez.size() == 2;
+}
+
+bool VisualBoard::gameOver(int clear)
+{
+    /*for (int i = 0; i < bubblez.size() - 2; i++) {
+		double y = bubblez[i]->getY();
+		if (y + clear < -300)	return true;
+	}*/
+    return false;
+}
+
+std::deque<Bubble *> VisualBoard::getBubble()
+{
+    return bubblez;
+}
+
+void VisualBoard::makePopping(Bubble *b)
+{
+    double x = b->getX();
+    double y = b->getY();
+    for (int i = 0; i < 20; i++)
+    {
+        double theta = 2 * M_PI / 20 * i;
+        double r = 20;
+        double dx = x + r * sin(theta);
+        double dy = y + r * cos(theta);
+        Bubble *newBubble = new Bubble(3, dx, dy, b->getOption());
+        newBubble->setState(Popping);
+        newBubble->setGradient(5 * sin(theta), 5 * cos(theta));
+        bubblez.push_back(newBubble);
+    }
 }

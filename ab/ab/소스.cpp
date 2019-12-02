@@ -20,7 +20,8 @@ using namespace std;
 // Bubble b, nextBubble;
 double theta = M_PI/2;
 int cnt = 0;
-// double t = 0.0;
+double t = 0.0;
+int upper = 0;
 
 clock_t start_clock = clock();
 clock_t end_clock;
@@ -33,13 +34,15 @@ VisualBoard* VB = new VisualBoard();
 
 TimeBar tb = TimeBar();
 
-
 int main_window, status_window, gameboard_window;
 
-void initGameBoard() {
-	// while (VB->getBubblez().size() == 2) {
-	// VB = VisualBoard();
-	// }
+void initGameBoard()
+{
+	while (VB->getBubble().size() == 2)
+	{
+		delete VB;
+		VB = new VisualBoard();
+	}
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	srand(time(0));
@@ -67,7 +70,6 @@ void initGameBoard() {
 void initScoreBoard() {
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
 }
 
 void processNormalKeys(unsigned char key, int x, int y) {
@@ -94,15 +96,29 @@ void processSpecialKeys(int key, int x, int y) {
 			cout<<VB->getScore()<<endl;
 			break;
 	}
-
 }
 
 void idle() {
 	end_clock = clock();
 	if (end_clock - start_clock > 1000 / 60) {
 		
+		
+		// cout << tb.getTime() << endl;
 		// glutSetWindow(main_window);
 		// glutPostRedisplay();
+
+		if (VB->gameClear())
+		{
+			cout << "game clear";
+			exit(0);
+		}
+
+		if (VB->gameOver(upper))
+		{
+			cout << "game over";
+			exit(0);
+		}
+		
 		VB->stateTransition();
 		if (VB->getState() == Ready) {
 			if (tb.getTime() == 0) VB->launchBubble();
@@ -111,7 +127,6 @@ void idle() {
 		else if (VB->getState() != ShotFlying) {
 			tb.reset();
 		}
-
 		glutSetWindow(status_window);
 		glutPostRedisplay();
 		glutSetWindow(gameboard_window);
@@ -140,12 +155,12 @@ void renderSceneGameBoard() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	// glPushMatrix();
+	glPushMatrix();
 
-	// glTranslatef(30*sin(t), 0, 0);
+	glTranslatef(30 * sin(t), 0, 0);
 	VB->draw();
-	// glPopMatrix();
-	
+	glPopMatrix();
+
 	glutSwapBuffers();
 }
 
@@ -202,10 +217,8 @@ int main(int argc, char** argv) {
 	// enter GLUT event processing cycle
 	glutMainLoop();
 
-
 	// exit
 	delete light0;
 	delete light1;
-	delete VB;
 	return 0;
 }

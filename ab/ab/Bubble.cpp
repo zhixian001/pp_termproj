@@ -32,6 +32,7 @@ Bubble::Bubble(double r, double px, double py, int op) : BaseObject(op)
 	y = py;
 	option = op;
 	state = Static;
+	life = 0;
 	// row = _row;
 	// col = _col;
 }
@@ -77,6 +78,12 @@ void Bubble::setState(BubbleState _state, double _dx, double _dy)
 	}
 }
 
+void Bubble::setGradient(double DX, double DY)
+{
+	dx = DX;
+	dy = DY;
+}
+
 void Bubble::move()
 {
 	if (state == Static)
@@ -109,6 +116,16 @@ void Bubble::move()
 		dy = 1.0 * ((rand() % 30) - 10);
 		dx = 1.0 * ((rand() % 30) - 10) / 5;
 		state = Falling;
+	}
+	else if (state == Popping)
+	{
+		x += dx;
+		y += dy;
+		life++;
+		if (life == 2)
+		{
+			state = Dead;
+		}
 	}
 	// dead
 	else
