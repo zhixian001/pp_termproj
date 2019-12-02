@@ -1,5 +1,3 @@
-#define _USE_MATH_DEFINES
-
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -17,6 +15,7 @@
 
 using namespace std;
 
+#define M_PI 3.14159265358979323846
 
 // Bubble b, nextBubble;
 double theta = M_PI/2;
@@ -176,7 +175,7 @@ int main(int argc, char** argv) {
 	// init GLUT and create Window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowPosition(650, 300);
+	glutInitWindowPosition(800, 100);
 	glutInitWindowSize(WIDTH, HEIGHT);
 
 	glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);
@@ -188,11 +187,11 @@ int main(int argc, char** argv) {
 		glutDisplayFunc(renderSceneParentWindow);
 		
 		// register callbacks
-	status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 100);
+	status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 30);
 		initScoreBoard();
 		 glutDisplayFunc(renderSceneScoreBoard);
 
-	gameboard_window = glutCreateSubWindow(main_window, 0, 100, WIDTH, 800);
+	gameboard_window = glutCreateSubWindow(main_window, 0, 30, WIDTH, 800);
 		initGameBoard();
 		glutDisplayFunc(renderSceneGameBoard);
 		glutKeyboardFunc(processNormalKeys);
