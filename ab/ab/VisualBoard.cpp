@@ -8,6 +8,9 @@ VisualBoard::VisualBoard(/* args */)
     score = 0;
 
     board = new Board();
+
+    separator = BaseObject(5);
+
     // inspect generated map
     std::vector<std::pair<Bubble *, std::pair<int, int>>> observation = board->observeBoard();
     cannon = Cannon();
@@ -206,6 +209,20 @@ void VisualBoard::draw()
         bubblez[i]->draw();
     }
     cannon.draw();
+
+    // draw separator
+
+    // TODO: BaseObject to other section
+    glPushMatrix();
+        separator.drawMaterialOnly();
+        glBegin(GL_QUADS);
+        glVertex3f(-WIDTH,-128,0);
+        glVertex3f(-WIDTH,-130, 0);
+        glVertex3f(WIDTH, -130, 0);
+        glVertex3f(WIDTH, -128, 0);
+        glEnd();
+    glPopMatrix();
+    
 }
 
 void VisualBoard::updateCannonAngle(double theta)

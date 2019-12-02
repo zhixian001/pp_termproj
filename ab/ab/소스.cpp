@@ -47,12 +47,12 @@ void initGameBoard() {
 	// TODO: Initial scripts
 	// lighting
 	if (LIGHTING_ON){
-		light0 = new Light(200.0, 100.0, 500.0, GL_LIGHT0);
+		light0 = new Light(0.0, 100.0, 300.0, GL_LIGHT0);
 		light0->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
 		light0->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
 		light0->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 
-		light1 = new Light(200.0, 300.0, 500.0, GL_LIGHT0);
+		light1 = new Light(0, 0.0, 300.0, GL_LIGHT0);
 		light1->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
 		light1->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
 		light1->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
