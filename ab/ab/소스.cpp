@@ -29,7 +29,7 @@ Light* light0;
 Light* light1;
 
 // Board board = Board();
-VisualBoard VB = VisualBoard();
+VisualBoard* VB = new VisualBoard();
 
 TimeBar tb = TimeBar();
 
@@ -37,7 +37,7 @@ TimeBar tb = TimeBar();
 int main_window, status_window, gameboard_window;
 
 void initGameBoard() {
-	// while (VB.getBubblez().size() == 2) {
+	// while (VB->getBubblez().size() == 2) {
 	// VB = VisualBoard();
 	// }
 	glClearColor(0, 0, 0, 0);
@@ -73,7 +73,7 @@ void initScoreBoard() {
 void processNormalKeys(unsigned char key, int x, int y) {
 
 	if (key == 32) {
-		VB.launchBubble();
+		VB->launchBubble();
 	}
 }
 
@@ -83,15 +83,15 @@ void processSpecialKeys(int key, int x, int y) {
 		case GLUT_KEY_LEFT:
 			theta += 0.2/M_PI;
 			theta = min(theta, M_PI / 180 * 170);
-			VB.updateCannonAngle(theta);
+			VB->updateCannonAngle(theta);
 			break;
 		case GLUT_KEY_RIGHT:
 			theta -= 0.2/M_PI;
 			theta = max(theta, M_PI / 180 * 10);
-			VB.updateCannonAngle(theta);
+			VB->updateCannonAngle(theta);
 			break;
 		case GLUT_KEY_F2:
-			cout<<VB.getScore()<<endl;
+			cout<<VB->getScore()<<endl;
 			break;
 	}
 
@@ -103,12 +103,12 @@ void idle() {
 		
 		// glutSetWindow(main_window);
 		// glutPostRedisplay();
-		VB.stateTransition();
-		if (VB.getState() == Ready) {
-			if (tb.getTime() == 0) VB.launchBubble();
+		VB->stateTransition();
+		if (VB->getState() == Ready) {
+			if (tb.getTime() == 0) VB->launchBubble();
 			else tb.timeTicking();
 		}
-		else if (VB.getState() != ShotFlying) {
+		else if (VB->getState() != ShotFlying) {
 			tb.reset();
 		}
 
@@ -143,7 +143,7 @@ void renderSceneGameBoard() {
 	// glPushMatrix();
 
 	// glTranslatef(30*sin(t), 0, 0);
-	VB.draw();
+	VB->draw();
 	// glPopMatrix();
 	
 	glutSwapBuffers();
@@ -206,5 +206,6 @@ int main(int argc, char** argv) {
 	// exit
 	delete light0;
 	delete light1;
+	delete VB;
 	return 0;
 }
