@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <stdexcept>
 #include <cstdlib>
 #include <time.h>
@@ -15,10 +14,18 @@
 #define BUBBLE_LAUNCH_Y_COORD -270
 #endif
 
-typedef enum {Static, Flick, Falling, Moving, Dead} BubbleState;
+typedef enum
+{
+	Static,
+	Flick,
+	Falling,
+	Moving,
+	Dead
+} BubbleState;
 
-class Bubble : public BaseObject{
-public :
+class Bubble : public BaseObject
+{
+public:
 	/* op = option. Bubble's color */
 	Bubble(double r = 0.0, double x = 0.0, double y = 0.0, int op = 0);
 	void setState(BubbleState);
@@ -27,9 +34,9 @@ public :
 	void draw() const;
 	// void draw(int color) const;
 	void move();
-	void moveRel (double rx=0, double ry=0);
-	void moveAbs (double ax, double ay);
-	void moveAbs (int ax, int ay);
+	void moveRel(double rx = 0, double ry = 0);
+	void moveAbs(double ax, double ay);
+	void moveAbs(int ax, int ay);
 	void changeDx(double a);
 	void changeDy(double a);
 	double getX() const;

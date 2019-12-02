@@ -3,7 +3,16 @@
 #include <GL/glut.h>
 #include "Material.h"
 
-typedef enum {RedPlastic, GreenPlastic, BluePlastic, YellowPlastic, MagentaPlastic, Ruby, Emerald} MaterialPreset;
+typedef enum
+{
+    RedPlastic,
+    GreenPlastic,
+    BluePlastic,
+    YellowPlastic,
+    MagentaPlastic,
+    Ruby,
+    Emerald
+} MaterialPreset;
 
 class BaseObject
 {
