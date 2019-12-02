@@ -19,10 +19,9 @@ public:
     void setSpecular(float r, float g, float b, float a);
     void setShininess(float sh);
 
-    const float* getEmission() const;    
-    const float* getAmbient() const;
-    const float* getDiffuse() const;
-    const float* getSpecular() const;
-    const float* getShininess() const;
-    
+    const float *getEmission() const;
+    const float *getAmbient() const;
+    const float *getDiffuse() const;
+    const float *getSpecular() const;
+    const float *getShininess() const;
 };

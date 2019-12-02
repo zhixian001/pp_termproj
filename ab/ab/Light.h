@@ -11,6 +11,7 @@ private:
     float ambient[4];
     float diffuse[4];
     float specular[4];
+
 public:
     Light(/* args */);
     Light(float x, float y, float z, int L_ID);

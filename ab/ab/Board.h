@@ -1,7 +1,6 @@
 #pragma once
 
-
-// debugging 
+// debugging
 #include <iostream>
 
 #include <memory>
@@ -34,19 +33,21 @@
 #define BUBBLE_RADIUS 25.0
 #endif
 
-class Board{
+class Board
+{
 public:
 	Board();
 	/* 새 맵 생성 후에 읽어오기 */
-	std::vector<std::pair<Bubble*, std::pair<int, int>>> observeBoard();
+	std::vector<std::pair<Bubble *, std::pair<int, int>>> observeBoard();
 	std::pair<int, int> getPos(double x, double y);
 	/* option : color */
-	std::pair<int, int> collision(const Bubble* bub);
+	std::pair<int, int> collision(const Bubble *bub);
 	/* option : color */
-	std::vector<std::pair<int, int>> BubblePop(const Bubble* bubs);
+	std::vector<std::pair<int, int>> BubblePop(const Bubble *bubs);
 	std::vector<std::pair<int, int>> BubbleDropRC();
 	void levelDown();
 	std::pair<double, double> getCoords(int r, int c) const;
+
 private:
 	const double bubble_diameter = BUBBLE_RADIUS * 2;
 	/* bubble visualization validity check */

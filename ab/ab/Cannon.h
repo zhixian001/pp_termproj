@@ -12,7 +12,8 @@
 #define BUBBLE_LAUNCH_Y_COORD -270
 #endif
 
-class Cannon : public BaseObject {
+class Cannon : public BaseObject
+{
 private:
     double head_angle;
     float cylinder_radius, cylinder_halflength;
