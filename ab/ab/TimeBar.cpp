@@ -1,41 +1,45 @@
 #include "TimeBar.h"
 
-
-TimeBar::TimeBar() {
-    base_timer = std::clock();
-    colored_width = TIME_BAR_WIDTH;
+TimeBar::TimeBar()
+{
+	base_timer = std::clock();
+	colored_width = TIME_BAR_WIDTH;
 	t = 300;
-    // TODO: change value
-    pos2d[0] = 0.0;
-    pos2d[1] = 0.0;
+	// TODO: change value
+	pos2d[0] = 0.0;
+	pos2d[1] = 0.0;
 }
 
-void TimeBar::draw() const {
-    glPushMatrix();
-    glLineWidth(10);
+void TimeBar::draw() const
+{
+	glPushMatrix();
+	glLineWidth(10);
 	// glEnable(GL_LINE_STIPPLE);
 	// glLineStipple(3, 0xAAAA);
 	glBegin(GL_LINES);
-		glColor3f(1, 0, 0);
-		glVertex2f(pos2d[0], pos2d[1]);
-		glColor3f(1, 0, 0);		
-		glVertex2f(pos2d[0]+colored_width, pos2d[1]);
+	glColor3f(1, 0, 0);
+	glVertex2f(pos2d[0], pos2d[1]);
+	glColor3f(1, 0, 0);
+	glVertex2f(pos2d[0] + colored_width, pos2d[1]);
 	glEnd();
-    glPopMatrix();
+	glPopMatrix();
 }
 
 /* If Shot, progressbar reset */
-void TimeBar::reset() {
+void TimeBar::reset()
+{
 	t = 300;
 	colored_width = TIME_BAR_WIDTH * 1.0 * t / 300;
 }
 
-void TimeBar::timeTicking() {
+void TimeBar::timeTicking()
+{
 	t -= 1;
 	colored_width = TIME_BAR_WIDTH * 1.0 * t / 300;
 }
 
-int TimeBar::getTime() {
+int TimeBar::getTime()
+{
 	return t;
 }
 

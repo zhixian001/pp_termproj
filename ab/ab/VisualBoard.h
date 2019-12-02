@@ -19,7 +19,6 @@
 
 #include <iostream>
 
-
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
@@ -73,21 +72,25 @@
 #define POINTS_PER_BUBBLE 100
 #endif
 
-
-
-
-typedef enum {Ready, ShotFlying, ShotCollide, Pop, Drop} GameStates;
+typedef enum
+{
+    Ready,
+    ShotFlying,
+    ShotCollide,
+    Pop,
+    Drop
+} GameStates;
 
 class VisualBoard
 {
 private:
-    std::deque<Bubble*> bubblez;
-    Board* board;
+    std::deque<Bubble *> bubblez;
+    Board *board;
     Cannon cannon;
-    std::deque<Bubble*>::iterator to_launch;
-    std::deque<Bubble*>::iterator next_launch;
-    std::deque<Bubble*>::iterator flying_now;
-    Bubble* bubble_alias[GAME_ROW_COUNT][GAME_COLUMN_COUNT];
+    std::deque<Bubble *>::iterator to_launch;
+    std::deque<Bubble *>::iterator next_launch;
+    std::deque<Bubble *>::iterator flying_now;
+    Bubble *bubble_alias[GAME_ROW_COUNT][GAME_COLUMN_COUNT];
     GameStates game_state;
     std::pair<int, int> collision_pair;
     std::vector<std::pair<int, int>> pop_vector;
@@ -98,8 +101,11 @@ private:
 
     unsigned int score;
 
+    BaseObject separator;
+
 protected:
-	Bubble* generateBubble();
+    Bubble *generateBubble();
+
 public:
     VisualBoard();
     ~VisualBoard();
@@ -108,7 +114,7 @@ public:
     void updateCannonAngle(double theta);
     void launchBubble();
     void stateTransition();
-	int getState();
+    int getState();
 
     unsigned int getScore() const;
 };

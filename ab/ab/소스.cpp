@@ -47,12 +47,12 @@ void initGameBoard() {
 	// TODO: Initial scripts
 	// lighting
 	if (LIGHTING_ON){
-		light0 = new Light(200.0, 100.0, 500.0, GL_LIGHT0);
+		light0 = new Light(0.0, 100.0, 300.0, GL_LIGHT0);
 		light0->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
 		light0->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
 		light0->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 
-		light1 = new Light(200.0, 300.0, 500.0, GL_LIGHT0);
+		light1 = new Light(0, 0.0, 300.0, GL_LIGHT0);
 		light1->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
 		light1->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
 		light1->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
@@ -98,26 +98,25 @@ void processSpecialKeys(int key, int x, int y) {
 }
 
 void idle() {
-	/* Implement: check collision with boundary */
 	end_clock = clock();
 	if (end_clock - start_clock > 1000 / 60) {
 		
-		cout << tb.getTime() << endl;
 		// glutSetWindow(main_window);
 		// glutPostRedisplay();
-		if (VB.getState() > 1)	tb.reset();
-		if (VB.getState() == 0)	tb.timeTicking();
 		VB.stateTransition();
-		if (tb.getTime() == 0 && VB.getState() == 0) {
-			VB.launchBubble();
+		if (VB.getState() == Ready) {
+			if (tb.getTime() == 0) VB.launchBubble();
+			else tb.timeTicking();
 		}
+		else if (VB.getState() != ShotFlying) {
+			tb.reset();
+		}
+
 		glutSetWindow(status_window);
 		glutPostRedisplay();
 		glutSetWindow(gameboard_window);
 		glutPostRedisplay();
 		start_clock = end_clock;
-		// t += 0.2;
-		// cout << t << endl;
 		
 	}
 }
@@ -136,7 +135,7 @@ void renderSceneGameBoard() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-WIDTH / 2, WIDTH / 2, -800 / 2, 800 / 2,-100.0, 100.0);
+	glOrtho(-WIDTH / 2, WIDTH / 2, -WIDTH, WIDTH, -100.0, 100.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -155,7 +154,7 @@ void renderSceneScoreBoard() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode (GL_PROJECTION); // Tell opengl that we are doing project matrix work
 	glLoadIdentity(); // Clear the matrix
-	glOrtho(-200.0, 200.0, -50.0, 50.0, -100.0, 100.0); // Setup an Ortho view
+	glOrtho(-WIDTH/2, WIDTH/2, -50.0, 50.0, -100.0, 100.0); // Setup an Ortho view
 	glMatrixMode(GL_MODELVIEW); // Tell opengl that we are doing model matrix work. (drawing)
 	glLoadIdentity(); // Clear the model matrix
 
@@ -176,10 +175,10 @@ int main(int argc, char** argv) {
 	// init GLUT and create Window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowPosition(650, 300);
+	glutInitWindowPosition(800, 100);
 	glutInitWindowSize(WIDTH, HEIGHT);
 
-	glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
+	glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);
 
 	main_window = glutCreateWindow("Class Term Project!");
 		glutReshapeFunc(resize);
@@ -188,11 +187,11 @@ int main(int argc, char** argv) {
 		glutDisplayFunc(renderSceneParentWindow);
 		
 		// register callbacks
-	status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 100);
+	status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 30);
 		initScoreBoard();
 		 glutDisplayFunc(renderSceneScoreBoard);
 
-	gameboard_window = glutCreateSubWindow(main_window, 0, 100, WIDTH, 800);
+	gameboard_window = glutCreateSubWindow(main_window, 0, 30, WIDTH, 800);
 		initGameBoard();
 		glutDisplayFunc(renderSceneGameBoard);
 		glutKeyboardFunc(processNormalKeys);
