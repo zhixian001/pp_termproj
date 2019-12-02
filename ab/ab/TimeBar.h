@@ -2,7 +2,7 @@
 
 // #include <ctime>
 #include <GL/glut.h>
-
+#include <ctime>
 #include "Settings.h"
 
 #ifndef GAME_TIMEOUT
