@@ -77,3 +77,11 @@ void BaseObject::drawMaterial() const
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mtl.getSpecular());
 	glMaterialfv(GL_FRONT, GL_SHININESS, mtl.getShininess());
 }
+
+void BaseObject::drawMaterialOnly() const
+{
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mtl.getAmbient());
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mtl.getDiffuse());
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mtl.getSpecular());
+	glMaterialfv(GL_FRONT, GL_SHININESS, mtl.getShininess());
+}

@@ -31,5 +31,7 @@ public:
     BaseObject(MaterialPreset preset);
     virtual ~BaseObject();
 
+    void drawMaterialOnly() const;
+
     // virtual void draw() const;
 };

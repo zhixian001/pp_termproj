@@ -3,7 +3,7 @@
 Cannon::Cannon() : BaseObject(Emerald)
 {
     this->head_angle = M_PI / 2;
-    this->cone_height = 20;
+    this->cone_height = 18;
     this->cylinder_radius = 7.0;
 }
 
@@ -13,26 +13,34 @@ Cannon::~Cannon()
 
 void Cannon::draw()
 {
+    // TODO: sep
+    BaseObject launch_torus = BaseObject(1);
+
     // launch pnt
     glPushMatrix();
-    drawMaterial();
-    glTranslatef(0, BUBBLE_LAUNCH_Y_COORD, this->cylinder_depth);
-    // cannon
-    glPushMatrix();
-    glRotatef(head_angle * 180 / M_PI - 90, 0, 0, 1.0);
-    // cannon arrow
-    glPushMatrix();
-    glTranslatef(0, 50, 0);
-    glRotatef(-90, 1.0, 0, 0);
-    glColor3f(0.7, 0.3, 0.6);
-    glutSolidCone(cylinder_radius * 2.3, cone_height, 50, 50);
-    // cannon body cylinder
-    glPushMatrix();
-    glTranslatef(0, 0, -110);
-    drawCylinder(cylinder_radius, 110.0, 0.7, 0.3, 0.6);
-    glPopMatrix();
-    glPopMatrix();
-    glPopMatrix();
+        glTranslatef(0, BUBBLE_LAUNCH_Y_COORD, this->cylinder_depth);
+        // cannon
+        glPushMatrix();
+            glRotatef(head_angle * 180 / M_PI - 90, 0, 0, 1.0);
+            // cannon arrow
+            glPushMatrix();
+                glPushMatrix();
+                    launch_torus.drawMaterialOnly();
+                    glutSolidTorus(3, 45, 30, 30);
+                glPopMatrix();
+                drawMaterial();
+
+                glTranslatef(0, 40, 0);
+                glRotatef(-90, 1.0, 0, 0);
+                glColor3f(0.7, 0.3, 0.6);
+                glutSolidCone(cylinder_radius * 2.3, cone_height, 25, 25);
+                // cannon body cylinder
+                glPushMatrix();
+                    glTranslatef(0, 0, -100);
+                    drawCylinder(cylinder_radius, 100.0, 0.7, 0.3, 0.6);
+                glPopMatrix();
+            glPopMatrix();
+        glPopMatrix();
     glPopMatrix();
 }
 

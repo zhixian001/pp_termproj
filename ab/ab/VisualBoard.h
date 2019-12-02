@@ -101,6 +101,8 @@ private:
 
     unsigned int score;
 
+    BaseObject separator;
+
 protected:
     Bubble *generateBubble();
 
