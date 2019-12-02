@@ -5,7 +5,8 @@
 #include "Settings.h"
 #include "BaseObject.h"
 
-#define M_PI 3.14159265358979323846
+#define _USE_MATH_DEFINES
+
 // 버블 발사 Y 좌표
 #ifndef BUBBLE_LAUNCH_Y_COORD
 #define BUBBLE_LAUNCH_Y_COORD -270
