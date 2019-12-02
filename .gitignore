@@ -87,3 +87,6 @@ buildlog.log
 
 ab/.vs
 ab/.vs/**/*
+
+ab/ab/[Dd]ebug/*.obj
+ab/ab/[Rr]elease/*.obj
