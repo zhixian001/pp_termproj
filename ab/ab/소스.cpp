@@ -15,7 +15,7 @@
 
 using namespace std;
 
-#define M_PI 3.14159265358979323846
+#define _USE_MATH_DEFINES
 
 // Bubble b, nextBubble;
 double theta = M_PI/2;
@@ -117,8 +117,6 @@ void idle() {
 		glutSetWindow(gameboard_window);
 		glutPostRedisplay();
 		start_clock = end_clock;
-		// t += 0.2;
-		// cout << t << endl;
 		
 	}
 }
@@ -137,7 +135,7 @@ void renderSceneGameBoard() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-WIDTH / 2, WIDTH / 2, -800 / 2, 800 / 2, -100.0, 100.0);
+	glOrtho(-WIDTH / 2, WIDTH / 2, -WIDTH, WIDTH, -100.0, 100.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -156,7 +154,7 @@ void renderSceneScoreBoard() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode (GL_PROJECTION); // Tell opengl that we are doing project matrix work
 	glLoadIdentity(); // Clear the matrix
-	glOrtho(-200.0, 200.0, -50.0, 50.0, -100.0, 100.0); // Setup an Ortho view
+	glOrtho(-WIDTH/2, WIDTH/2, -50.0, 50.0, -100.0, 100.0); // Setup an Ortho view
 	glMatrixMode(GL_MODELVIEW); // Tell opengl that we are doing model matrix work. (drawing)
 	glLoadIdentity(); // Clear the model matrix
 
