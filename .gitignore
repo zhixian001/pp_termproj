@@ -83,3 +83,7 @@ build/
 
 buildlog.log
 !glut32.dll
+
+
+ab/.vs
+ab/.vs/**/*
