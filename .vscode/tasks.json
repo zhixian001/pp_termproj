@@ -42,7 +42,7 @@
         {
             "label": "Launch in Linux",
             "type": "shell",
-            "command": "./bin/pp_termproj",
+            "command": "./bin/Bubblebobble_Termproject_28",
             "problemMatcher": [
                 "$gcc"
             ],

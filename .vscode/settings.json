@@ -50,5 +50,19 @@
     },
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
     "C_Cpp.exclusionPolicy": "checkFilesAndFolders",
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "Bubblebobble_Termproject_28/include/GL/**": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "Bubblebobble_Termproject_28/include/GL/**": true
+
+    }
 }
