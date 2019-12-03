@@ -42,7 +42,11 @@
         "xstddef": "cpp",
         "xstring": "cpp",
         "xtr1common": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "array": "cpp",
+        "list": "cpp",
+        "string_view": "cpp",
+        "hash_map": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
     "files.exclude": {
