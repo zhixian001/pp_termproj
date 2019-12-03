@@ -259,9 +259,9 @@ Bubble *VisualBoard::generateBubble()
     for (int i = 1; i < 5; i++)
         cnt[i] += cnt[i - 1];
     int r = rand() % cnt[4];
-    for (int i = 0; i < 5; i++)
-        std::cout << cnt[i] << ' ';
-    std::cout << r << '\n';
+    // for (int i = 0; i < 5; i++)
+        // std::cout << cnt[i] << ' ';
+    // std::cout << r << '\n';
     for (int i = 0; i < 5; i++)
     {
         if (r < cnt[i])

@@ -109,13 +109,13 @@ void idle() {
 
 		if (VB->gameClear())
 		{
-			cout << "game clear";
+			cout << "game clear" << endl;
 			exit(0);
 		}
 
 		if (VB->gameOver(upper))
 		{
-			cout << "game over";
+			cout << "game over" << endl;
 			exit(0);
 		}
 		
