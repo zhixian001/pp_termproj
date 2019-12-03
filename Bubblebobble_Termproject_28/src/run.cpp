@@ -35,7 +35,6 @@ Light* light1;
 static GLuint bgtextureID;
 GLubyte* bgtextureData;
 int bgtextureWidth, bgtextureHeight;
-/* 
 // Board board = Board();
 VisualBoard* VB = new VisualBoard();
 
@@ -43,6 +42,7 @@ TimeBar tb = TimeBar();
 
 int main_window, status_window, gameboard_window;
 
+/* 
 FIBITMAP* createBitMap(char const* filename) {
 	FREE_IMAGE_FORMAT format = FreeImage_GetFileType(filename, 0);
 
