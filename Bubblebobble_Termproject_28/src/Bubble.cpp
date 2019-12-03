@@ -218,11 +218,11 @@ void Bubble::makePopping() {
 	for (int i = 0 ; i < 20 ; i++){
 		theta = 2 * M_PI / 20 * i;
         r = 20;
-        particle_dx = this->x + r * std::sin(theta);
-        particle_dy = this->y + r * std::cos(theta);
+        particle_dx = this->x + r * sin(theta);
+        particle_dy = this->y + r * cos(theta);
 
 		this->particles[i] = Bubble(3, particle_dx, particle_dy, this->getOption());
         this->particles[i].setState(Falling);
-        this->particles[i].setGradient(5 * std::sin(theta), 5 * std::cos(theta));
+        this->particles[i].setGradient(5 * sin(theta), 5 * cos(theta));
 	}
 }

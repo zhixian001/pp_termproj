@@ -6,7 +6,7 @@
 #include <memory>
 #include <cstring>
 #include <vector>
-#include <cstdlib>
+#include <stdlib.h>
 #include <time.h>
 #include "Settings.h"
 #include "Bubble.h"

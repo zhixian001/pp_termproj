@@ -57,7 +57,7 @@ void VisualBoard::launchBubble()
     if (game_state == Ready)
     {
         // bubble launch
-        (*to_launch)->setState(Moving, BUBBLE_SPEED_MULTIPLIER * std::cos(cannon.getAngle()), BUBBLE_SPEED_MULTIPLIER * std::sin(cannon.getAngle()));
+        (*to_launch)->setState(Moving, BUBBLE_SPEED_MULTIPLIER * cos(cannon.getAngle()), BUBBLE_SPEED_MULTIPLIER * sin(cannon.getAngle()));
         // prepare next launch bubble
         (*next_launch)->moveAbs(BUBBLE_LAUNCH_X_COORD, BUBBLE_LAUNCH_Y_COORD);
         // insert bubble and manage iterator

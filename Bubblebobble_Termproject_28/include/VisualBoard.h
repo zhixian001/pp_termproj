@@ -19,9 +19,10 @@
 
 #include <iostream>
 
-#include <cstdlib>
 #include <ctime>
-#include <cmath>
+// #include <cstdlib>
+#include <stdlib.h>
+#include <math.h>
 #include <vector>
 #include <utility>
 #include <deque>

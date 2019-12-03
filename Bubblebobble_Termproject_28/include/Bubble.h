@@ -1,8 +1,10 @@
 #pragma once
 
 #include <stdexcept>
-#include <cstdlib>
-#include <cmath>
+// #include <cstdlib>
+// #include <cmath>
+#include <math.h>
+#include <stdlib.h>
 #include <time.h>
 #include <GL/glut.h>
 #include "Settings.h"
