@@ -118,6 +118,6 @@ public:
     bool gameClear();
     bool gameOver(int upper);
     std::deque<Bubble *> getBubble();
-    void makePopping(Bubble *b);
+    // void maklePopping(Bubble *b);
     unsigned int getScore() const;
 };

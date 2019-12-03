@@ -105,17 +105,27 @@ void VisualBoard::stateTransition()
         {
             tmp = pop_vector.back();
             pop_vector.pop_back();
+
+// ******************************************************************************************8
+// 새 객체를 bubblez에 넣지 않는 방향으로 바꿨습니다.
             for (unsigned int i = 0; i < bubblez.size(); i++)
             {
                 if (bubblez[i] == bubble_alias[tmp.first][tmp.second])
                 {
-                    makePopping(bubblez[i]);
-                    bubblez.erase(bubblez.begin() + i);
-                    delete bubble_alias[tmp.first][tmp.second];
+                    // GC를 Drop state의 끝에서 해줌
+                    // 새 객체를 생성할 필요가 없음
+                    // bubblez[i].makePopping();
+                    bubblez[i]->makePopping();
+                    // makePopping(bubblez[i]);
+                    // bubblez.erase(bubblez.begin() + i);
+                    // delete bubble_alias[tmp.first][tmp.second];
                     bubble_alias[tmp.first][tmp.second] = NULL;
                     break;
                 }
             }
+
+// ******************************************************************************************8
+
         }
         next_launch = bubblez.end() - 1;
         to_launch = next_launch - 1;
@@ -180,6 +190,10 @@ void VisualBoard::stateTransition()
                 break;
             }
         }
+
+
+        // Delete pop bubbles
+
 
         next_launch = bubblez.end() - 1;
         to_launch = next_launch - 1;
@@ -285,19 +299,19 @@ std::deque<Bubble *> VisualBoard::getBubble()
     return bubblez;
 }
 
-void VisualBoard::makePopping(Bubble *b)
-{
-    double x = b->getX();
-    double y = b->getY();
-    for (int i = 0; i < 20; i++)
-    {
-        double theta = 2 * M_PI / 20 * i;
-        double r = 20;
-        double dx = x + r * sin(theta);
-        double dy = y + r * cos(theta);
-        Bubble *newBubble = new Bubble(3, dx, dy, b->getOption());
-        newBubble->setState(Popping);
-        newBubble->setGradient(5 * sin(theta), 5 * cos(theta));
-        bubblez.push_back(newBubble);
-    }
-}
+// void VisualBoard::makePopping(Bubble *b)
+// {
+//     double x = b->getX();
+//     double y = b->getY();
+//     for (int i = 0; i < 20; i++)
+//     {
+//         double theta = 2 * M_PI / 20 * i;
+//         double r = 20;
+//         double dx = x + r * sin(theta);
+//         double dy = y + r * cos(theta);
+//         Bubble *newBubble = new Bubble(3, dx, dy, b->getOption());
+//         newBubble->setState(Popping);
+//         newBubble->setGradient(5 * sin(theta), 5 * cos(theta));
+//         bubblez.push_back(newBubble);
+//     }
+// }

@@ -44,11 +44,11 @@ BubbleState Bubble::getState()
 
 void Bubble::setState(BubbleState _state)
 {
-	if (_state == Falling)
-	{
-		throw std::invalid_argument("Cannot change state 'Falling' directly");
-	}
-	else if (_state == Dead)
+	// if (_state == Falling)
+	// {
+	// 	throw std::invalid_argument("Cannot change state 'Falling' directly");
+	// }
+	if (_state == Dead)
 	{
 		throw std::invalid_argument("Cannot change state 'Dead' directly");
 	}
@@ -119,8 +119,12 @@ void Bubble::move()
 	}
 	else if (state == Popping)
 	{
-		x += dx;
-		y += dy;
+		// x += dx;
+		// y += dy;
+		for (int i = 0 ; i < 20 ; i++){
+			this->particles[i].move();
+		}
+
 		life++;
 		if (life == 2)
 		{
@@ -130,6 +134,7 @@ void Bubble::move()
 	// dead
 	else
 	{
+		delete this->particles;
 	}
 }
 
@@ -170,11 +175,18 @@ void Bubble::draw() const
 	// 사라진 버블은 그리지 않음
 	if (state == Dead)
 		return;
-	glPushMatrix();
-	drawMaterial();
-	glTranslatef(x, y, 50);
-	glutSolidSphere(radius, 20, 50);
-	glPopMatrix();
+	else if (state == Popping){
+		for (int i = 0 ; i < 20 ; i++){
+			this->particles[i].draw();
+		}
+	}
+	else {
+		glPushMatrix();
+		drawMaterial();
+		glTranslatef(x, y, 50);
+		glutSolidSphere(radius, 20, 50);
+		glPopMatrix();
+	}
 }
 
 void Bubble::changeDx(double a)
@@ -194,4 +206,23 @@ double Bubble::getDx() const
 double Bubble::getDy() const
 {
 	return dy;
+}
+
+void Bubble::makePopping() {
+	// 
+	this->state = Popping;
+	this->particles = new Bubble[20];
+
+	double theta, r, particle_dx, particle_dy;
+
+	for (int i = 0 ; i < 20 ; i++){
+		theta = 2 * M_PI / 20 * i;
+        r = 20;
+        particle_dx = this->x + r * std::sin(theta);
+        particle_dy = this->y + r * std::cos(theta);
+
+		this->particles[i] = Bubble(3, particle_dx, particle_dy, this->getOption());
+        this->particles[i].setState(Falling);
+        this->particles[i].setGradient(5 * std::sin(theta), 5 * std::cos(theta));
+	}
 }

@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 #include <cstdlib>
+#include <cmath>
 #include <time.h>
 #include <GL/glut.h>
 #include "Settings.h"
@@ -13,6 +14,9 @@
 #ifndef BUBBLE_LAUNCH_Y_COORD
 #define BUBBLE_LAUNCH_Y_COORD -270
 #endif
+
+#define M_PI 3.14159265358979323846
+
 
 typedef enum
 {
@@ -52,6 +56,8 @@ public:
 	void setRow(int);
 	void setCol(int);
 
+	void makePopping();
+
 private:
 	BubbleState state;
 	double dx;
@@ -60,4 +66,6 @@ private:
 	double x, y;
 	int option;
 	int life;
+
+	Bubble* particles;
 };
