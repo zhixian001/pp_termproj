@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <time.h>
 #include <GL/glut.h>
-// #include <FreeImage.h>
+#include <FreeImage.h>
 #include "Settings.h"
 #include "VisualBoard.h"
 #include "Light.h"
@@ -42,7 +42,6 @@ TimeBar tb = TimeBar();
 
 int main_window, status_window, gameboard_window;
 
-/* 
 FIBITMAP* createBitMap(char const* filename) {
 	FREE_IMAGE_FORMAT format = FreeImage_GetFileType(filename, 0);
 
@@ -77,7 +76,6 @@ FIBITMAP* createBitMap(char const* filename) {
 
 	return bitmap32;
 }
- */
 void drawBackgroundTexture(){
 	glPushMatrix();
 	glTranslatef(0.0, 0.0, -4.5);
