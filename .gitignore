@@ -422,10 +422,12 @@ healthchecksdb
 build/
 
 !glut32.lib
+!FreeImage.lib
 
 
 buildlog.log
 !glut32.dll
+!FreeImage.dll
 
 
 ab/.vs

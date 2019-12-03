@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <time.h>
 #include <GL/glut.h>
+#include <FreeImage.h>
 #include "Settings.h"
 #include "VisualBoard.h"
 #include "Light.h"
@@ -29,12 +30,83 @@ clock_t end_clock;
 Light* light0;
 Light* light1;
 
+
+// Texture background
+static GLuint bgtextureID;
+GLubyte* bgtextureData;
+int bgtextureWidth, bgtextureHeight;
+
 // Board board = Board();
 VisualBoard* VB = new VisualBoard();
 
 TimeBar tb = TimeBar();
 
 int main_window, status_window, gameboard_window;
+
+FIBITMAP* createBitMap(char const* filename) {
+	FREE_IMAGE_FORMAT format = FreeImage_GetFileType(filename, 0);
+
+	if (format == -1) {
+		cout << "Could not find image: " << filename << " - Aborting." << endl;
+		exit(-1);
+	}
+
+	if (format == FIF_UNKNOWN) {
+		cout << "Couldn't determine file format - attempting to get from file extension..." << endl;
+		format = FreeImage_GetFIFFromFilename(filename);
+
+		if (!FreeImage_FIFSupportsReading(format)) {
+			cout << "Detected image format cannot be read!" << endl;
+			exit(-1);
+		}
+	}
+
+	FIBITMAP* bitmap = FreeImage_Load(format, filename);
+
+	int bitsPerPixel = FreeImage_GetBPP(bitmap);
+
+	FIBITMAP* bitmap32;
+	if (bitsPerPixel == 32) {
+		cout << "Source image has " << bitsPerPixel << " bits per pixel. Skipping conversion." << endl;
+		bitmap32 = bitmap;
+	}
+	else {
+		cout << "Source image has " << bitsPerPixel << " bits per pixel. Converting to 32-bit colour." << endl;
+		bitmap32 = FreeImage_ConvertTo32Bits(bitmap);
+	}
+
+	return bitmap32;
+}
+
+void drawBackgroundTexture(){
+	glPushMatrix();
+	glTranslatef(0.0, 0.0, -4.5);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &bgtextureID);
+	glBindTexture(GL_TEXTURE_2D, bgtextureID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bgtextureWidth, bgtextureHeight, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, bgtextureData);
+
+	glEnable(GL_TEXTURE_2D);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	glBindTexture(GL_TEXTURE_2D, bgtextureID);
+	glBegin(GL_QUADS);
+		glTexCoord2f(0, 0);glVertex3f(-0.5, -0.5, 0.0);
+		glTexCoord2f(0, 1);glVertex3f(-0.5, 0.5, 0.0);
+		glTexCoord2f(1, 1);glVertex3f(0.5, 0.5, 0.0);
+		glTexCoord2f(1, 0);glVertex3f(0.5, -0.5, 0.0);
+	glEnd();
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_DEPTH_TEST);
+	glPopMatrix();
+}
 
 void initGameBoard()
 {
