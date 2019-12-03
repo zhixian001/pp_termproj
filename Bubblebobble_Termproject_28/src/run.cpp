@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <time.h>
 #include <GL/glut.h>
-#include <FreeImage.h>
+// #include <FreeImage.h>
 #include "Settings.h"
 #include "VisualBoard.h"
 #include "Light.h"
@@ -35,7 +35,7 @@ Light* light1;
 static GLuint bgtextureID;
 GLubyte* bgtextureData;
 int bgtextureWidth, bgtextureHeight;
-
+/* 
 // Board board = Board();
 VisualBoard* VB = new VisualBoard();
 
@@ -77,7 +77,7 @@ FIBITMAP* createBitMap(char const* filename) {
 
 	return bitmap32;
 }
-
+ */
 void drawBackgroundTexture(){
 	glPushMatrix();
 	glTranslatef(0.0, 0.0, -4.5);
