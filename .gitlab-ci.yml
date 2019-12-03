@@ -11,6 +11,9 @@ build:
 
   script:
     - ./msvc_build.bat
+
+  after_script:
+    - mv "Bubblebobble_Termproject_28/$env:BUILD_CONFIG/" ./
   artifacts:
     paths:
       - "$env:BUILD_CONFIG/*"
