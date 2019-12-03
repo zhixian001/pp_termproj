@@ -108,6 +108,13 @@ void drawBackgroundTexture(){
 
 void initGameBoard()
 {
+	// init image
+	FIBITMAP* bitmap32 = createBitMap("background.jpg");
+	bgtextureWidth = FreeImage_GetWidth(bitmap32);
+	bgtextureHeight = FreeImage_GetHeight(bitmap32);
+	bgtextureData = FreeImage_GetBits(bitmap32);
+
+
 	while (VB->getBubble().size() == 2)
 	{
 		delete VB;
@@ -180,6 +187,7 @@ void idle() {
 		if (VB->gameClear())
 		{
 			cout << "game clear" << endl;
+			glutLeaveGameMode();
 			//exit(0);
 		}
 
