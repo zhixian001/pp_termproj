@@ -421,7 +421,8 @@ healthchecksdb
 
 build/
 
-!msvc/lib/*
+!glut32.lib
+
 
 buildlog.log
 !glut32.dll
