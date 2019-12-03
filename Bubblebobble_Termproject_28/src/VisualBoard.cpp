@@ -72,8 +72,13 @@ void VisualBoard::launchBubble()
 // Bubble state transitions
 void VisualBoard::stateTransition()
 {
-    if (game_state == ShotFlying)
+    switch (game_state)
     {
+    // Ready state
+    case Ready:
+        break;
+
+    case ShotFlying: {
         // Move flying bubble
 		(*flying_now)->move();
         // collision resolution every times
@@ -83,17 +88,18 @@ void VisualBoard::stateTransition()
             (*flying_now)->setState(Static);
             game_state = ShotCollide;
         }
+        break;
     }
-    else if (game_state == ShotCollide)
-    {
+    case ShotCollide: {
         // Collision resolution and transition to next state
         std::pair<double, double> coord_tmp = board->getCoords(collision_pair.first, collision_pair.second);
         (*flying_now)->moveAbs(coord_tmp.first, coord_tmp.second);
         bubble_alias[collision_pair.first][collision_pair.second] = (*flying_now);
         game_state = Pop;
+        break;
     }
-    else if (game_state == Pop)
-    {
+
+    case Pop: {
         int previous_size = bubblez.size();
         // update all bubble states
         for (unsigned int i = 0; i < bubblez.size(); i++)
@@ -136,9 +142,10 @@ void VisualBoard::stateTransition()
         }
 
         game_state = Drop;
+
+        break;
     }
-    else if (game_state == Drop)
-    {
+    case Drop: {
         int previous_size = bubblez.size();
 
         // update all bubble states
@@ -203,10 +210,11 @@ void VisualBoard::stateTransition()
         }
         if (state_transition)
             game_state = Ready;
+        break;
     }
-    // Ready state
-    else
-    {
+
+    default:
+        break;
     }
 }
 
