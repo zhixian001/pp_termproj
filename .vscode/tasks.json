@@ -3,27 +3,6 @@
     // https://go.microsoft.com/fwlink/?LinkId=733558의 내용을 참조하세요.
     "version": "2.0.0",
     "tasks": [
-        // {
-        //     "type": "script",
-        //     "scriptType": "batch",
-        //     "cmdLine": "cmd.exe /c .\\msvc_build.bat",
-        //     "path": "",
-        //     "fileName": "msvc_build.bat",
-        //     "scriptFile": true,
-        //     "requiresArgs": false,
-        //     "uri": {
-        //         "$mid": 1,
-        //         "fsPath": "c:\\Users\\okyjh\\Desktop\\pp_termproj\\msvc_build.bat",
-        //         "_sep": 1,
-        //         "path": "/c:/Users/okyjh/Desktop/pp_termproj/msvc_build.bat",
-        //         "scheme": "file"
-        //     },
-        //     "group": {
-        //         "kind": "build",
-        //         "isDefault": true
-        //     },
-        //     "problemMatcher": "$msCompile"
-        // },
         {
             "label": "Build in Linux",
             "type": "shell",
@@ -42,7 +21,7 @@
         {
             "label": "Launch in Linux",
             "type": "shell",
-            "command": "./bin/Bubblebobble_Termproject_28",
+            "command": "./build/bin/Bubblebobble_Termproject_28",
             "problemMatcher": [
                 "$gcc"
             ],
@@ -51,11 +30,30 @@
                 "kind": "test"
             },
             "options": {
-                "cwd": "${workspaceFolder}/build"
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "DISPLAY": ":1"
+                }
             },
-            "dependsOn":[
+            "dependsOn": [
                 "Build in Linux"
             ]
+        },
+        {
+            "type": "script",
+            "scriptType": "bash",
+            "cmdLine": "./build.sh",
+            "path": "",
+            "fileName": "build.sh",
+            "scriptFile": true,
+            "requiresArgs": false,
+            "uri": {
+                "$mid": 1,
+                "fsPath": "/home/homejh/projects/pp_termproj/build.sh",
+                "path": "/home/homejh/projects/pp_termproj/build.sh",
+                "scheme": "file"
+            },
+            "problemMatcher": []
         }
     ]
 }
