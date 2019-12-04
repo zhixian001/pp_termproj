@@ -92,8 +92,9 @@
       <AdditionalDependencies>glut32.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Message>CopyGlutDll</Message>
-      <Command>copy /y "$(ProjectDir)\*dll*" "$(OutDir)"</Command>
+      <Message>CopyDeps</Message>
+      <Command>copy /y "$(ProjectDir)\*dll*" "$(OutDir)";
+copy /y "$(ProjectDir)\*jpg*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -124,8 +125,9 @@
       <AdditionalDependencies>glut32.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Message>CopyGlutDll</Message>
-      <Command>copy /y "$(ProjectDir)\*dll*" "$(OutDir)"</Command>
+      <Message>CopyDeps</Message>
+      <Command>copy /y "$(ProjectDir)\*dll*" "$(OutDir)";
+copy /y "$(ProjectDir)\*jpg*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -170,6 +172,9 @@
     <ClInclude Include="include\Texts.h" />
     <ClInclude Include="include\TimeBar.h" />
     <ClInclude Include="include\VisualBoard.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\background.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
