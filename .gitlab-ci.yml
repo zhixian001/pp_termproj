@@ -24,19 +24,24 @@ build_linux:
   tags:
     - shared
   before_script:
+    - echo "$PWD"
     - apt-get update -qq && apt-get install -y -qq cmake freeglut3-dev libfreeimage-dev
     - mkdir build
   script:
+    - echo "$PWD"
     - cd build && cmake ../
+    - echo "$PWD"
     - cmake --build . --target all -- -j 4
+    - echo "$PWD"
   after_script:
-    - cd ..
+    - echo "$PWD"
     - mv build/bin ./ && mv build/lib ./ && cp background.jpg bin/
   only: 
     - master
   artifacts:
     when: on_success
     paths:
-      - "bin/*"
-      - "lib/*"
-      - "background.jpg"
+      - "**/*"
+      # - "bin/*"
+      # - "lib/*"
+      # - "background.jpg"
