@@ -32,7 +32,6 @@
             "options": {
                 "cwd": "${workspaceFolder}",
                 "env": {
-                    "DISPLAY": ":1"
                 }
             },
             "dependsOn": [
