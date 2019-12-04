@@ -8,7 +8,6 @@ build:
   stage: build
   tags:
     - windows
-
   script:
     - ./msvc_build.bat
 
@@ -18,3 +17,27 @@ build:
   artifacts:
     paths:
       - "$env:BUILD_CONFIG/*"
+
+build_linux:
+  image: gcc
+  stage: build
+  tags:
+    - shared
+    - gcc
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq cmake freeglut3-dev libfreeimage-dev
+    - mkdir build
+  script:
+    - cd build && cmake ../
+    - cmake --build . --target all -- -j 4
+  after_script:
+    - mv build/bin ../ && mv build/lib ../ && cp background.jpg ./bin/
+  when: manual
+  only: 
+    - master
+  artifacts:
+    when: on_success
+    paths:
+      - "bin/*"
+      - "lib/*"
+      - "background.jpg"
