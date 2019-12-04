@@ -30,8 +30,7 @@ build_linux:
     - cd build && cmake ../
     - cmake --build . --target all -- -j 4
   after_script:
-    - mv build/bin ../ && mv build/lib ../ && cp background.jpg ./bin/
-  when: manual
+    - mv build/bin ../bin && mv build/lib ../lib && cp background.jpg ../bin/
   only: 
     - master
   artifacts:
