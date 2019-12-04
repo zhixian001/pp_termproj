@@ -37,6 +37,9 @@ Bubble::Bubble(double r, double px, double py, int op) : BaseObject(op)
 	// col = _col;
 }
 
+Bubble::~Bubble(){
+}
+
 BubbleState Bubble::getState()
 {
 	return state;
