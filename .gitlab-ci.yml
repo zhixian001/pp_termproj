@@ -19,12 +19,11 @@ build:
       - "$env:BUILD_CONFIG/*"
 
 build_linux:
-  image: gcc
+  image: "$CI_REGISTRY_IMAGE"
   stage: build
   tags:
     - shared
   before_script:
-    - apt-get update -qq && apt-get install -y -qq cmake freeglut3-dev libfreeimage-dev
     - mkdir build
   script:
     - cd build && cmake ../
@@ -38,6 +37,3 @@ build_linux:
     paths:
       - "bin/*"
       - "lib/*"
-      # - "bin/*"
-      # - "lib/*"
-      # - "background.jpg"
