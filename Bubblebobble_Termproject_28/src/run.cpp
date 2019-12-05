@@ -35,6 +35,14 @@ Light* light1;
 vector<Texture> textures;
 
 
+typedef enum
+{
+    InGame,
+	GG,
+	Clear
+} ProgressStates;
+
+ProgressStates g_state = InGame;
 // Texture background
 
 // Board board = Board();
@@ -129,32 +137,52 @@ void idle() {
 	end_clock = clock();
 	if (end_clock - start_clock > 1000 / 60) {
 		
-		
-		// cout << tb.getTime() << endl;
-		// glutSetWindow(main_window);
-		// glutPostRedisplay();
-
-		if (VB->gameClear())
+		switch (g_state)
 		{
-			cout << "game clear" << endl;
-			// glutLeaveGameMode();
-			//exit(0);
-		}
+		case InGame: {
+			if (VB->gameClear())
+			{
+				Texture clearMsg = Texture("clear.png");
+				clearMsg.setTranslationfV(0, 0, 10);
+				textures.push_back(clearMsg);
+				g_state = Clear;
+			}
 
-		if (VB->gameOver(upper))
-		{
-			cout << "game over" << endl;
-			//exit(0);
+			if (VB->gameOver(upper))
+			{
+				Texture GGMsg = Texture("gg.png");
+				GGMsg.setTranslationfV(0, 0, 10);
+				textures.push_back(GGMsg);
+				g_state = GG;
+			}
+			
+			VB->stateTransition();
+			if (VB->getState() == Ready) {
+				if (tb.getTime() == 0) VB->launchBubble();
+				else tb.timeTicking();
+			}
+			else if (VB->getState() != ShotFlying) {
+				tb.reset();
+			}
+			break;
 		}
+		case GG: {
+			VB->stateTransition();
+			
+			break;
+		}
+		case Clear: {
+			VB->stateTransition();
+
+			break;
+		}
+		default:
 		
-		VB->stateTransition();
-		if (VB->getState() == Ready) {
-			if (tb.getTime() == 0) VB->launchBubble();
-			else tb.timeTicking();
-		}
-		else if (VB->getState() != ShotFlying) {
-			tb.reset();
-		}
+			break;
+		}		
+	
+
+		
 		glutSetWindow(status_window);
 		glutPostRedisplay();
 		glutSetWindow(gameboard_window);
@@ -165,6 +193,7 @@ void idle() {
 }
 
 void initParentWindow() {
+	g_state = InGame;
 }
 
 void renderSceneParentWindow() {

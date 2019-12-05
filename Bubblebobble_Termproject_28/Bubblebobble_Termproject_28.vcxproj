@@ -181,6 +181,9 @@ copy /y "$(ProjectDir)\*png*" "$(OutDir)"</Command>
     <Image Include="..\background.jpg" />
     <Image Include="..\player0.png" />
     <Image Include="..\player1.png" />
+    <Image Include="..\clear.png" />
+    <Image Include="..\gg.png" />
+
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
