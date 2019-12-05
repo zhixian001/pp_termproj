@@ -41,6 +41,9 @@
     <ClCompile Include="src\run.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="src\Texts.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -76,6 +79,9 @@
     <ClInclude Include="include\Settings.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="include\Texture.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="include\Texts.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -88,6 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\background.jpg">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\player0.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\player1.png">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

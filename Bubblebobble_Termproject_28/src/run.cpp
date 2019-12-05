@@ -13,6 +13,7 @@
 #include "Bubble.h"
 #include "Cannon.h"
 #include "TimeBar.h"
+#include "Texture.h"
 
 using namespace std;
 
@@ -31,10 +32,11 @@ Light* light0;
 Light* light1;
 
 
+vector<Texture> textures;
+
+
 // Texture background
-static GLuint bgtextureID;
-GLubyte* bgtextureData;
-int bgtextureWidth, bgtextureHeight;
+
 // Board board = Board();
 VisualBoard* VB = new VisualBoard();
 
@@ -42,79 +44,32 @@ TimeBar tb = TimeBar();
 
 int main_window, status_window, gameboard_window;
 
-FIBITMAP* createBitMap(char const* filename) {
-	FREE_IMAGE_FORMAT format = FreeImage_GetFileType(filename, 0);
-
-	if (format == -1) {
-		cout << "Could not find image: " << filename << " - Aborting." << endl;
-		exit(-1);
-	}
-
-	if (format == FIF_UNKNOWN) {
-		cout << "Couldn't determine file format - attempting to get from file extension..." << endl;
-		format = FreeImage_GetFIFFromFilename(filename);
-
-		if (!FreeImage_FIFSupportsReading(format)) {
-			cout << "Detected image format cannot be read!" << endl;
-			exit(-1);
-		}
-	}
-
-	FIBITMAP* bitmap = FreeImage_Load(format, filename);
-
-	int bitsPerPixel = FreeImage_GetBPP(bitmap);
-
-	FIBITMAP* bitmap32;
-	if (bitsPerPixel == 32) {
-		cout << "Source image has " << bitsPerPixel << " bits per pixel. Skipping conversion." << endl;
-		bitmap32 = bitmap;
-	}
-	else {
-		cout << "Source image has " << bitsPerPixel << " bits per pixel. Converting to 32-bit colour." << endl;
-		bitmap32 = FreeImage_ConvertTo32Bits(bitmap);
-	}
-
-	return bitmap32;
-}
-void drawBackgroundTexture(){
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, -4.5);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_TEXTURE_2D);
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &bgtextureID);
-	glBindTexture(GL_TEXTURE_2D, bgtextureID);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bgtextureWidth, bgtextureHeight, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, bgtextureData);
-
-	glEnable(GL_TEXTURE_2D);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	glBindTexture(GL_TEXTURE_2D, bgtextureID);
-	glBegin(GL_QUADS);
-		glTexCoord2f(0, 0);glVertex3f(-0.5, -0.5, 0.0);
-		glTexCoord2f(0, 1);glVertex3f(-0.5, 0.5, 0.0);
-		glTexCoord2f(1, 1);glVertex3f(0.5, 0.5, 0.0);
-		glTexCoord2f(1, 0);glVertex3f(0.5, -0.5, 0.0);
-	glEnd();
-
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_DEPTH_TEST);
-	glPopMatrix();
-}
 
 void initGameBoard()
 {
-	// init image
-	FIBITMAP* bitmap32 = createBitMap("background.jpg");
-	bgtextureWidth = FreeImage_GetWidth(bitmap32);
-	bgtextureHeight = FreeImage_GetHeight(bitmap32);
-	bgtextureData = FreeImage_GetBits(bitmap32);
+	// Background Texture
+	Texture background = Texture("background.jpg");
+	background.setTranslationfV(0.0, 0.18, -4.5);
+
+	textures.push_back(background);
 
 
+	// player texture
+	Texture player0 = Texture("player0.png");
+	Texture player1 = Texture("player1.png");
+
+	player0.setTranslationfV(-0.8, -1.7, -2.5);
+	player0.setFoV(110.0);
+
+	player1.setTranslationfV(0.8, -1.7, -2.5);
+	player1.setFoV(110.0);
+
+
+	textures.push_back(player0);
+	textures.push_back(player1);
+
+
+	// init bubble game board
 	while (VB->getBubble().size() == 2)
 	{
 		delete VB;
@@ -123,25 +78,20 @@ void initGameBoard()
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	srand(time(0));
-	glEnable(GL_DEPTH_TEST);
-	// TODO: Initial scripts
+
+
 	// lighting
-	if (LIGHTING_ON){
-		light0 = new Light(0.0, 100.0, 300.0, GL_LIGHT0);
-		light0->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
-		light0->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
-		light0->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+	// if (LIGHTING_ON){
+	light0 = new Light(0.0, 100.0, 300.0, GL_LIGHT0);
+	light0->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
+	light0->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
+	light0->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 
-		light1 = new Light(0, 0.0, 300.0, GL_LIGHT0);
-		light1->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
-		light1->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
-		light1->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+	light1 = new Light(0, 0.0, 300.0, GL_LIGHT0);
+	light1->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
+	light1->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
+	light1->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 
-		glEnable(GL_LIGHTING);
-		glEnable(GL_SMOOTH);
-    	light0->draw();
-    	light1->draw();
-	}
 }
 
 void initScoreBoard() {
@@ -187,7 +137,7 @@ void idle() {
 		if (VB->gameClear())
 		{
 			cout << "game clear" << endl;
-			glutLeaveGameMode();
+			// glutLeaveGameMode();
 			//exit(0);
 		}
 
@@ -215,7 +165,6 @@ void idle() {
 }
 
 void initParentWindow() {
-
 }
 
 void renderSceneParentWindow() {
@@ -233,11 +182,32 @@ void renderSceneGameBoard() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glPushMatrix();
 
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_SMOOTH);
+
+
+	glPushMatrix();
 	glTranslatef(30 * sin(t), 0, 0);
 	VB->draw();
+
+	// Draw Textures
+	for (int i = 0 ; i < textures.size() ; i++) {
+		textures[i].drawTexture();
+	}
+
 	glPopMatrix();
+
+	light0->draw();
+	light1->draw();
+	
+
+
+	glDisable(GL_LIGHTING);
+	glDisable(GL_SMOOTH);
+	glDisable(GL_DEPTH_TEST);
+	
 
 	glutSwapBuffers();
 }
@@ -284,7 +254,7 @@ int main(int argc, char** argv) {
 		initScoreBoard();
 		 glutDisplayFunc(renderSceneScoreBoard);
 
-	gameboard_window = glutCreateSubWindow(main_window, 0, 30, WIDTH, 800);
+	gameboard_window = glutCreateSubWindow(main_window, 0, 30, WIDTH, HEIGHT);
 		initGameBoard();
 		glutDisplayFunc(renderSceneGameBoard);
 		glutKeyboardFunc(processNormalKeys);

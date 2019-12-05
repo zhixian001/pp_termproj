@@ -47,4 +47,5 @@ void Light::draw() const
     glLightfv(this->lightID, GL_DIFFUSE, this->diffuse);
     glLightfv(this->lightID, GL_SPECULAR, this->specular);
     glLightfv(this->lightID, GL_POSITION, this->pos);
+    // glDisable(this->lightID);
 }

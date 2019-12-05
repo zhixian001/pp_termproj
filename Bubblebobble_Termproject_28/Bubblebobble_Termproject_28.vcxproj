@@ -94,7 +94,8 @@
     <PostBuildEvent>
       <Message>CopyDeps</Message>
       <Command>copy /y "$(ProjectDir)\*dll*" "$(OutDir)";
-copy /y "$(ProjectDir)\*jpg*" "$(OutDir)"</Command>
+copy /y "$(ProjectDir)\*jpg*" "$(OutDir)";
+copy /y "$(ProjectDir)\*png*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -127,7 +128,8 @@ copy /y "$(ProjectDir)\*jpg*" "$(OutDir)"</Command>
     <PostBuildEvent>
       <Message>CopyDeps</Message>
       <Command>copy /y "$(ProjectDir)\*dll*" "$(OutDir)";
-copy /y "$(ProjectDir)\*jpg*" "$(OutDir)"</Command>
+copy /y "$(ProjectDir)\*jpg*" "$(OutDir)";
+copy /y "$(ProjectDir)\*png*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -156,6 +158,7 @@ copy /y "$(ProjectDir)\*jpg*" "$(OutDir)"</Command>
     <ClCompile Include="src\Light.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\run.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\Texts.cpp" />
     <ClCompile Include="src\TimeBar.cpp" />
     <ClCompile Include="src\VisualBoard.cpp" />
@@ -169,12 +172,15 @@ copy /y "$(ProjectDir)\*jpg*" "$(OutDir)"</Command>
     <ClInclude Include="include\Material.h" />
     <ClInclude Include="include\resource.h" />
     <ClInclude Include="include\Settings.h" />
+    <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Texts.h" />
     <ClInclude Include="include\TimeBar.h" />
     <ClInclude Include="include\VisualBoard.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\background.jpg" />
+    <Image Include="..\player0.png" />
+    <Image Include="..\player1.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,8 +2,8 @@
 
 #ifdef WIDTH
 #undef WIDHT
-#define WIDTH 400
 #endif
+#define WIDTH 400
 
 #ifdef HEIGHT
 #undef HEIGHT

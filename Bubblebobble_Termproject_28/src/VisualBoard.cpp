@@ -234,7 +234,6 @@ void VisualBoard::draw()
     cannon.draw();
 
     // draw separator
-
     // TODO: BaseObject to other section
     glPushMatrix();
         separator.drawMaterialOnly();
