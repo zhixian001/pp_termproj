@@ -11,6 +11,14 @@ VisualBoard::VisualBoard(/* args */)
 
     separator = BaseObject(5);
 
+
+    // initialize bubble alias
+    for (int i = 0 ; i < 12 ; i++) {
+        for (int j = 0 ; j < 10 ; j++){
+            bubble_alias[i][j] = NULL;
+        }
+    }
+
     // inspect generated map
     std::vector<std::pair<Bubble *, std::pair<int, int>>> observation = board->observeBoard();
     cannon = Cannon();
