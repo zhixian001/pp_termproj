@@ -329,3 +329,9 @@ void Board::dfs(int row, int col, int option)
 		}
 	}
 }
+
+void Board::cheatClear(){
+	for (int i = 0 ; i < GAME_COLUMN_COUNT ; i++){
+		bubbled[1][i] = false;
+	}
+}

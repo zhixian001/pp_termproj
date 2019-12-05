@@ -47,6 +47,7 @@ public:
 	std::vector<std::pair<int, int>> BubbleDropRC();
 	void levelDown();
 	std::pair<double, double> getCoords(int r, int c) const;
+	void cheatClear();
 
 private:
 	const double bubble_diameter = BUBBLE_RADIUS * 2;

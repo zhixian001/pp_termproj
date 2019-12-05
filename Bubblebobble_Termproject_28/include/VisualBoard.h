@@ -125,4 +125,5 @@ public:
     std::vector<Bubble *> getBubble();
     // void maklePopping(Bubble *b);
     unsigned int getScore() const;
+    void cheatClear();
 };

@@ -338,7 +338,7 @@ int VisualBoard::getState()
 
 bool VisualBoard::gameClear()
 {
-    return bubblez.size() == 2;
+    return bubblez.size() <= 2;
 }
 
 bool VisualBoard::gameOver(int clear)
@@ -353,6 +353,17 @@ bool VisualBoard::gameOver(int clear)
 std::vector<Bubble *> VisualBoard::getBubble()
 {
     return bubblez;
+}
+
+void VisualBoard::cheatClear(){
+    
+    board->cheatClear();
+    for (int i = 0 ; i < GAME_COLUMN_COUNT ; i++){
+        if(bubble_alias[1][i] != NULL) bubble_alias[1][i]->makePopping();
+    }
+
+    game_state = Drop;
+    
 }
 
 // void VisualBoard::makePopping(Bubble *b)

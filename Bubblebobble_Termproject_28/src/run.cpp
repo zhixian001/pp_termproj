@@ -114,6 +114,7 @@ void initScoreBoard() {
 
 void processNormalKeys(unsigned char key, int x, int y) {
 
+	// spacebar
 	if (key == 32) {
 		if (g_state == InGame) {
 			VB->launchBubble();
@@ -121,6 +122,26 @@ void processNormalKeys(unsigned char key, int x, int y) {
 		else {
 			exit(0);
 		}
+	}
+	// restart game
+	if (key == 'r') {
+		if (g_state == InGame) {
+		}
+		else {
+			g_state = InGame;
+
+			textures.clear();
+			delete VB;
+			delete light0;
+			delete light1;
+
+			VB = new VisualBoard();
+			initGameBoard();
+		}
+	}
+	// quick exit
+	if (key == 'q') {
+		exit(0);
 	}
 }
 
@@ -139,6 +160,11 @@ void processSpecialKeys(int key, int x, int y) {
 			break;
 		case GLUT_KEY_F2:
 			cout<<VB->getScore()<<endl;
+			break;
+		// Cheat!
+		case GLUT_KEY_F12:
+			VB->cheatClear();
+			cout << "You Cheated!!!" << endl;
 			break;
 	}
 }
