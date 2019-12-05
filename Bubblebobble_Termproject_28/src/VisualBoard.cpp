@@ -241,7 +241,6 @@ void VisualBoard::stateTransition()
             }
         }
 
-
         // Delete pop bubbles
 
 

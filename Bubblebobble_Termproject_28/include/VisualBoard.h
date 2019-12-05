@@ -25,7 +25,6 @@
 #include <math.h>
 #include <vector>
 #include <utility>
-#include <deque>
 #include "Settings.h"
 #include "Bubble.h"
 #include "Cannon.h"
