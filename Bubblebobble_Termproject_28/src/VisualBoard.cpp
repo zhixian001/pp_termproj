@@ -351,7 +351,7 @@ bool VisualBoard::gameOver(int clear)
     return false;
 }
 
-std::deque<Bubble *> VisualBoard::getBubble()
+std::vector<Bubble *> VisualBoard::getBubble()
 {
     return bubblez;
 }

@@ -85,7 +85,7 @@ typedef enum
 class VisualBoard
 {
 private:
-    std::deque<Bubble *> bubblez;
+    std::vector<Bubble *> bubblez;
     Board *board;
     Cannon cannon;
     // std::deque<Bubble *>::iterator to_launch;
@@ -123,7 +123,7 @@ public:
     int getState();
     bool gameClear();
     bool gameOver(int upper);
-    std::deque<Bubble *> getBubble();
+    std::vector<Bubble *> getBubble();
     // void maklePopping(Bubble *b);
     unsigned int getScore() const;
 };
