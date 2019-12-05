@@ -44,7 +44,7 @@ Texture::Texture(char const* filename)
 	bgtextureData = FreeImage_GetBits(bitmap32);
 
 	// free(bitmap32);
-	free(bitmap);
+	// free(bitmap);
 
     translationfV[0] = 0.0;
     translationfV[1] = 0.0;
@@ -63,7 +63,7 @@ Texture::Texture(char const* filename)
 Texture::~Texture()
 {
 	// Freeimage_de
-	free(bitmap32);
+	// free(bitmap32);
 }
 
 
