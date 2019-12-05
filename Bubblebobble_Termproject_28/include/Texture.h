@@ -6,6 +6,10 @@
 #include <FreeImage.h>
 #include "Settings.h"
 
+
+static GLuint bgtextureID;
+
+
 class Texture
 {
 private:
@@ -36,6 +40,5 @@ public:
     void setzNear(double _znear);
     void setzFar(double _zfar);
 
-    GLuint bgtextureID;
 
 };

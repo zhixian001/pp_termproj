@@ -62,8 +62,7 @@ Texture::Texture(char const* filename)
 
 Texture::~Texture()
 {
-	// Freeimage_de
-	// free(bitmap32);
+	// glDeleteTextures(1, &bgtextureID);
 }
 
 

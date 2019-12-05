@@ -29,8 +29,8 @@ int upper = 0;
 clock_t start_clock = clock();
 clock_t end_clock;
 
-Light* light0;
-Light* light1;
+Light light0;
+Light light1;
 
 vector<Texture> textures;
 
@@ -65,6 +65,8 @@ void draw_characters(void* font, const char* c, float x, float y) {
 void initGameBoard()
 {
 	// Background Texture
+	textures.empty();
+
 	Texture background = Texture("background.png");
 	background.setTranslationfV(0.0, 0.06, -4.5);
 
@@ -87,7 +89,7 @@ void initGameBoard()
 
 
 	// init bubble game board
-	while (VB->getBubble().size() == 2)
+	while (VB->getBubble().size() <= 2)
 	{
 		delete VB;
 		VB = new VisualBoard();
@@ -97,15 +99,7 @@ void initGameBoard()
 
 	// lighting
 	// if (LIGHTING_ON){
-	light0 = new Light(0.0, 100.0, 300.0, GL_LIGHT0);
-	light0->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
-	light0->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
-	light0->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-
-	light1 = new Light(0, 0.0, 300.0, GL_LIGHT0);
-	light1->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
-	light1->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
-	light1->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+	
 
 }
 
@@ -130,10 +124,9 @@ void processNormalKeys(unsigned char key, int x, int y) {
 		else {
 			g_state = InGame;
 
-			textures.clear();
+			textures.empty();
+
 			delete VB;
-			delete light0;
-			delete light1;
 
 			VB = new VisualBoard();
 			initGameBoard();
@@ -222,8 +215,8 @@ void idle() {
 			break;
 		}		
 	
-
-		
+		glutSetWindow(main_window);
+		glutPostRedisplay();		
 		glutSetWindow(gameboard_window);
 		glutPostRedisplay();
 		glutSetWindow(status_window);
@@ -234,6 +227,15 @@ void idle() {
 }
 
 void initParentWindow() {
+	light0 = Light(0.0, 100.0, 300.0, GL_LIGHT0);
+	light0.setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
+	light0.setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
+	light0.setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+
+	light1 = Light(0, 0.0, 300.0, GL_LIGHT0);
+	light1.setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
+	light1.setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
+	light1.setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 	g_state = InGame;
 }
 
@@ -269,8 +271,8 @@ void renderSceneGameBoard() {
 
 	glPopMatrix();
 
-	light0->draw();
-	light1->draw();
+	light0.draw();
+	light1.draw();
 	
 
 
@@ -342,8 +344,6 @@ int main(int argc, char** argv) {
 	glutMainLoop();
 
 	// exit
-	delete light0;
-	delete light1;
 	delete VB;
 	return 0;
 }
