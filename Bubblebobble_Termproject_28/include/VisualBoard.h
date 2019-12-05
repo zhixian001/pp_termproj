@@ -88,9 +88,14 @@ private:
     std::deque<Bubble *> bubblez;
     Board *board;
     Cannon cannon;
-    std::deque<Bubble *>::iterator to_launch;
-    std::deque<Bubble *>::iterator next_launch;
-    std::deque<Bubble *>::iterator flying_now;
+    // std::deque<Bubble *>::iterator to_launch;
+    // std::deque<Bubble *>::iterator next_launch;
+    // std::deque<Bubble *>::iterator flying_now;
+
+
+    int i_to_launch, i_next_launch, i_flying_now;
+
+
     Bubble *bubble_alias[GAME_ROW_COUNT][GAME_COLUMN_COUNT];
     GameStates game_state;
     std::pair<int, int> collision_pair;

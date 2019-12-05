@@ -35,8 +35,12 @@ VisualBoard::VisualBoard(/* args */)
     bubblez.push_back(new Bubble(BUBBLE_RADIUS, BUBBLE_NEXT_LAUNCH_X_COORD, BUBBLE_NEXT_LAUNCH_Y_COORD, rand() % 5));
 
     // manage iterator
-    to_launch = bubblez.end() - 2;
-    next_launch = bubblez.end() - 1;
+    // to_launch = bubblez.end() - 2;
+    // next_launch = bubblez.end() - 1;
+
+    // to idx
+    i_to_launch = bubblez.size() - 2;
+    i_next_launch = bubblez.size() - 1;
 }
 
 VisualBoard::~VisualBoard()
@@ -65,14 +69,26 @@ void VisualBoard::launchBubble()
     if (game_state == Ready)
     {
         // bubble launch
-        (*to_launch)->setState(Moving, BUBBLE_SPEED_MULTIPLIER * cos(cannon.getAngle()), BUBBLE_SPEED_MULTIPLIER * sin(cannon.getAngle()));
+        // (*to_launch)->setState(Moving, BUBBLE_SPEED_MULTIPLIER * cos(cannon.getAngle()), BUBBLE_SPEED_MULTIPLIER * sin(cannon.getAngle()));
+
+        bubblez[i_to_launch]->setState(Moving, BUBBLE_SPEED_MULTIPLIER * cos(cannon.getAngle()), BUBBLE_SPEED_MULTIPLIER * sin(cannon.getAngle()));
+
         // prepare next launch bubble
-        (*next_launch)->moveAbs(BUBBLE_LAUNCH_X_COORD, BUBBLE_LAUNCH_Y_COORD);
+        // (*next_launch)->moveAbs(BUBBLE_LAUNCH_X_COORD, BUBBLE_LAUNCH_Y_COORD);
+
+        bubblez[i_next_launch]->moveAbs(BUBBLE_LAUNCH_X_COORD, BUBBLE_LAUNCH_Y_COORD);
         // insert bubble and manage iterator
         bubblez.push_back(generateBubble());
-        flying_now = to_launch;
-        to_launch += 1;
-        next_launch += 1;
+        
+        
+        // flying_now = to_launch;
+        // to_launch += 1;
+        // next_launch += 1;
+
+        i_flying_now = i_to_launch;
+        i_to_launch++;
+        i_next_launch++;
+
         game_state = ShotFlying;
     }
 }
@@ -88,12 +104,21 @@ void VisualBoard::stateTransition()
 
     case ShotFlying: {
         // Move flying bubble
-		(*flying_now)->move();
+		// (*flying_now)->move();
+
+        bubblez[i_flying_now]->move();
+
         // collision resolution every times
-        collision_pair = board->collision((*flying_now));
+        // collision_pair = board->collision((*flying_now));
+
+        collision_pair = board->collision(bubblez[i_flying_now]);
+
+
+
         if (collision_pair.first > 0 || collision_pair.second > 0)
         {
-            (*flying_now)->setState(Static);
+            // (*flying_now)->setState(Static);
+            bubblez[i_flying_now]->setState(Static);
             game_state = ShotCollide;
         }
         break;
@@ -101,8 +126,11 @@ void VisualBoard::stateTransition()
     case ShotCollide: {
         // Collision resolution and transition to next state
         std::pair<double, double> coord_tmp = board->getCoords(collision_pair.first, collision_pair.second);
-        (*flying_now)->moveAbs(coord_tmp.first, coord_tmp.second);
-        bubble_alias[collision_pair.first][collision_pair.second] = (*flying_now);
+        // (*flying_now)->moveAbs(coord_tmp.first, coord_tmp.second);
+        bubblez[i_flying_now]->moveAbs(coord_tmp.first, coord_tmp.second);
+        // bubble_alias[collision_pair.first][collision_pair.second] = (*flying_now);
+        bubble_alias[collision_pair.first][collision_pair.second] = bubblez[i_flying_now];
+
         game_state = Pop;
         break;
     }
@@ -114,7 +142,11 @@ void VisualBoard::stateTransition()
         {
             bubblez[i]->move();
         }
-        pop_vector = board->BubblePop((*flying_now));
+        
+        // pop_vector = board->BubblePop((*flying_now));
+        pop_vector = board->BubblePop(bubblez[i_flying_now]);
+
+
         while (!pop_vector.empty())
         {
             tmp = pop_vector.back();
@@ -141,8 +173,11 @@ void VisualBoard::stateTransition()
 // ******************************************************************************************8
 
         }
-        next_launch = bubblez.end() - 1;
-        to_launch = next_launch - 1;
+        // next_launch = bubblez.end() - 1;
+        // to_launch = next_launch - 1;
+
+        i_next_launch = bubblez.size() - 1;
+        i_to_launch = i_next_launch - 1;
 
         if (previous_size - bubblez.size() > 0)
         {
@@ -210,8 +245,13 @@ void VisualBoard::stateTransition()
         // Delete pop bubbles
 
 
-        next_launch = bubblez.end() - 1;
-        to_launch = next_launch - 1;
+        // next_launch = bubblez.end() - 1;
+        // to_launch = next_launch - 1;
+
+
+        i_next_launch = bubblez.size() - 1;
+        i_to_launch = i_next_launch - 1;
+
         if (previous_size - bubblez.size() > 0)
         {
             score += POINTS_PER_BUBBLE * (previous_size - bubblez.size());
