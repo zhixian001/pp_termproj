@@ -115,7 +115,12 @@ void initScoreBoard() {
 void processNormalKeys(unsigned char key, int x, int y) {
 
 	if (key == 32) {
-		VB->launchBubble();
+		if (g_state == InGame) {
+			VB->launchBubble();
+		}
+		else {
+			exit(0);
+		}
 	}
 }
 
@@ -148,17 +153,22 @@ void idle() {
 			if (VB->gameClear())
 			{
 				Texture clearMsg = Texture("clear.png");
-				clearMsg.setTranslationfV(0, 0.2, 0);
+				clearMsg.setTranslationfV(0, 0.06, -4.5);
+				clearMsg.setFoV(16);
 				textures.push_back(clearMsg);
 				g_state = Clear;
+				cout << "Game Clear!" << endl;
 			}
 
 			if (VB->gameOver(upper))
 			{
 				Texture GGMsg = Texture("gg.png");
-				GGMsg.setTranslationfV(0, 2, 0);
+				GGMsg.setTranslationfV(0, 0.06, -4.5);
+				GGMsg.setFoV(16);
 				textures.push_back(GGMsg);
 				g_state = GG;
+				cout << "Game Over :(" << endl;
+
 			}
 			
 			VB->stateTransition();
