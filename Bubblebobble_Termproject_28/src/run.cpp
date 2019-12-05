@@ -68,8 +68,8 @@ void initGameBoard()
 	player0.setTranslationfV(-1.6, -3, -2.5);
 	player0.setFoV(110.0);
 
-	player1.setTranslationfV(1, -2.9, -2.5);
-	player1.setFoV(110.0);
+	player1.setTranslationfV(0.8, -2.0, -2.5);
+	player1.setFoV(90.0);
 
 
 	textures.push_back(player0);
