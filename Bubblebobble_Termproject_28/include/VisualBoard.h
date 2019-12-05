@@ -25,7 +25,6 @@
 #include <math.h>
 #include <vector>
 #include <utility>
-#include <deque>
 #include "Settings.h"
 #include "Bubble.h"
 #include "Cannon.h"
@@ -85,12 +84,17 @@ typedef enum
 class VisualBoard
 {
 private:
-    std::deque<Bubble *> bubblez;
+    std::vector<Bubble *> bubblez;
     Board *board;
     Cannon cannon;
-    std::deque<Bubble *>::iterator to_launch;
-    std::deque<Bubble *>::iterator next_launch;
-    std::deque<Bubble *>::iterator flying_now;
+    // std::deque<Bubble *>::iterator to_launch;
+    // std::deque<Bubble *>::iterator next_launch;
+    // std::deque<Bubble *>::iterator flying_now;
+
+
+    int i_to_launch, i_next_launch, i_flying_now;
+
+
     Bubble *bubble_alias[GAME_ROW_COUNT][GAME_COLUMN_COUNT];
     GameStates game_state;
     std::pair<int, int> collision_pair;
@@ -118,7 +122,8 @@ public:
     int getState();
     bool gameClear();
     bool gameOver(int upper);
-    std::deque<Bubble *> getBubble();
+    std::vector<Bubble *> getBubble();
     // void maklePopping(Bubble *b);
     unsigned int getScore() const;
+    void cheatClear();
 };

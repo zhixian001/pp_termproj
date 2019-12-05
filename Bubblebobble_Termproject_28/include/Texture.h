@@ -1,18 +1,23 @@
 #pragma once
 
 #include <iostream>
+#include <stdlib.h>
 #include <GL/glut.h>
 #include <FreeImage.h>
 #include "Settings.h"
+
+
+static GLuint bgtextureID;
+
 
 class Texture
 {
 private:
     /* data */
-    GLuint bgtextureID;
     GLubyte* bgtextureData;
     int bgtextureWidth, bgtextureHeight;
 
+	FIBITMAP* bitmap32;
 
     // tweaks
     float translationfV [3];
@@ -21,7 +26,7 @@ private:
     double zNear, zFar;
 
 protected:
-    FIBITMAP* createBitMap(char const* filename);
+    // FIBITMAP* createBitMap(char const* filename);
 
 public:
     Texture(char const* filename);
@@ -34,5 +39,6 @@ public:
 
     void setzNear(double _znear);
     void setzFar(double _zfar);
+
 
 };

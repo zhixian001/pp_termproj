@@ -29,8 +29,8 @@ int upper = 0;
 clock_t start_clock = clock();
 clock_t end_clock;
 
-Light* light0;
-Light* light1;
+Light light0;
+Light light1;
 
 vector<Texture> textures;
 
@@ -65,6 +65,8 @@ void draw_characters(void* font, const char* c, float x, float y) {
 void initGameBoard()
 {
 	// Background Texture
+	textures.empty();
+
 	Texture background = Texture("background.png");
 	background.setTranslationfV(0.0, 0.06, -4.5);
 
@@ -87,39 +89,52 @@ void initGameBoard()
 
 
 	// init bubble game board
-	while (VB->getBubble().size() == 2)
+	while (VB->getBubble().size() <= 2)
 	{
 		delete VB;
 		VB = new VisualBoard();
 	}
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	srand(time(0));
 
 
 	// lighting
 	// if (LIGHTING_ON){
-	light0 = new Light(0.0, 100.0, 300.0, GL_LIGHT0);
-	light0->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
-	light0->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
-	light0->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-
-	light1 = new Light(0, 0.0, 300.0, GL_LIGHT0);
-	light1->setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
-	light1->setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
-	light1->setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+	
 
 }
 
 void initScoreBoard() {
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void processNormalKeys(unsigned char key, int x, int y) {
 
+	// spacebar
 	if (key == 32) {
-		VB->launchBubble();
+		if (g_state == InGame) {
+			VB->launchBubble();
+		}
+		else {
+			exit(0);
+		}
+	}
+	// restart game
+	if (key == 'r') {
+		if (g_state == InGame) {
+		}
+		else {
+			g_state = InGame;
+
+			textures.empty();
+
+			delete VB;
+
+			VB = new VisualBoard();
+			initGameBoard();
+		}
+	}
+	// quick exit
+	if (key == 'q') {
+		exit(0);
 	}
 }
 
@@ -139,6 +154,11 @@ void processSpecialKeys(int key, int x, int y) {
 		case GLUT_KEY_F2:
 			cout<<VB->getScore()<<endl;
 			break;
+		// Cheat!
+		case GLUT_KEY_F12:
+			VB->cheatClear();
+			cout << "You Cheated!!!" << endl;
+			break;
 	}
 }
 
@@ -152,17 +172,22 @@ void idle() {
 			if (VB->gameClear())
 			{
 				Texture clearMsg = Texture("clear.png");
-				clearMsg.setTranslationfV(0, 0.2, 0);
+				clearMsg.setTranslationfV(0, 0.06, -4.5);
+				clearMsg.setFoV(16);
 				textures.push_back(clearMsg);
 				g_state = Clear;
+				cout << "Game Clear!" << endl;
 			}
 
 			if (VB->gameOver(upper))
 			{
 				Texture GGMsg = Texture("gg.png");
-				GGMsg.setTranslationfV(0, 2, 0);
+				GGMsg.setTranslationfV(0, 0.06, -4.5);
+				GGMsg.setFoV(16);
 				textures.push_back(GGMsg);
 				g_state = GG;
+				cout << "Game Over :(" << endl;
+
 			}
 			
 			VB->stateTransition();
@@ -190,8 +215,8 @@ void idle() {
 			break;
 		}		
 	
-
-		
+		glutSetWindow(main_window);
+		glutPostRedisplay();		
 		glutSetWindow(gameboard_window);
 		glutPostRedisplay();
 		glutSetWindow(status_window);
@@ -202,6 +227,15 @@ void idle() {
 }
 
 void initParentWindow() {
+	light0 = Light(0.0, 100.0, 300.0, GL_LIGHT0);
+	light0.setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
+	light0.setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
+	light0.setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+
+	light1 = Light(0, 0.0, 300.0, GL_LIGHT0);
+	light1.setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
+	light1.setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
+	light1.setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
 	g_state = InGame;
 }
 
@@ -237,8 +271,8 @@ void renderSceneGameBoard() {
 
 	glPopMatrix();
 
-	light0->draw();
-	light1->draw();
+	light0.draw();
+	light1.draw();
 	
 
 
@@ -310,8 +344,6 @@ int main(int argc, char** argv) {
 	glutMainLoop();
 
 	// exit
-	delete light0;
-	delete light1;
 	delete VB;
 	return 0;
 }

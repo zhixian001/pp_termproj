@@ -1,32 +1,12 @@
 #include "Texture.h"
 
+
+
 Texture::Texture(char const* filename)
 {
     // init image
     // init image
-	FIBITMAP* bitmap32 = createBitMap(filename);
-	bgtextureWidth = FreeImage_GetWidth(bitmap32);
-	bgtextureHeight = FreeImage_GetHeight(bitmap32);
-	bgtextureData = FreeImage_GetBits(bitmap32);
 
-
-    translationfV[0] = 0.0;
-    translationfV[1] = 0.0;
-    translationfV[2] = -4.5;
-
-
-    fov = 18;
-
-	zNear = 0.1;
-	zFar = 20;
-}
-
-Texture::~Texture()
-{
-}
-
-
-FIBITMAP* Texture::createBitMap(char const* filename) {
 	FREE_IMAGE_FORMAT format = FreeImage_GetFileType(filename, 0);
 
 	if (format == -1) {
@@ -48,7 +28,7 @@ FIBITMAP* Texture::createBitMap(char const* filename) {
 
 	int bitsPerPixel = FreeImage_GetBPP(bitmap);
 
-	FIBITMAP* bitmap32;
+	// FIBITMAP* bitmap32;
 	if (bitsPerPixel == 32) {
 		std::cout << "Source image has " << bitsPerPixel << " bits per pixel. Skipping conversion." << std::endl;
 		bitmap32 = bitmap;
@@ -58,8 +38,41 @@ FIBITMAP* Texture::createBitMap(char const* filename) {
 		bitmap32 = FreeImage_ConvertTo32Bits(bitmap);
 	}
 
-	return bitmap32;
+
+	bgtextureWidth = FreeImage_GetWidth(bitmap32);
+	bgtextureHeight = FreeImage_GetHeight(bitmap32);
+	bgtextureData = FreeImage_GetBits(bitmap32);
+
+	// free(bitmap32);
+	// free(bitmap);
+
+    translationfV[0] = 0.0;
+    translationfV[1] = 0.0;
+    translationfV[2] = -4.5;
+
+
+    fov = 18;
+
+	zNear = 0.1;
+	zFar = 20;
+
+	glGenTextures(1, &bgtextureID);
+
 }
+
+Texture::~Texture()
+{
+	// glDeleteTextures(1, &bgtextureID);
+}
+
+
+// FIBITMAP* Texture::createBitMap(char const* filename) {
+	
+
+// 	// FreeImage_Unload(bitmap);
+
+// 	return bitmap32;
+// }
 
 
 void Texture::drawTexture(){
@@ -79,7 +92,7 @@ void Texture::drawTexture(){
   	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &bgtextureID);
+	// glGenTextures(1, &Texture::bgtextureID);
 	glBindTexture(GL_TEXTURE_2D, bgtextureID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
