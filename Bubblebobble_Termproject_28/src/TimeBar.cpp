@@ -14,8 +14,6 @@ void TimeBar::draw() const
 {
 	glPushMatrix();
 	glLineWidth(10);
-	// glEnable(GL_LINE_STIPPLE);
-	// glLineStipple(3, 0xAAAA);
 	glBegin(GL_LINES);
 	glColor3f(1, 0, 0);
 	glVertex2f(pos2d[0], pos2d[1]);

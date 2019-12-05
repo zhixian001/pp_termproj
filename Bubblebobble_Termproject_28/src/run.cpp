@@ -4,6 +4,7 @@
 #include <cmath>
 #include <algorithm>
 #include <time.h>
+#include <string>
 #include <GL/glut.h>
 #include <FreeImage.h>
 #include "Settings.h"
@@ -51,6 +52,15 @@ TimeBar tb = TimeBar();
 
 int main_window, status_window, gameboard_window;
 
+
+void draw_characters(void* font, const char* c, float x, float y) {
+    /* TODO: Implement */
+    glRasterPos2f(x, y);
+
+    for (int i = 0; i < strlen(c); i++){
+        glutBitmapCharacter(font, c[i]);
+    }
+}
 
 void initGameBoard()
 {
@@ -157,7 +167,7 @@ void idle() {
 			
 			VB->stateTransition();
 			if (VB->getState() == Ready) {
-				if (tb.getTime() == 0) VB->launchBubble();
+				if (tb.getTime() <= 0) VB->launchBubble();
 				else tb.timeTicking();
 			}
 			else if (VB->getState() != ShotFlying) {
@@ -249,8 +259,14 @@ void renderSceneScoreBoard() {
 	glMatrixMode(GL_MODELVIEW); // Tell opengl that we are doing model matrix work. (drawing)
 	glLoadIdentity(); // Clear the model matrix
 
+	string scoreTxt = to_string(VB->getScore());
+
 	glPushMatrix();
+	glColor3f(0,1,0);
+	draw_characters(GLUT_BITMAP_HELVETICA_18, ("Score: " + scoreTxt).c_str(), -150, -7);
 	glTranslatef(50, -6, 0);
+		glColor3f(1,0,0);
+	    draw_characters(GLUT_BITMAP_HELVETICA_18, "Time Left", 0, 6);
 		tb.draw();
 	glPopMatrix();
 
