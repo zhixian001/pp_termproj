@@ -15,7 +15,7 @@ Texture::Texture(char const* filename)
     translationfV[2] = -4.5;
 
 
-    fov = 23.0;
+    fov = 18;
 
 	zNear = 0.1;
 	zFar = 20;
@@ -64,14 +64,14 @@ FIBITMAP* Texture::createBitMap(char const* filename) {
 
 void Texture::drawTexture(){
 	glPushMatrix();
-	
+	glPushMatrix();
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(fov, (GLfloat)WIDTH / (GLfloat)(HEIGHT), zNear, zFar);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-
+	// glTranslatef(0, 0, -4.5);
 	glTranslatef(translationfV[0], translationfV[1], translationfV[2]);
 	glEnable(GL_TEXTURE_2D);
 	glDepthMask(GL_FALSE);
@@ -101,6 +101,7 @@ void Texture::drawTexture(){
    	glDepthMask(GL_TRUE); 
 
 	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
 	// glDisable(GL_DEPTH_TEST);
 	glPopMatrix();
 }

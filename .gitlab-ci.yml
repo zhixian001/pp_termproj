@@ -13,7 +13,7 @@ build:
 
   after_script:
     - mv "Bubblebobble_Termproject_28/$env:BUILD_CONFIG/" ./
-    - cp background.jpg "$env:BUILD_CONFIG/"
+    - cp background.png "$env:BUILD_CONFIG/"
     - cp player0.png "$env:BUILD_CONFIG/"
     - cp player1.png "$env:BUILD_CONFIG/"
     - cp clear.png "$env:BUILD_CONFIG/"
@@ -35,7 +35,7 @@ build_linux:
     - cd build && cmake ../
     - cmake --build . --target all -- -j 4
   after_script:
-    - mv build/bin ./ && mv build/lib ./ && cp background.jpg bin/ && cp player0.png bin/ && cp player1.png bin/ && cp clear.png bin/ && cp gg.png bin/
+    - mv build/bin ./ && mv build/lib ./ && cp background.png bin/ && cp player0.png bin/ && cp player1.png bin/ && cp clear.png bin/ && cp gg.png bin/
   only: 
     - master
   artifacts:

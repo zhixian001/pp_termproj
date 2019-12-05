@@ -221,6 +221,8 @@ void VisualBoard::stateTransition()
 void VisualBoard::draw()
 {
     // draw and update all values
+    // glPushMatrix();
+    // glLoadIdentity();
     for (unsigned int i = 0; i < bubblez.size() - 2; i++)
     {
         bubblez[i]->draw();
@@ -232,16 +234,16 @@ void VisualBoard::draw()
         bubblez[i]->draw();
     }
     cannon.draw();
-
+    // glPopMatrix();
     // draw separator
     // TODO: BaseObject to other section
     glPushMatrix();
         separator.drawMaterialOnly();
         glBegin(GL_QUADS);
-        glVertex3f(-WIDTH,-128,0);
-        glVertex3f(-WIDTH,-130, 0);
-        glVertex3f(WIDTH, -130, 0);
-        glVertex3f(WIDTH, -128, 0);
+        glVertex3f(-WIDTH,-238,0);
+        glVertex3f(-WIDTH,-240, 0);
+        glVertex3f(WIDTH, -240, 0);
+        glVertex3f(WIDTH, -238, 0);
         glEnd();
     glPopMatrix();
 

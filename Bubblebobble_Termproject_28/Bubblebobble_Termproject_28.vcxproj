@@ -178,7 +178,7 @@ copy /y "$(ProjectDir)\*png*" "$(OutDir)"</Command>
     <ClInclude Include="include\VisualBoard.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\background.jpg" />
+    <Image Include="..\background.png" />
     <Image Include="..\player0.png" />
     <Image Include="..\player1.png" />
     <Image Include="..\clear.png" />

@@ -54,9 +54,13 @@ int main_window, status_window, gameboard_window;
 
 void initGameBoard()
 {
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	srand(time(0));
 	// Background Texture
 	Texture background = Texture("background.png");
-	background.setTranslationfV(0.0, 0.06, -4.5);
+	background.setFoV(18);
+	background.setTranslationfV(0, -0.1, -4.5);
 
 	textures.push_back(background);
 
@@ -65,10 +69,10 @@ void initGameBoard()
 	Texture player0 = Texture("player0.png");
 	Texture player1 = Texture("player1.png");
 
-	player0.setTranslationfV(-1.6, -3, -2.5);
+	player0.setTranslationfV(-0.1, -5, -2.5);
 	player0.setFoV(110.0);
 
-	player1.setTranslationfV(1, -2.9, -2.5);
+	player1.setTranslationfV(0.1, -5, -2.5);
 	player1.setFoV(110.0);
 
 
@@ -82,9 +86,6 @@ void initGameBoard()
 		delete VB;
 		VB = new VisualBoard();
 	}
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	srand(time(0));
 
 
 	// lighting
@@ -205,7 +206,7 @@ void renderSceneGameBoard() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-WIDTH / 2, WIDTH / 2, -HEIGHT / 2, HEIGHT / 2, -100.0, 100.0);
+	glOrtho(-WIDTH / 2, WIDTH / 2, -WIDTH, WIDTH, -100.0, 100.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -217,7 +218,7 @@ void renderSceneGameBoard() {
 
 
 	glPushMatrix();
-	glTranslatef(30 * sin(t), 60, 0);
+	glTranslatef(30 * sin(t), 0, 0);
 	VB->draw();
 
 	// Draw Textures
@@ -245,14 +246,13 @@ void renderSceneScoreBoard() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode (GL_PROJECTION); // Tell opengl that we are doing project matrix work
 	glLoadIdentity(); // Clear the matrix
-	glOrtho(-WIDTH/2, WIDTH/2, -15.0, 15.0, -100.0, 100.0); // Setup an Ortho view
+	glOrtho(-WIDTH/2, WIDTH/2, -50.0, 50.0, -100.0, 100.0); // Setup an Ortho view
 	glMatrixMode(GL_MODELVIEW); // Tell opengl that we are doing model matrix work. (drawing)
 	glLoadIdentity(); // Clear the model matrix
 
-	glPushMatrix();
-	glTranslatef(50, -6, 0);
-		tb.draw();
-	glPopMatrix();
+	// glPushMatrix();
+	tb.draw();
+	// glPopMatrix();
 
 	glutSwapBuffers();
 }
@@ -284,9 +284,9 @@ int main(int argc, char** argv) {
 		glutDisplayFunc(renderSceneGameBoard);
 		glutKeyboardFunc(processNormalKeys);
 		glutSpecialFunc(processSpecialKeys);
-	status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 50);
+	status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 10);
 		initScoreBoard();
-		glutDisplayFunc(renderSceneScoreBoard);
+		 glutDisplayFunc(renderSceneScoreBoard);
 
 	// int bottom_window = glutCreateSubWindow(main_window, 0, 850, 400, 50);
 
