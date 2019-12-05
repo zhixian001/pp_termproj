@@ -4,6 +4,7 @@
 #include <cmath>
 #include <algorithm>
 #include <time.h>
+#include <string>
 #include <GL/glut.h>
 #include <FreeImage.h>
 #include "Settings.h"
