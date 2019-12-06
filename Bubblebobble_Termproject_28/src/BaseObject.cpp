@@ -53,6 +53,11 @@ void BaseObject::applyPreset(int preset_number)
 		mtl.setSpecular(0.6, 0.5, 0.6, 1.0);
 		mtl.setShininess(32);
 		break;
+	case Gray:
+		mtl.setAmbient(0.1, 0.1, 0.1, 1.0);
+		mtl.setDiffuse(0.2, 0.2, 0.2, 1.0);
+		mtl.setSpecular(0.6, 0.5, 0.6, 1.0);
+		mtl.setShininess(32.0);
 	default:
 		break;
 	}

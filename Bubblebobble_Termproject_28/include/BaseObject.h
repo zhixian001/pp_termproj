@@ -12,12 +12,12 @@ typedef enum
     YellowPlastic,
     MagentaPlastic,
     Ruby,
-    Emerald
+    Emerald,
+	Gray
 } MaterialPreset;
 
 class BaseObject
 {
-private:
 
 protected:
     Material mtl;
@@ -25,8 +25,7 @@ protected:
     void drawMaterial() const;
 
 public:
-    /* 프리셋 material 적용 함수 */
-    void applyPreset(int preset_number);
+	void applyPreset(int preset_number);
     BaseObject();
     BaseObject(int preset);
     BaseObject(MaterialPreset preset);
