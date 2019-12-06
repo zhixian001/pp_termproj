@@ -48,6 +48,7 @@ public:
 	void levelDown();
 	std::pair<double, double> getCoords(int r, int c) const;
 	void cheatClear();
+	void gameOver();
 	
 	bool checkGameOver(int row_down=0);
 

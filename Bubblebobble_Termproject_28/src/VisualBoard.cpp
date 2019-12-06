@@ -348,10 +348,23 @@ bool VisualBoard::gameOver(int clear)
 		double y = bubblez[i]->getY();
 		if (y + clear < -300)	return true;
 	}*/
-    return board->checkGameOver();
+    bool result = board->checkGameOver();
+    
 
+    if (result){
+        board->gameOver();
+        for (int i = bubblez.size() - 1 ; i >= 0 ; i--) {
+            bubblez[i]->setOption(0);
+        }
 
-
+        for (int i = 0 ; i < GAME_COLUMN_COUNT ; i++){
+            if(bubble_alias[1][i] != NULL) bubble_alias[1][i]->makePopping();
+        }
+        
+        game_state = Drop;
+    
+    }
+    return result;
     // return false;
 }
 

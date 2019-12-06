@@ -54,6 +54,8 @@ public:
 	int getOption() const;
 	void setGradient(double DX, double DY);
 
+	void setOption(int opt);
+
 	int getRow() const;
 	int getCol() const;
 	void setRow(int);

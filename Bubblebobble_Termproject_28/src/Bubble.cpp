@@ -168,6 +168,10 @@ double Bubble::getY() const
 	return y;
 }
 
+void Bubble::setOption(int opt) {
+	option = opt;
+}
+
 int Bubble::getOption() const
 {
 	return option;

@@ -371,6 +371,12 @@ void Board::cheatClear(){
 	}
 }
 
+void Board::gameOver(){
+	for (int i = 0 ; i < GAME_COLUMN_COUNT ; i++){
+		bubbled[1][i] = false;
+	}
+}
+
 bool Board::checkGameOver(int row_down) {
 	for (int i = 0 ; i < GAME_COLUMN_COUNT ; i++){
 		if (bubbled[GAME_ROW_DEADLINE - row_down][i]) return true;

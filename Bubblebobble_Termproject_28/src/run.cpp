@@ -141,24 +141,36 @@ void processNormalKeys(unsigned char key, int x, int y) {
 void processSpecialKeys(int key, int x, int y) {
 
 	switch (key) {
-		case GLUT_KEY_LEFT:
+		case GLUT_KEY_LEFT:{
+			if(g_state == InGame){
 			theta += 0.2/M_PI;
 			theta = min(theta, M_PI / 180 * 170);
 			VB->updateCannonAngle(theta);
+			}
 			break;
-		case GLUT_KEY_RIGHT:
+			}
+		case GLUT_KEY_RIGHT:{
+			if(g_state == InGame){
+
 			theta -= 0.2/M_PI;
 			theta = max(theta, M_PI / 180 * 10);
 			VB->updateCannonAngle(theta);
+			}
 			break;
+			
+		}
 		case GLUT_KEY_F2:
 			cout<<VB->getScore()<<endl;
 			break;
 		// Cheat!
-		case GLUT_KEY_F12:
+		case GLUT_KEY_F12:{
+			if(g_state == InGame){
+
 			VB->cheatClear();
 			cout << "You Cheated!!!" << endl;
+			}
 			break;
+			}
 	}
 }
 
