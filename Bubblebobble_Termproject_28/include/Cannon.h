@@ -16,8 +16,7 @@ class Cannon : public BaseObject
 {
 private:
     double head_angle;
-    float cylinder_radius, cylinder_halflength;
-    int cylinder_slices;
+    float cylinder_radius;
     float cylinder_depth;
     float cone_height;
 
