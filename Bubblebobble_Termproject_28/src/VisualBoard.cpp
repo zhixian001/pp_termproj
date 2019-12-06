@@ -87,6 +87,12 @@ void VisualBoard::launchBubble()
         // to_launch += 1;
         // next_launch += 1;
 
+		Bubble* bubble = bubblez[bubblez.size() - 1];
+		bubble->moveRel(0, upper_stages * upper_stage_multiplier);
+		bubble = bubblez[bubblez.size() - 2];
+		bubble->moveRel(0, upper_stages * upper_stage_multiplier);
+        
+
         i_flying_now = i_to_launch;
         i_to_launch++;
         i_next_launch++;
@@ -276,12 +282,13 @@ void VisualBoard::draw(double t)
     {
         bubblez[i]->draw();
     }
-    glPopMatrix();
+    
     // glPushMatrix();
     for (unsigned int i = bubblez.size() - 2; i < bubblez.size(); i++)
     {
         bubblez[i]->draw();
     }
+	glPopMatrix();
     cannon.draw();
     // glPopMatrix();
     // draw separator
@@ -352,10 +359,11 @@ int VisualBoard::getState()
 
 bool VisualBoard::gameClear()
 {
-	if (bubblez.size() <= 2) {
+    if (bubblez.size() <= 2) {
 		upper_stages = 0;
 	}
     return bubblez.size() <= 2;
+    // return bubblez.size() <= 2;
 }
 
 bool VisualBoard::gameOver()
@@ -377,7 +385,7 @@ bool VisualBoard::gameOver()
             if(bubble_alias[1][i] != NULL) bubble_alias[1][i]->makePopping();
         }
         
-        game_state = Drop;
+        game_state = Ready;
     
     }
     return result;
@@ -402,4 +410,8 @@ void VisualBoard::cheatClear(){
 
 void VisualBoard::updateUpper() {
 	upper_stages++;
+	Bubble* bubble = bubblez[bubblez.size() - 1];
+	bubble->moveRel(0, upper_stage_multiplier);
+	bubble = bubblez[bubblez.size() - 2];
+	bubble->moveRel(0, upper_stage_multiplier);
 }

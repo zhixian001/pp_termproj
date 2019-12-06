@@ -124,8 +124,8 @@ void processNormalKeys(unsigned char key, int x, int y) {
 	// spacebar
 	if (key == 32) {
 		if (g_state == InGame) {
+			if (VB->getState() == Ready)	cnt++;
 			VB->launchBubble();
-			cnt++;
 		}
 		else {
 			exit(0);
@@ -217,7 +217,6 @@ void idle() {
 			}
 
 			if (cnt == 8) {
-				cout << "yes\n";
 				VB->updateUpper();
 				cnt = 0;
 			}
@@ -246,7 +245,9 @@ void idle() {
 
 			break;
 		}
+
 		t += 0.4;
+
 		glutSetWindow(main_window);
 		glutPostRedisplay();		
 		glutSetWindow(gameboard_window);
@@ -296,12 +297,10 @@ void renderSceneGameBoard() {
 	glEnable(GL_SMOOTH);
 
 	glPushMatrix();
-	glTranslatef(30 * sin(t), 60, 0);
-
-	if (cnt < 7)	t = 0;
-
-
-	VB->draw(t);
+	glTranslatef(0, 60, 0);
+	if(cnt >= 7)
+		glTranslatef(8 * sin(t), 0, 0);
+	VB->draw();
 	glPopMatrix();
 
 	// Draw Textures
