@@ -115,7 +115,7 @@ protected:
 public:
     VisualBoard();
     ~VisualBoard();
-    void draw();
+    void draw(int upper);
     void levelDown();
     void updateCannonAngle(double theta);
     void launchBubble();

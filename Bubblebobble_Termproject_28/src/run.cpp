@@ -96,6 +96,8 @@ void initGameBoard()
 	}
 	srand(time(0));
 
+	upper = 0;
+	cnt = 0;
 
 	// lighting
 	// if (LIGHTING_ON){
@@ -112,6 +114,7 @@ void processNormalKeys(unsigned char key, int x, int y) {
 	if (key == 32) {
 		if (g_state == InGame) {
 			VB->launchBubble();
+			cnt++;
 		}
 		else {
 			exit(0);
@@ -201,10 +204,16 @@ void idle() {
 				cout << "Game Over :(" << endl;
 
 			}
+
+			if (cnt == 5) {
+				cout << "yes\n";
+				upper++;
+				cnt = 0;
+			}
 			
 			VB->stateTransition();
 			if (VB->getState() == Ready) {
-				if (tb.getTime() <= 0) VB->launchBubble();
+				if (tb.getTime() <= 0) VB->launchBubble(), cnt++;
 				else tb.timeTicking();
 			}
 			else if (VB->getState() != ShotFlying) {
@@ -223,9 +232,9 @@ void idle() {
 			break;
 		}
 		default:
-		
+
 			break;
-		}		
+		}
 	
 		glutSetWindow(main_window);
 		glutPostRedisplay();		
@@ -271,10 +280,10 @@ void renderSceneGameBoard() {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_SMOOTH);
 
-
 	glPushMatrix();
 	glTranslatef(30 * sin(t), 60, 0);
-	VB->draw();
+	VB->draw(upper);
+	glPopMatrix();
 
 	// Draw Textures
 	for (int i = 0 ; i < textures.size() ; i++) {

@@ -282,7 +282,6 @@ void Board::dfs(int row, int col, int option)
 	// Odd Row
 	if (row % 2)
 	{
-		// 7시, 5시
 		for (int j = 0; j < 2; j++)
 		{
 			if (!isValid2(row + 1, col + dc[j]))
@@ -295,7 +294,6 @@ void Board::dfs(int row, int col, int option)
 				continue;
 			dfs(row + 1, col + dc[j], option);
 		}
-		// 11시 1시
 		for (int j = 0; j < 2; j++)
 		{
 			if (!isValid2(row - 1, col + dc[j]))
@@ -308,7 +306,6 @@ void Board::dfs(int row, int col, int option)
 				continue;
 			dfs(row - 1, col + dc[j], option);
 		}
-		// 9시, self, 3시
 		for (int j = 0; j < 3; j++)
 		{
 			if (!isValid2(row, col + dc[j]))

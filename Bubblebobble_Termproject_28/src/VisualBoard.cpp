@@ -266,16 +266,17 @@ void VisualBoard::stateTransition()
     }
 }
 
-void VisualBoard::draw()
+void VisualBoard::draw(int upper)
 {
     // draw and update all values
-    // glPushMatrix();
+    glPushMatrix();
     // glLoadIdentity();
+	glTranslatef(0, -upper * (25.0 + 0.5 * 25 * 1.732050807568877293), 0);
     for (unsigned int i = 0; i < bubblez.size() - 2; i++)
     {
         bubblez[i]->draw();
     }
-    // glPopMatrix();
+    glPopMatrix();
     // glPushMatrix();
     for (unsigned int i = bubblez.size() - 2; i < bubblez.size(); i++)
     {
@@ -348,8 +349,7 @@ bool VisualBoard::gameOver(int clear)
 		double y = bubblez[i]->getY();
 		if (y + clear < -300)	return true;
 	}*/
-    bool result = board->checkGameOver();
-    
+    bool result = board->checkGameOver(clear);
 
     if (result){
         board->gameOver();
