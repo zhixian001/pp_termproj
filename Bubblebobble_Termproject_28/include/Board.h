@@ -48,6 +48,8 @@ public:
 	void levelDown();
 	std::pair<double, double> getCoords(int r, int c) const;
 	void cheatClear();
+	
+	bool checkGameOver(int row_down=0);
 
 private:
 	const double bubble_diameter = BUBBLE_RADIUS * 2;

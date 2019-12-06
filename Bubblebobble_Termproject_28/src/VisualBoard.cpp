@@ -32,9 +32,9 @@ VisualBoard::VisualBoard(/* args */)
     }
     // Bubble to launch
     srand(clock());
-    bubblez.push_back(new Bubble(BUBBLE_RADIUS, BUBBLE_LAUNCH_X_COORD, BUBBLE_LAUNCH_Y_COORD, rand() % 5));
+    bubblez.push_back(new Bubble(BUBBLE_RADIUS, BUBBLE_LAUNCH_X_COORD, BUBBLE_LAUNCH_Y_COORD, rand() % 5+1));
     // Bubble to launch next
-    bubblez.push_back(new Bubble(BUBBLE_RADIUS, BUBBLE_NEXT_LAUNCH_X_COORD, BUBBLE_NEXT_LAUNCH_Y_COORD, rand() % 5));
+    bubblez.push_back(new Bubble(BUBBLE_RADIUS, BUBBLE_NEXT_LAUNCH_X_COORD, BUBBLE_NEXT_LAUNCH_Y_COORD, rand() % 5+1));
 
     // manage iterator
     // to_launch = bubblez.end() - 2;
@@ -307,12 +307,12 @@ Bubble *VisualBoard::generateBubble()
 {
     // TOFIX: generation method
     srand(clock());
-    int cnt[6] = {
+    int cnt[5] = {
         0,
     };
-    int cnt1 = 0;
+    // int cnt1 = 0;
     for (unsigned int i = 0; i < bubblez.size() - 2; i++)
-        cnt[bubblez[i]->getOption()]++;
+        cnt[bubblez[i]->getOption()-1]++;
     for (int i = 1; i < 5; i++)
         cnt[i] += cnt[i - 1];
     int r = rand() % cnt[4];
@@ -322,7 +322,7 @@ Bubble *VisualBoard::generateBubble()
     for (int i = 0; i < 5; i++)
     {
         if (r < cnt[i])
-            return new Bubble(BUBBLE_RADIUS, BUBBLE_NEXT_LAUNCH_X_COORD, BUBBLE_NEXT_LAUNCH_Y_COORD, i);
+            return new Bubble(BUBBLE_RADIUS, BUBBLE_NEXT_LAUNCH_X_COORD, BUBBLE_NEXT_LAUNCH_Y_COORD, i+1);
     }
     return new Bubble(BUBBLE_RADIUS, BUBBLE_NEXT_LAUNCH_X_COORD, BUBBLE_NEXT_LAUNCH_Y_COORD, -1);
 }
@@ -348,7 +348,11 @@ bool VisualBoard::gameOver(int clear)
 		double y = bubblez[i]->getY();
 		if (y + clear < -300)	return true;
 	}*/
-    return false;
+    return board->checkGameOver();
+
+
+
+    // return false;
 }
 
 std::vector<Bubble *> VisualBoard::getBubble()

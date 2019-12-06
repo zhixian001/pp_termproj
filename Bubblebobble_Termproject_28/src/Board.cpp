@@ -119,11 +119,22 @@ std::vector<std::pair<Bubble *, std::pair<int, int>>> Board::observeBoard()
 
 bool Board::isValid(int row, int col)
 {
-	if (1 <= row && row <= GAME_ROW_COUNT - 1 && 1 <= col && col <= GAME_COLUMN_COUNT - 3)
+	if (row >= 1 && row <= GAME_ROW_COUNT -1 && col >= 1 && col <= GAME_COLUMN_COUNT -3){
 		return true;
-	if (1 <= row && row <= GAME_ROW_COUNT - 1 && col == GAME_COLUMN_COUNT - 2 && row % 2)
+	}
+	else if (row >= 1 && row <= GAME_ROW_COUNT -1 && col == GAME_COLUMN_COUNT -2 && row % 2) {
 		return true;
-	return false;
+	}
+	else {
+		return false;
+	}
+
+
+	// if (1 <= row && row <= GAME_ROW_COUNT - 1 && 1 <= col && col <= GAME_COLUMN_COUNT - 3)
+		// return true;
+	// if (col == GAME_COLUMN_COUNT - 2 && row % 2)
+		// return true;
+	// return false;
 }
 
 bool Board::isValid2(int row, int col)
@@ -133,6 +144,22 @@ bool Board::isValid2(int row, int col)
 	if (0 <= row && row <= GAME_ROW_COUNT - 1 && col == GAME_COLUMN_COUNT - 2 && row % 2)
 		return true;
 	return false;
+	// if (isValid(row, col)) {
+	// 	return true;
+	// }
+	// else if (row >= 0 && row < GAME_ROW_COUNT -1 ) {
+	// 	return true;
+	// }
+	// else {
+	// 	return false;
+	// }
+	// else if (col == GAME_COLUMN_COUNT - 2 && row % 2)
+
+	// if (0 <= row && row <= GAME_ROW_COUNT - 1 && 1 <= col && col <= GAME_COLUMN_COUNT - 3)
+	// 	return true;
+	// if (0 <= row && row <= GAME_ROW_COUNT - 1 && col == GAME_COLUMN_COUNT - 2 && row % 2)
+	// 	return true;
+	// return false;
 }
 
 std::pair<int, int> Board::getPos(double x, double y)
@@ -168,8 +195,7 @@ std::pair<int, int> Board::collision(const Bubble *bub)
 	{
 		for (int c = 1; c <= GAME_COLUMN_COUNT - 2; c++)
 		{
-			if (!isValid2(r, c))
-				continue;
+			if (!isValid2(r, c)) continue;
 			if (y >= upper)
 			{
 				std::pair<int, int> coord = getPos(x, y);
@@ -179,11 +205,11 @@ std::pair<int, int> Board::collision(const Bubble *bub)
 				color[r][c] = bub->getOption();
 				return {r, c};
 			}
-			if (!bubbled[r][c])
-				continue;
+			if (!bubbled[r][c]) continue;
+
 			double dist = (xPos[r][c] - (WIDTH / 2) - 1.0 * x) * (xPos[r][c] - (WIDTH / 2) - 1.0 * x) + (yPos[r][c] + upper - 1.0 * y) * (yPos[r][c] + upper - 1.0 * y);
 			// TOCHK: generalize?
-			if (625 < dist && dist < 2500)
+			if (dist > 625 && dist < 2500)
 			{
 				std::pair<int, int> coord = getPos(x, y);
 				int r = coord.first;
@@ -253,8 +279,10 @@ std::vector<std::pair<int, int>> Board::BubbleDropRC()
 void Board::dfs(int row, int col, int option)
 {
 	visited[row][col] = true;
+	// Odd Row
 	if (row % 2)
 	{
+		// 7시, 5시
 		for (int j = 0; j < 2; j++)
 		{
 			if (!isValid2(row + 1, col + dc[j]))
@@ -267,6 +295,7 @@ void Board::dfs(int row, int col, int option)
 				continue;
 			dfs(row + 1, col + dc[j], option);
 		}
+		// 11시 1시
 		for (int j = 0; j < 2; j++)
 		{
 			if (!isValid2(row - 1, col + dc[j]))
@@ -279,6 +308,7 @@ void Board::dfs(int row, int col, int option)
 				continue;
 			dfs(row - 1, col + dc[j], option);
 		}
+		// 9시, self, 3시
 		for (int j = 0; j < 3; j++)
 		{
 			if (!isValid2(row, col + dc[j]))
@@ -292,6 +322,8 @@ void Board::dfs(int row, int col, int option)
 			dfs(row, col + dc[j], option);
 		}
 	}
+
+	// Even Row
 	else
 	{
 		for (int j = 1; j < 3; j++)
@@ -337,4 +369,11 @@ void Board::cheatClear(){
 	for (int i = 0 ; i < GAME_COLUMN_COUNT ; i++){
 		bubbled[1][i] = false;
 	}
+}
+
+bool Board::checkGameOver(int row_down) {
+	for (int i = 0 ; i < GAME_COLUMN_COUNT ; i++){
+		if (bubbled[GAME_ROW_DEADLINE - row_down][i]) return true;
+	}
+	return false;
 }

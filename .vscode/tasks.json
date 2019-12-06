@@ -39,20 +39,26 @@
             ]
         },
         {
-            "type": "script",
-            "scriptType": "bash",
-            "cmdLine": "./build.sh",
-            "path": "",
-            "fileName": "build.sh",
-            "scriptFile": true,
-            "requiresArgs": false,
-            "uri": {
-                "$mid": 1,
-                "fsPath": "/home/homejh/projects/pp_termproj/build.sh",
-                "path": "/home/homejh/projects/pp_termproj/build.sh",
-                "scheme": "file"
-            },
-            "problemMatcher": []
+            "label": "Windows Debug Build",
+            "type": "shell",
+            "command": "${workspaceFolder}/msvc_build.bat",
+            "problemMatcher": ["$msCompile"],
+            "options": {
+                "env": {
+                    "BUILD_CONFIG":"Debug"   
+                }   
+            }
+        },
+        {
+            "label": "Windows Release Build",
+            "type": "shell",
+            "command": "${workspaceFolder}/msvc_build.bat",
+            "problemMatcher": ["$msCompile"],
+            "options": {
+                "env": {
+                    "BUILD_CONFIG":"Release"   
+                }   
+            }
         }
     ]
 }

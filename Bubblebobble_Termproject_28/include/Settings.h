@@ -29,6 +29,12 @@
 #endif
 #define GAME_ROW_COUNT 12
 
+#ifdef GAME_ROW_DEADLINE
+#undef GAME_ROW_DEADLINE
+// #define GAME_ROW_COUNT 16
+#endif
+#define GAME_ROW_DEADLINE 10
+
 #ifdef GAME_COLUMN_COUNT
 #undef GAME_COLUMN_COUNT
 #endif
