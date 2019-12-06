@@ -297,7 +297,11 @@ void renderSceneGameBoard() {
 
 	glPushMatrix();
 	glTranslatef(30 * sin(t), 60, 0);
-	VB->draw();
+
+	if (cnt < 7)	t = 0;
+
+
+	VB->draw(t);
 	glPopMatrix();
 
 	// Draw Textures

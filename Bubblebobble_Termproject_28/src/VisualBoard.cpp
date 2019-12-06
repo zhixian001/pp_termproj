@@ -266,12 +266,12 @@ void VisualBoard::stateTransition()
     }
 }
 
-void VisualBoard::draw()
+void VisualBoard::draw(double t)
 {
     // draw and update all values
     glPushMatrix();
     // glLoadIdentity();
-	glTranslatef(0, -upper_stages * upper_stage_multiplier, 0);
+	glTranslatef(8 * sin(t), -upper_stages * upper_stage_multiplier, 0);
     for (unsigned int i = 0; i < bubblez.size() - 2; i++)
     {
         bubblez[i]->draw();
