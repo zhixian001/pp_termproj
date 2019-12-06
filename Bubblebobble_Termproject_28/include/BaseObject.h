@@ -18,8 +18,6 @@ typedef enum
 class BaseObject
 {
 private:
-    /* 프리셋 material 적용 함수 */
-    void applyPreset(int preset_number);
 
 protected:
     Material mtl;
@@ -27,6 +25,8 @@ protected:
     void drawMaterial() const;
 
 public:
+    /* 프리셋 material 적용 함수 */
+    void applyPreset(int preset_number);
     BaseObject();
     BaseObject(int preset);
     BaseObject(MaterialPreset preset);

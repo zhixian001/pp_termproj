@@ -80,7 +80,7 @@ void draw_characters(void* font, const char* c, float x, float y) {
 void initGameBoard()
 {
 	// Background Texture
-	textures.empty();
+	textures.resize(0);
 
 	Texture background = Texture("background.png");
 	background.setTranslationfV(0.0, 0.06, -4.5);
@@ -301,7 +301,7 @@ void renderSceneGameBoard() {
 	if (cnt >= 7) {
 		glTranslatef(8 * sin(t), 0, 0);
 	}
-	VB->draw(t);
+	VB->draw();
 	glPopMatrix();
 
 	// Draw Textures

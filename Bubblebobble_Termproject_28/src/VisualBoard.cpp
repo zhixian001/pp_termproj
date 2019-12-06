@@ -272,7 +272,7 @@ void VisualBoard::stateTransition()
     }
 }
 
-void VisualBoard::draw(double t)
+void VisualBoard::draw()
 {
     // draw and update all values
     glPushMatrix();
@@ -383,9 +383,9 @@ bool VisualBoard::gameOver()
 
         }
 
-        for (int i = 0 ; i < GAME_COLUMN_COUNT ; i++){
-            if(bubble_alias[1][i] != NULL) bubble_alias[1][i]->makePopping();
-        }
+        // for (int i = 0 ; i < GAME_COLUMN_COUNT ; i++){
+            // if(bubble_alias[1][i] != NULL) bubble_alias[1][i]->makePopping();
+        // }
         
         game_state = Ready;
     
