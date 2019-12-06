@@ -277,7 +277,7 @@ void VisualBoard::draw(double t)
     // draw and update all values
     glPushMatrix();
     // glLoadIdentity();
-	glTranslatef(8 * sin(t), -upper_stages * upper_stage_multiplier, 0);
+	glTranslatef(0, -upper_stages * upper_stage_multiplier, 0);
     for (unsigned int i = 0; i < bubblez.size() - 2; i++)
     {
         bubblez[i]->draw();
@@ -379,6 +379,8 @@ bool VisualBoard::gameOver()
 		upper_stages = 0;
         for (int i = bubblez.size() - 1 ; i >= 0 ; i--) {
             bubblez[i]->setOption(0);
+			bubblez[i]->applyPreset(8);
+
         }
 
         for (int i = 0 ; i < GAME_COLUMN_COUNT ; i++){
