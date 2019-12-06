@@ -94,7 +94,7 @@ private:
     int upper_stages;
 
     int i_to_launch, i_next_launch, i_flying_now;
-
+	double upper_stage_multiplier = 25.0 + 0.5 * 25 * 1.732050807568877293;
 
     Bubble *bubble_alias[GAME_ROW_COUNT][GAME_COLUMN_COUNT];
     GameStates game_state;
@@ -115,16 +115,17 @@ protected:
 public:
     VisualBoard();
     ~VisualBoard();
-    void draw(int upper);
+    void draw();
     void levelDown();
     void updateCannonAngle(double theta);
     void launchBubble();
     void stateTransition();
     int getState();
     bool gameClear();
-    bool gameOver(int upper);
+    bool gameOver();
     std::vector<Bubble *> getBubble();
     // void maklePopping(Bubble *b);
     unsigned int getScore() const;
     void cheatClear();
+	void updateUpper();
 };

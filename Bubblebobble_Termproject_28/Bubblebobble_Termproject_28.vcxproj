@@ -160,7 +160,6 @@ copy /y "$(ProjectDir)\*png*" "$(OutDir)"</Command>
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\run.cpp" />
     <ClCompile Include="src\Texture.cpp" />
-    <ClCompile Include="src\Texts.cpp" />
     <ClCompile Include="src\TimeBar.cpp" />
     <ClCompile Include="src\VisualBoard.cpp" />
   </ItemGroup>
@@ -174,7 +173,6 @@ copy /y "$(ProjectDir)\*png*" "$(OutDir)"</Command>
     <ClInclude Include="include\resource.h" />
     <ClInclude Include="include\Settings.h" />
     <ClInclude Include="include\Texture.h" />
-    <ClInclude Include="include\Texts.h" />
     <ClInclude Include="include\TimeBar.h" />
     <ClInclude Include="include\VisualBoard.h" />
   </ItemGroup>

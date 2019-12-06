@@ -24,7 +24,6 @@ using namespace std;
 double theta = M_PI/2;
 int cnt = 0;
 double t = 0.0;
-int upper = 0;
 
 clock_t start_clock = clock();
 clock_t end_clock;
@@ -55,12 +54,28 @@ int main_window, status_window, gameboard_window;
 
 void draw_characters(void* font, const char* c, float x, float y) {
     /* TODO: Implement */
-    glRasterPos2f(x, y);
+	BaseObject txtcolor(5);
+	//txtcolor.drawMaterialOnly();
+	Material text_mtl;
+	text_mtl.setEmission(0, 0, 0, 1);
+	text_mtl.setAmbient(0, 1, 1, 1);
+	text_mtl.setDiffuse(0, 0.5, 0.5, 1);
+	text_mtl.setSpecular(0.5, 0.6, 0.6, 1);
+	text_mtl.setShininess(50);
+	glMaterialfv(GL_FRONT, GL_EMISSION, text_mtl.getEmission());
+	glMaterialfv(GL_FRONT, GL_AMBIENT, text_mtl.getAmbient());
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, text_mtl.getDiffuse());
+	glMaterialfv(GL_FRONT, GL_SPECULAR, text_mtl.getSpecular());
+	glMaterialfv(GL_FRONT, GL_SHININESS, text_mtl.getShininess());
+
+
+	glRasterPos2f(x, y);
 
     for (int i = 0; i < strlen(c); i++){
         glutBitmapCharacter(font, c[i]);
     }
 }
+
 
 void initGameBoard()
 {
@@ -96,11 +111,7 @@ void initGameBoard()
 	}
 	srand(time(0));
 
-	upper = 0;
 	cnt = 0;
-
-	// lighting
-	// if (LIGHTING_ON){
 	
 
 }
@@ -194,7 +205,7 @@ void idle() {
 				cout << "Game Clear!" << endl;
 			}
 
-			if (VB->gameOver(upper))
+			if (VB->gameOver())
 			{
 				Texture GGMsg = Texture("gg.png");
 				GGMsg.setTranslationfV(0, 0.06, -4.5);
@@ -207,7 +218,7 @@ void idle() {
 
 			if (cnt == 5) {
 				cout << "yes\n";
-				upper++;
+				VB->updateUpper();
 				cnt = 0;
 			}
 			
@@ -261,10 +272,14 @@ void initParentWindow() {
 }
 
 void renderSceneParentWindow() {
-
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glutSetWindow(main_window);
+	glutSwapBuffers();
 }
 
 void renderSceneGameBoard() {
+	glutSetWindow(gameboard_window);
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -282,7 +297,7 @@ void renderSceneGameBoard() {
 
 	glPushMatrix();
 	glTranslatef(30 * sin(t), 60, 0);
-	VB->draw(upper);
+	VB->draw();
 	glPopMatrix();
 
 	// Draw Textures
@@ -306,26 +321,39 @@ void renderSceneGameBoard() {
 }
 
 void renderSceneScoreBoard() {
+	glutSetWindow(status_window);
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glMatrixMode (GL_PROJECTION); // Tell opengl that we are doing project matrix work
-	glLoadIdentity(); // Clear the matrix
-	glOrtho(-WIDTH/2, WIDTH/2, -15.0, 15.0, -100.0, 100.0); // Setup an Ortho view
-	glMatrixMode(GL_MODELVIEW); // Tell opengl that we are doing model matrix work. (drawing)
-	glLoadIdentity(); // Clear the model matrix
+	
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-WIDTH / 2, WIDTH / 2, -15.0, 15.0, -100.0, 100.0); // Setup an Ortho view
 
 	string scoreTxt = to_string(VB->getScore());
 
 	glPushMatrix();
-	glColor3f(0,1,0);
+	glTranslatef(0,0,10);
+
+	glColor3f(0, 1, 0);
 	draw_characters(GLUT_BITMAP_HELVETICA_18, ("Score: " + scoreTxt).c_str(), -150, -7);
+	//draw_characters(GLUT_BITMAP_HELVETICA_18, ("Score: " + scoreTxt).c_str(), 0, 0);
+
 	glTranslatef(50, -6, 0);
-		glColor3f(1,0,0);
-	    draw_characters(GLUT_BITMAP_HELVETICA_18, "Time Left", 0, 6);
-		tb.draw();
+	glColor3f(1, 0, 0);
+	draw_characters(GLUT_BITMAP_HELVETICA_18, "Time Left", 0, 6);
+
+
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	tb.draw();
 	glPopMatrix();
 
 	glutSwapBuffers();
+
+
 }
 
 
@@ -349,15 +377,15 @@ int main(int argc, char** argv) {
 		initParentWindow();
 		glutDisplayFunc(renderSceneParentWindow);
 		
-		// register callbacks
+	// register callbacks
+	status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 50);
+		initScoreBoard();
+		glutDisplayFunc(renderSceneScoreBoard);
 	gameboard_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, HEIGHT);
 		initGameBoard();
 		glutDisplayFunc(renderSceneGameBoard);
 		glutKeyboardFunc(processNormalKeys);
 		glutSpecialFunc(processSpecialKeys);
-	status_window = glutCreateSubWindow(main_window, 0, 0, WIDTH, 50);
-		initScoreBoard();
-		glutDisplayFunc(renderSceneScoreBoard);
 
 	// int bottom_window = glutCreateSubWindow(main_window, 0, 850, 400, 50);
 

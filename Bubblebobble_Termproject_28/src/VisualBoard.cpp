@@ -266,12 +266,12 @@ void VisualBoard::stateTransition()
     }
 }
 
-void VisualBoard::draw(int upper)
+void VisualBoard::draw()
 {
     // draw and update all values
     glPushMatrix();
     // glLoadIdentity();
-	glTranslatef(0, -upper * (25.0 + 0.5 * 25 * 1.732050807568877293), 0);
+	glTranslatef(0, -upper_stages * upper_stage_multiplier, 0);
     for (unsigned int i = 0; i < bubblez.size() - 2; i++)
     {
         bubblez[i]->draw();
@@ -286,6 +286,18 @@ void VisualBoard::draw(int upper)
     // glPopMatrix();
     // draw separator
     // TODO: BaseObject to other section
+
+	// Upper
+	glPushMatrix();
+		separator.drawMaterialOnly();
+		glBegin(GL_QUADS);
+		glVertex3f(-WIDTH, DEFAULT_UPPER_COORD +26, 0);
+		glVertex3f(-WIDTH, -upper_stages * upper_stage_multiplier+ DEFAULT_UPPER_COORD+24, 0);
+		glVertex3f(WIDTH, -upper_stages * upper_stage_multiplier+ DEFAULT_UPPER_COORD+24, 0);
+		glVertex3f(WIDTH, DEFAULT_UPPER_COORD +26, 0);
+		glEnd();
+	glPopMatrix();
+
     glPushMatrix();
         separator.drawMaterialOnly();
         glBegin(GL_QUADS);
@@ -340,19 +352,23 @@ int VisualBoard::getState()
 
 bool VisualBoard::gameClear()
 {
+	if (bubblez.size() <= 2) {
+		upper_stages = 0;
+	}
     return bubblez.size() <= 2;
 }
 
-bool VisualBoard::gameOver(int clear)
+bool VisualBoard::gameOver()
 {
     /*for (int i = 0; i < bubblez.size() - 2; i++) {
 		double y = bubblez[i]->getY();
 		if (y + clear < -300)	return true;
 	}*/
-    bool result = board->checkGameOver(clear);
+    bool result = board->checkGameOver(upper_stages);
 
     if (result){
         board->gameOver();
+		upper_stages = 0;
         for (int i = bubblez.size() - 1 ; i >= 0 ; i--) {
             bubblez[i]->setOption(0);
         }
@@ -382,4 +398,8 @@ void VisualBoard::cheatClear(){
 
     game_state = Drop;
     
+}
+
+void VisualBoard::updateUpper() {
+	upper_stages++;
 }

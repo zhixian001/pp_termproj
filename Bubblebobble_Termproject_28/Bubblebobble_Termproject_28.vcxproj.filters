@@ -44,9 +44,6 @@
     <ClCompile Include="src\Texture.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\Texts.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="src\TimeBar.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -80,9 +77,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\Texture.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Texts.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\TimeBar.h">
