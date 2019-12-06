@@ -138,7 +138,7 @@ void processNormalKeys(unsigned char key, int x, int y) {
 		else {
 			g_state = InGame;
 
-			textures.empty();
+			textures.resize();
 
 			delete VB;
 

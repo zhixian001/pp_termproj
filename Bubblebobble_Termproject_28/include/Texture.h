@@ -29,6 +29,7 @@ protected:
     // FIBITMAP* createBitMap(char const* filename);
 
 public:
+    Texture();
     Texture(char const* filename);
     ~Texture();
 

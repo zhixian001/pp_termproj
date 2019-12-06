@@ -1,6 +1,8 @@
 #include "Texture.h"
 
+Texture::Texture() {
 
+}
 
 Texture::Texture(char const* filename)
 {
