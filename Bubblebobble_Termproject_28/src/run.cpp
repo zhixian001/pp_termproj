@@ -216,7 +216,7 @@ void idle() {
 
 			}
 
-			if (cnt == 5) {
+			if (cnt == 8) {
 				cout << "yes\n";
 				VB->updateUpper();
 				cnt = 0;
@@ -246,7 +246,7 @@ void idle() {
 
 			break;
 		}
-	
+		t += 0.4;
 		glutSetWindow(main_window);
 		glutPostRedisplay();		
 		glutSetWindow(gameboard_window);
