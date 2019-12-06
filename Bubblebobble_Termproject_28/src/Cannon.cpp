@@ -5,6 +5,7 @@ Cannon::Cannon() : BaseObject(Emerald)
     this->head_angle = M_PI / 2;
     this->cone_height = 18;
     this->cylinder_radius = 7.0;
+    this->cylinder_depth = 10;
 }
 
 Cannon::~Cannon()
