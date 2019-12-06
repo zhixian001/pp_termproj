@@ -70,7 +70,8 @@ Board::Board()
 	// 맵 생성
 	for (int i = 0; i <= GAME_COLUMN_COUNT - 2; i++)
 	{
-		bubbled[0][i] = true, color[0][i] = 1;
+		bubbled[0][i] = true;
+		color[0][i] = 0;
 	}
 	for (int r = 1; r <= GAME_ROW_COUNT - 1; r++)
 	{
@@ -81,7 +82,7 @@ Board::Board()
 			if (1.0 * rand() / RAND_MAX < 0.7)
 				continue;
 			bubbled[r][c] = true;
-			color[r][c] = rand() % 5;
+			color[r][c] = rand() % 5 + 1;
 		}
 	}
 	memset(visited, false, sizeof(visited));
@@ -159,6 +160,8 @@ void Board::levelDown()
 
 std::pair<int, int> Board::collision(const Bubble *bub)
 {
+
+
 	double x = bub->getX();
 	double y = bub->getY();
 	for (int r = 1; r <= GAME_ROW_COUNT - 1; r++)

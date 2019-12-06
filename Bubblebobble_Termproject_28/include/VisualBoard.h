@@ -91,6 +91,7 @@ private:
     // std::deque<Bubble *>::iterator next_launch;
     // std::deque<Bubble *>::iterator flying_now;
 
+    int upper_stages;
 
     int i_to_launch, i_next_launch, i_flying_now;
 

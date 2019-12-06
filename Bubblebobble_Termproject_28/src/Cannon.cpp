@@ -15,7 +15,7 @@ Cannon::~Cannon()
 void Cannon::draw()
 {
     // TODO: sep
-    BaseObject launch_torus = BaseObject(1);
+    BaseObject launch_torus = BaseObject(2);
 
     // launch pnt
     glPushMatrix();

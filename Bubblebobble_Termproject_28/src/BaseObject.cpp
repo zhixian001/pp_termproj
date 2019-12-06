@@ -4,6 +4,12 @@ void BaseObject::applyPreset(int preset_number)
 {
 	switch (preset_number)
 	{
+	case BlackDefault:
+		mtl.setAmbient(0.0, 0.0, 0.0, 1.0);
+		mtl.setDiffuse(0.0, 0.0, 0.0, 1.0);
+		mtl.setSpecular(0.0, 0.0, 0.0, 1.0);
+		mtl.setShininess(16.0);
+	
 	case RedPlastic:
 		mtl.setAmbient(0.0, 0.0, 0.0, 1.0);
 		mtl.setDiffuse(0.5, 0.0, 0.0, 1.0);

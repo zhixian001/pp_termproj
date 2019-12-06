@@ -5,11 +5,13 @@ VisualBoard::VisualBoard(/* args */)
 
     game_state = Ready;
 
+    upper_stages = 0;
+
     score = 0;
 
     board = new Board();
 
-    separator = BaseObject(5);
+    separator = BaseObject(6);
 
 
     // initialize bubble alias
@@ -117,7 +119,6 @@ void VisualBoard::stateTransition()
 
         if (collision_pair.first > 0 || collision_pair.second > 0)
         {
-            // (*flying_now)->setState(Static);
             bubblez[i_flying_now]->setState(Static);
             game_state = ShotCollide;
         }
@@ -306,7 +307,7 @@ Bubble *VisualBoard::generateBubble()
 {
     // TOFIX: generation method
     srand(clock());
-    int cnt[5] = {
+    int cnt[6] = {
         0,
     };
     int cnt1 = 0;
@@ -365,20 +366,3 @@ void VisualBoard::cheatClear(){
     game_state = Drop;
     
 }
-
-// void VisualBoard::makePopping(Bubble *b)
-// {
-//     double x = b->getX();
-//     double y = b->getY();
-//     for (int i = 0; i < 20; i++)
-//     {
-//         double theta = 2 * M_PI / 20 * i;
-//         double r = 20;
-//         double dx = x + r * sin(theta);
-//         double dy = y + r * cos(theta);
-//         Bubble *newBubble = new Bubble(3, dx, dy, b->getOption());
-//         newBubble->setState(Popping);
-//         newBubble->setGradient(5 * sin(theta), 5 * cos(theta));
-//         bubblez.push_back(newBubble);
-//     }
-// }

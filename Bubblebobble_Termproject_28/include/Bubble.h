@@ -34,7 +34,7 @@ class Bubble : public BaseObject
 {
 public:
 	/* op = option. Bubble's color */
-	Bubble(double r = 0.0, double x = 0.0, double y = 0.0, int op = 5);
+	Bubble(double r = 0.0, double x = 0.0, double y = 0.0, int op = 0);
 	~Bubble();
 	void setState(BubbleState);
 	void setState(BubbleState, double, double);

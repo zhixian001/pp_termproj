@@ -5,6 +5,7 @@
 
 typedef enum
 {
+    BlackDefault,
     RedPlastic,
     GreenPlastic,
     BluePlastic,
